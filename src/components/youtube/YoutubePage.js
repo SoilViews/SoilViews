@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchTube } from '../../store/actions/youtubeAction';
 
-import SearchBar from './SearchBar';
 import List from './List';
 import Detail from './Detail'
 import _ from 'lodash';
@@ -16,7 +15,7 @@ class YoutubePage extends Component {
   }
 
   componentDidMount() {
-    this.search('softuni react') 
+    this.search('react') 
   }
 
   search = (term) => {
@@ -32,9 +31,7 @@ class YoutubePage extends Component {
     return (
       <div className="container-fluid youtube">
         <div className="row">
-          <div className="col s12">
-            <SearchBar onSearchTerm={this.search} />
-          </div>
+          
         </div>
         <div className="row">
           <div className="col s12 m8">

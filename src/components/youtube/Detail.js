@@ -5,13 +5,13 @@ const Detail = ({ video }) => {
     return (
       <div className="container center">
         <div className="spinner">
-          <div className="rect1">Se</div>
-          <div className="rect2">le</div>
-          <div className="rect3">ct</div>
+          <div className="rect1">So</div>
+          <div className="rect2">i</div>
+          <div className="rect3">l</div>
         </div>
         <div className="spinner">
-            <div className="rect4">Vid</div>
-            <div className="rect5">eo</div>
+            <div className="rect4">Vie</div>
+            <div className="rect5">ws</div>
         </div>
       </div>
     )
