@@ -11,7 +11,7 @@ const ProjectLists = ({ projects, id }) => {
       return (
         <div className="row project-lists">
           {projects && projects.map(project => {
-            if (project.authorId == id) {
+            if (project.authorId === id) {
               return (
                 <Link to={'project/' + project.id} key={project.id} title="More Info">
                   <ProjectSummary project={project} />

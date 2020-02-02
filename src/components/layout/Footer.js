@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import moment from 'moment'
 
 const Footer = (props) => {
 
 
 
-    const { projects, profile, auth } = props;
 
     return (
         <React.Fragment>

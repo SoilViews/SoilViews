@@ -8,7 +8,6 @@ import ProjecDetails from './components/projects/ProjectDetails'
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import CreateProject from './components/projects/CreateProject'
-import YoutubePage from './components/youtube/YoutubePage';
 import EditProject from './components/projects/EditProject'
 import Footer from './components/layout/Footer'
 
@@ -25,7 +24,6 @@ function App() {
           <button className="change-background-btn" type="button" onClick={() => changeBackground(!checked)}>Change Website Colors</button>
             <Nabvar></Nabvar>
             <Switch>
-              <Route path='/' exact component={YoutubePage} />
               <Route path='/project/:id' component={ProjecDetails} />
               <Route path='/edit/:id' component={EditProject} />
               <Route path='/SignIn' component={SignIn} />
