@@ -21,7 +21,7 @@ function App() {
       <div className={checked ? "isActive" : "isInactive"}>
         <div className='App' >
           <header>
-          <button className="change-background-btn" type="button" onClick={() => changeBackground(!checked)}>Change Website Colors</button>
+          {/*}<button className="change-background-btn" type="button" onClick={() => changeBackground(!checked)}>Change Website Colors</button>*/}
             <Nabvar></Nabvar>
             <Switch>
               <Route path='/project/:id' component={ProjecDetails} />
