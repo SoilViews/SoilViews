@@ -42,15 +42,15 @@ class SignIn extends Component {
                                 <div className="row">
                                     <div className="input-field col s12">
                                         <i className="material-icons prefix">email</i>
-                                        <input type="email" placeholder='' id="email" className="validate" onChange={this.onChangeInput}/>
-                                        <label htmlFor="email">Email</label>
+                                        <input type="email" placeholder='Email' id="email" className="validate" onChange={this.onChangeInput}/>
+                                       
                                     </div>
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s12">
                                         <i className="material-icons prefix">vpn_key</i>
-                                        <input type="password" placeholder="" id="password" className="validate" onChange={this.onChangeInput}/>
-                                        <label htmlFor="email">Password</label>
+                                        <input type="password" placeholder="Password" id="password" className="validate" onChange={this.onChangeInput}/>
+                                        
                                     </div>
                                 </div>
                                 <div className="row center-align">

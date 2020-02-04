@@ -1,49 +1,42 @@
 import React from 'react'
-import Notifications from './Notifications'
-import ProjectLists from '../projects/ProjectList'
-import { connect } from 'react-redux'
-import { firestoreConnect } from 'react-redux-firebase'
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import { compose } from 'redux'
-import { Redirect } from 'react-router-dom'
+import "leaflet/dist/leaflet.css";
+
+
 
 export class Dashboard extends React.Component{
+    constructor() {
+        super();
+        this.state = {
+          lat: 42.696295,
+          lng:  23.303643,
+          zoom: 10,
+        };
+      }
+
+  render() {
+    const position = [this.state.lat, this.state.lng]
+
+    return(
+        <div className='dashboard container'>
+            <Map style={{ height: "50vh" }} center={position} zoom={13}>
+            <TileLayer
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
+        />
+        <Marker position={position}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </Map>
+        </div>
+    )
     
-    render(){
-        const {projects, notifications, auth} = this.props
-
-        if(!auth.uid) return <Redirect to="/signIn"/>
-         
-        return(
-            <div className='dashboard container'>
-                <div className='row'>
-                    <div className="col s12 m8">
-                    <h2>Projects:</h2>
-                    </div>
-                    <div className='col s12 m8'>
-                      <ProjectLists  id={this.props.uid} projects={projects}></ProjectLists>
-                    </div>
-                    <div className='col s12 m3 offset-m1'>
-                        <Notifications notifications={notifications}></Notifications>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-}
-
-const mapStateToProps = (state) => {
-    return{
-        uid: state.firebase.auth.uid,
-        projects: state.firestore.ordered.projects ,
-        notifications: state.firestore.ordered.notifications,
-        auth: state.firebase.auth
-    }
+  }
 }
 
 export default compose(
-	connect(mapStateToProps),
-	firestoreConnect([
-		{ collection: "projects", orderBy: ['createdAt', 'desc'] },
-		{ collection: "notifications", limit: 5, orderBy: ['time', 'desc'] },
-	])
+	
 )(Dashboard);

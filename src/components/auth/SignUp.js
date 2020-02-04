@@ -89,32 +89,32 @@ class SignUp extends Component {
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <i className="material-icons prefix">email</i>
-                                            <input type="text" placeholder='' id="firstName" className="validate" onChange={this.onChangeInput} />
-                                            <label htmlFor="firstName">First Name:</label>
+                                            <input type="text" placeholder='First Name' id="firstName" className="validate" onChange={this.onChangeInput} />
+                                           
                                             <span style={{ color: "red" }}>{this.state.errors["name"]}</span>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <i className="material-icons prefix">email</i>
-                                            <input type="text" placeholder='' id="lastName" className="validate" onChange={this.onChangeInput} />
-                                            <label htmlFor="lastName">Last Name</label>
+                                            <input type="text" placeholder='Last Name' id="lastName" className="validate" onChange={this.onChangeInput} />
+                                            
                                             <span style={{ color: "red" }}>{this.state.errors["name"]}</span>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <i className="material-icons prefix">email</i>
-                                            <input type="email" placeholder='' id="email" className="validate" onChange={this.onChangeInput} />
-                                            <label htmlFor="email">Email</label>
+                                            <input type="email" placeholder='Email' id="email" className="validate" onChange={this.onChangeInput} />
+                                            
                                             <span style={{ color: "red" }}>{this.state.errors["email"]}</span>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
                                             <i className="material-icons prefix">vpn_key</i>
-                                            <input type="password" placeholder="" id="password" className="validate" onChange={this.onChangeInput} />
-                                            <label htmlFor="password">Password</label>
+                                            <input type="password" placeholder="Password" id="password" className="validate" onChange={this.onChangeInput} />
+                                         
                                         </div>
                                     </div>
                                     <div className="row center-align">
