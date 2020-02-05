@@ -10,6 +10,9 @@ import CreateProject from './components/projects/CreateProject'
 import EditProject from './components/projects/EditProject'
 import Footer from './components/layout/Footer'
 
+import { Map, TileLayer, Circle, FeatureGroup } from 'react-leaflet';
+import { EditControl } from 'react-leaflet-draw';
+
 function App() {
 
 
