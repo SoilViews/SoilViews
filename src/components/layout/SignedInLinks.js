@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux' 
@@ -20,5 +21,4 @@ const mapDispatchToProps = (dispatch) => {
         signOut: ()=> dispatch(signOut())
     }
 }
-
 export default connect(null,mapDispatchToProps)(SignedInLinks)

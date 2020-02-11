@@ -1,9 +1,16 @@
 import React from "react";
-import { Map, Marker, Popup, TileLayer, FeatureGroup } from "react-leaflet";
+import { Map, TileLayer, FeatureGroup,Polygon } from "react-leaflet";
 import { compose } from "redux";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
-import L from "leaflet";
+// import L from "leaflet";
+
+const polygon = [
+  [42.696295, 23.303643],
+  [42.699295, 23.303643],
+  [42.699295, 23.313643],
+  [42.679295, 23.313643],
+]
 
 export class Dashboard extends React.Component {
   constructor() {
@@ -41,6 +48,7 @@ export class Dashboard extends React.Component {
               }}
             />
           </FeatureGroup>
+          <Polygon color="purple" positions={polygon} />
         </Map>
       </div>
     );
