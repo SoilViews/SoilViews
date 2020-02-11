@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
 
 const Footer = (props) => {
 
@@ -19,7 +18,6 @@ const Footer = (props) => {
                 <div className="footer-copyright">
                     <div className="container">
                         © 2020 Copyright by Team HAG
-                        {/* <Link className="grey-text text-lighten-4 right" to={'dashboard'} title="dashboard">DashBoard</Link> */}
                     </div>
                 </div>
             </footer>
