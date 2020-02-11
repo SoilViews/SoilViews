@@ -3,6 +3,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import './App.css';
 import Nabvar from '../src/components/layout/Navbar'
 import Dashboard from '../src/components/dashboard/Dashboard'
+import indexPage from '../src/components/index/indexPage'
 import ProjecDetails from './components/projects/ProjectDetails'
 import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
@@ -24,13 +25,14 @@ function App() {
           
             <Nabvar></Nabvar>
             <Switch>
-              <Route path='/project/:id' component={ProjecDetails} />
-              <Route path='/edit/:id' component={EditProject} />
+              {/* <Route path='/project/:id' component={ProjecDetails} />
+              <Route path='/edit/:id' component={EditProject} /> */}
+              <Route path='/indexPage' component={indexPage} />
               <Route path='/SignIn' component={SignIn} />
               <Route path='/SignUp' component={SignUp} />
               <Route path='/CreateProject' component={CreateProject} />
               <Route path='/Dashboard' component={Dashboard} />
-              <Route path="/" component={SignIn} />
+              <Route path="/" component={indexPage} />
             </Switch>
           </header>
           <Footer/>
