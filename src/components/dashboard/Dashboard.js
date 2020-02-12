@@ -32,20 +32,15 @@ export class Dashboard extends React.Component {
       map.leafletElement.locate()
       
     }
-    console.log("CatchHandleClick",Polygon.latlng);
+    console.log("CatchMouseClick",Polygon.latlng);
   }
 
-  //TODO
-  handleLocationFound = (e) => {
-    this.setState({
-      hasLocation: true,
-      latlng: e.latlng,
+  onCreate = (e) => {
+    var layer = e.layer;
+    console.log("Polygon Cordinates",layer.getLatLngs())
+    console.log('Log_Create_Shape: ', e)
       
     }
- 
-    )
-    console.log("e")
-  }
 
   
 
@@ -56,6 +51,7 @@ export class Dashboard extends React.Component {
       <div id="map" className="dashboard container">
         <Map style={{ height: "50vh" }} center={position} zoom={13}
           onClick={this.handleClick}
+          onCreate={this.onCreate}
           onLocationfound={this.handleLocationFound}>
           <TileLayer
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -65,7 +61,7 @@ export class Dashboard extends React.Component {
             <EditControl
               position="topright"
               onEdited={this._onEditPath}
-              onCreated={this._onCreate}
+              onCreated={this.onCreate}
               onDeleted={this._onDeleted}
               onMounted={this._mounted}
               onEditStart={this._onEditStart}
