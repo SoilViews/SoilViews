@@ -1,8 +1,10 @@
 import React,{createRef}from "react";
-import { Map, TileLayer, FeatureGroup,Polygon } from "react-leaflet";
+import { Map, TileLayer, FeatureGroup,Polygon,GeoJSON  } from "react-leaflet";
 import { compose } from "redux";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
+import london_postcodes from '../Files/london_postcodes.json'
+// import sophia_postcodes from '../Files/rpu_sofia.geojson'
 // import L from "leaflet";
 
 //Hardcoded cordinates of polygons
@@ -76,6 +78,11 @@ export class Dashboard extends React.Component {
             />
           </FeatureGroup>
           <Polygon color="purple" positions={polygon} />
+          <GeoJSON
+          data={london_postcodes}
+          style={this.geoJSONStyle}
+          onEachFeature={this.onEachFeature}
+        />
         </Map>
       </div>
     );
