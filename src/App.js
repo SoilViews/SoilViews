@@ -8,6 +8,7 @@ import SignIn from './components/auth/SignIn'
 import SignUp from './components/auth/SignUp'
 import CreateProject from './components/projects/CreateProject'
 import Footer from './components/layout/Footer'
+import Profile from '../src/components/Profile/profile'
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
               <Route path='/SignUp' component={SignUp} />
               <Route path='/CreateProject' component={CreateProject} />
               <Route path='/Dashboard' component={Dashboard} />
+              <Route path='/Profile' component={Profile} />
               <Route path="/" component={indexPage} />
             </Switch>
           </header>
