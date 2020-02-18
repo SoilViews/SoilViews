@@ -1,14 +1,27 @@
 import React  from 'react'
-import { compose } from "redux";
-export class Profile extends React.Component {
+import { connect } from 'react-redux'
 
-    render() {
+const Profile = (props) => {
+   
+    return (
         
-        return (
+        <div className="card-action">
             <h4 className="card-title center-align">Profile</h4>
-        )
+        <p> <span >Username: </span>{props.profile.firstName} </p>
+        <p> <span >Last Name: </span>{props.profile.lastName} </p>
+        <p> <span>Email: </span>{props.profile.email} </p>
+  
+    </div>
         
-    }
-
+    )
 }
-export default compose()(Profile);
+
+
+const mapStateToProps = (state) => {
+    return{
+        auth: state.firebase.auth,
+        profile: state.firebase.profile
+    }
+}
+
+export default connect(mapStateToProps)(Profile)

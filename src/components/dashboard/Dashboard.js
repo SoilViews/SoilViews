@@ -4,6 +4,7 @@ import { compose } from "redux";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from '../Files/london_postcodes.json'
+import '../../leaflet.filelayer'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
 // import L from "leaflet";
 
@@ -35,7 +36,7 @@ export class Dashboard extends React.Component {
     console.log("CatchMouseClick",Polygon.latlng);
   }
 
-  onCreate = (e) => {
+  onCreatee = (e) => {
     var layer = e.layer;
     console.log("Polygon Cordinates",layer.getLatLngs())
     console.log('Log_Create_Shape: ', e)
@@ -47,8 +48,9 @@ export class Dashboard extends React.Component {
   render() {
     const position = [this.state.lat, this.state.lng];
 
-    return (
+    return (   
       <div id="map" className="dashboard container">
+        <div>onCreate</div>
         <Map style={{ height: "50vh" }} center={position} zoom={13}
           onClick={this.handleClick}
           onCreate={this.onCreate}
@@ -59,7 +61,7 @@ export class Dashboard extends React.Component {
           />
           <FeatureGroup>
             <EditControl
-              position="topright"
+              position="topleft"
               onEdited={this._onEditPath}
               onCreated={this.onCreate}
               onDeleted={this._onDeleted}
