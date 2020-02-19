@@ -4,7 +4,7 @@ export class indexPage extends React.Component {
 
     render() {
         return (
-            <h4 className="card-title center-align">Login</h4>
+            <h4 className="card-title center-align">Loginn</h4>
         )
         
     }
