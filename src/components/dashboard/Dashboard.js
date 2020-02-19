@@ -36,7 +36,7 @@ export class Dashboard extends React.Component {
     console.log("CatchMouseClick",Polygon.latlng);
   }
 
-  onCreatee = (e) => {
+  onCreate = (e) => {
     var layer = e.layer;
     console.log("Polygon Cordinates",layer.getLatLngs())
     console.log('Log_Create_Shape: ', e)
