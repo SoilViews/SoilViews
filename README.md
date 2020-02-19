@@ -15,3 +15,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />	
 You will also see any lint errors in the console.	
+
+
+
+Deploy the app on branch gh-pages
+URL: https://alvelchev.github.io/SoilViews/
+
+### 1.Commit all changes in master branch
+### 2.  `npm run build`
+### 3.  `npm run deploy`	
