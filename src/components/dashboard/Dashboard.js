@@ -50,7 +50,6 @@ export class Dashboard extends React.Component {
 
     return (   
       <div id="map" className="dashboard container">
-        <div>onCreatee</div>
         <Map style={{ height: "50vh" }} center={position} zoom={13}
           onClick={this.handleClick}
           onCreate={this.onCreate}
