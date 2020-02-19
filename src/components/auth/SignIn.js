@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux' 
 import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom' 
+import { NavLink } from "react-router-dom";    
 
 class SignIn extends Component {
     constructor(props) {
@@ -59,6 +60,7 @@ class SignIn extends Component {
                                              {authError ? <p>{authError}</p>: null }
                                     </div>
                                 </div>
+                                <li><NavLink to='/ResetPassword'>Forgot password?</NavLink></li>
                             </form>
                         </div>
                     </div>

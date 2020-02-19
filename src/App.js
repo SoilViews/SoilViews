@@ -5,6 +5,7 @@ import Nabvar from '../src/components/layout/Navbar'
 import Dashboard from '../src/components/dashboard/Dashboard'
 import indexPage from '../src/components/index/indexPage'
 import SignIn from './components/auth/SignIn'
+import ResetPassword from './components/auth/ResetPassword'
 import SignUp from './components/auth/SignUp'
 import CreateProject from './components/projects/CreateProject'
 import Footer from './components/layout/Footer'
@@ -30,6 +31,7 @@ function App() {
               <Route path='/CreateProject' component={CreateProject} />
               <Route path='/Dashboard' component={Dashboard} />
               <Route path='/Profile' component={Profile} />
+              <Route path='/ResetPassword' component={ResetPassword} />
               <Route path="/" component={indexPage} />
             </Switch>
           </header>
