@@ -81,6 +81,7 @@ export class Dashboard extends React.Component {
           onEachFeature={this.onEachFeature}
         />
         </Map>
+        <div>Cordinates</div>
       </div>
     );
   }

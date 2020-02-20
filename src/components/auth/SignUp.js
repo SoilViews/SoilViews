@@ -10,6 +10,8 @@ class SignUp extends Component {
         this.state = {
             firstName: '',
             lastName: '',
+            city:'',
+            telephone:'',
             email: '',
             password: '',
             errors: []
@@ -30,9 +32,9 @@ class SignUp extends Component {
 
     onSubmitForm = (e) => {
         e.preventDefault();
-        const { firstName, lastName, email, password } = this.state;
+        const { firstName, lastName, email, password,city,telephone } = this.state;
 
-        const errors = this.validate(firstName, lastName, email, password);
+        const errors = this.validate(firstName, lastName, email, password,city,telephone);
 
         if (errors.length > 0) {
             this.setState({ errors });
@@ -42,10 +44,20 @@ class SignUp extends Component {
         this.props.signUp(this.state)
     }
 
-    validate = (firstName, lastName, email, password) => {
+    validate = (firstName, lastName, email, password,city,telephone) => {
         const errors = [];
         if (firstName.length === 0) {
             errors.push("First Name can't be empty");
+        }
+        if (city.length === 0) {
+            errors.push("City can't be empty");
+        }
+        if (telephone.length === 0) {
+            errors.push("Telephone number can't be empty");
+        }
+
+        if (telephone.length < 10) {
+            errors.push("Telephone number should be at least 10 charcters long");
         }
 
         if (lastName.length === 0) {
@@ -100,6 +112,22 @@ class SignUp extends Component {
                                             <input type="text" placeholder='Last Name' id="lastName" className="validate" onChange={this.onChangeInput} />
                                             
                                             <span style={{ color: "red" }}>{this.state.errors["name"]}</span>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="input-field col s12">
+                                            <i className="material-icons prefix">location_city</i>
+                                            <input type="text" placeholder='City' id="city" className="validate" onChange={this.onChangeInput} />
+                                            
+                                            <span style={{ color: "red" }}>{this.state.errors["city"]}</span>
+                                        </div>
+                                    </div>
+                                    <div className="row">
+                                        <div className="input-field col s12">
+                                            <i className="material-icons prefix">phone</i>
+                                            <input type="text" placeholder='telephone' id="telephone" className="validate" onChange={this.onChangeInput} />
+                                            
+                                            <span style={{ color: "red" }}>{this.state.errors["telephone"]}</span>
                                         </div>
                                     </div>
                                     <div className="row">
