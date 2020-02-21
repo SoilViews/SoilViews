@@ -16,8 +16,9 @@ const polygon = [
   [42.679295, 23.313643],
 ]
 
+var cordinate= [];
 export class Dashboard extends React.Component {
-
+  
     //Set location when the map is visualized
     state = {
       lat: 42.696295,
@@ -40,7 +41,8 @@ export class Dashboard extends React.Component {
     var layer = e.layer;
     console.log("Polygon Cordinates",layer.getLatLngs())
     console.log('Log_Create_Shape: ', e)
-      
+    cordinate.push(layer);
+    console.log("Array",cordinate)
     }
 
   
@@ -81,7 +83,8 @@ export class Dashboard extends React.Component {
           onEachFeature={this.onEachFeature}
         />
         </Map>
-        <div>Cordinates</div>
+
+        <a className="waves-effect waves-light btn-large">Button</a>
       </div>
     );
   }
