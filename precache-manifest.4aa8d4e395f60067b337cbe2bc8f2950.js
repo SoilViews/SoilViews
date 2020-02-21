@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ccccd9f63dfcdaab593f829362bbc0ad",
+    "revision": "affa49eecdd3f4493a666ec61b57fb4e",
     "url": "/SoilViews/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/SoilViews/static/css/2.098bc035.chunk.css"
   },
   {
-    "revision": "86e2d15b0a8432952863",
+    "revision": "7cb1dfb7dea8289a5690",
     "url": "/SoilViews/static/css/main.511bf896.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/SoilViews/static/js/2.18aa1e6d.chunk.js"
   },
   {
-    "revision": "86e2d15b0a8432952863",
-    "url": "/SoilViews/static/js/main.0174cad8.chunk.js"
+    "revision": "7cb1dfb7dea8289a5690",
+    "url": "/SoilViews/static/js/main.f7c8880a.chunk.js"
   },
   {
     "revision": "7755171efa56b91fe655",
