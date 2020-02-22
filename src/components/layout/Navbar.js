@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
-import ContactForm from '../ContactForm/ContactForm'
 
 const Navbar = (props) => {
     const {auth, profile} = props;

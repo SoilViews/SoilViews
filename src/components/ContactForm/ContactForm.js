@@ -19,7 +19,7 @@ class ContactForm extends React.Component {
     onSubmitForm = (e) => {
         e.preventDefault();
 
-        const { firstName, email,message } = this.state;
+        // const { firstName, email,message } = this.state;
 
         // const errors = this.validate(firstName, email);
         // if (errors.length > 0) {
