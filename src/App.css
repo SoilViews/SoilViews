@@ -464,3 +464,6 @@ background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 10
     opacity: 0;
   }
 }
+a{
+  color: #fff !important;
+}

@@ -25,9 +25,7 @@ const Footer = props => {
                   </a>
                 </li>
                 <li>
-                  <a className="white-text" href="#!">
-                    Link 2
-                  </a>
+                  <Link to='/Dashboard' className='brand-logo'>Dashboard</Link>
                 </li>
               </ul>
             </div>
