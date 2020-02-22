@@ -83,8 +83,7 @@ export class Dashboard extends React.Component {
           onEachFeature={this.onEachFeature}
         />
         </Map>
-
-        <a className="waves-effect waves-light btn-large">Button</a>
+        <button className="waves-effect waves-light btn-large">Button</button>
       </div>
     );
   }
