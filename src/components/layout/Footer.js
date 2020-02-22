@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 
 const Footer = props => {
   return (
@@ -19,8 +20,8 @@ const Footer = props => {
               <h5 className="white-text">Settings</h5>
               <ul>
                 <li>
-                  <a className="white-text" href="#!">
-                    Link 1
+                <a className="white-text" href="/ContactForm">
+                    Contact Us
                   </a>
                 </li>
                 <li>
