@@ -20,9 +20,7 @@ const Footer = props => {
               <h5 className="white-text">Settings</h5>
               <ul>
                 <li>
-                <a className="white-text" href="/ContactForm">
-                    Contact Us
-                  </a>
+                  <Link to='/ContactForm' className='brand-logo'>Contact Us</Link>
                 </li>
                 <li>
                   <Link to='/Dashboard' className='brand-logo'>Dashboard</Link>
