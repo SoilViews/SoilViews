@@ -33,7 +33,7 @@
 }
 
 nav .brand-logo {
-  margin: 0 30px;
+  /* margin: 0 30px; */
 }
 
 .dashboard {
@@ -85,6 +85,7 @@ nav .brand-logo {
   color: #0097a7;
   font: 400 1.2em 'Barlow Condensed', sans-serif;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .card-action span {
