@@ -6,68 +6,49 @@ export class indexPage extends React.Component {
         <div class="section no-pad-bot" id="index-banner">
         <div class="container">
          
-          <h1 class="header center orange-text">SoilViews</h1>
+          <h1 class="header center orange-text">Welcome to SoilViews Web App</h1>
           <div class="row center">
-            <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+            <h5 class="header col s12 light">Get your soil analysis today</h5>
+            <h5 class="header col s12 light">Increase your predictability and crop yields</h5> 
+            <h5 class="header col s12 light">Not magic: we combine soil samples and Copernicus satelite imaging</h5>
           </div>
-          <div class="row center">
+          {/* <div class="row center">
             <a href="https://soilviews.com/" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
-          </div>
-         
-    
-     
-      
+          </div> */}
 
           <div class="container">
             <div class="section">
-              <div class="row">
+              <div class="row center">
                 <div class="col s12 m4">
                   <div class="icon-block">
                     <h2 class="center light-blue-text">
-                      <i class="material-icons">flash_on</i>
+                      {/* <i class="material-icons">account_circle</i> */}
                     </h2>
-                    <h5 class="center">Speeds up development</h5>
-
-                    <p class="light">
-                      We did most of the heavy lifting for you to provide a
-                      default stylings that incorporate our custom components.
-                      Additionally, we refined animations and transitions to
-                      provide a smoother experience for developers.
-                    </p>
+                    <h5 class="center btn-large waves-effect waves-light">My Profile</h5>
+                    {/* <i class="material-icons">account_circle</i> */}
+                   
                   </div>
                 </div>
 
                 <div class="col s12 m4">
                   <div class="icon-block">
                     <h2 class="center light-blue-text">
-                      <i class="material-icons">group</i>
+                      {/* <i class="material-icons">add_circle_outline</i> */}
                     </h2>
-                    <h5 class="center">User Experience Focused</h5>
-
-                    <p class="light">
-                      By utilizing elements and principles of Material Design,
-                      we were able to create a framework that incorporates
-                      components and animations that provide more feedback to
-                      users. Additionally, a single underlying responsive system
-                      across all platforms allow for a more unified user
-                      experience.
-                    </p>
+                    <h5 class="center btn-large waves-effect waves-light">New Project</h5>
+                    {/* <i class="material-icons">add_circle_outline</i> */}
+                    
                   </div>
                 </div>
 
                 <div class="col s12 m4">
                   <div class="icon-block">
                     <h2 class="center light-blue-text">
-                      <i class="material-icons">settings</i>
+                      {/* <i class="material-icons">help_outline</i> */}
                     </h2>
-                    <h5 class="center">Easy to work with</h5>
-
-                    <p class="light">
-                      We have provided detailed documentation as well as
-                      specific code examples to help new users get started. We
-                      are also always open to feedback and can answer any
-                      questions a user may have about Materialize.
-                    </p>
+                    <h5 class="center btn-large waves-effect waves-light">Get Help</h5>
+                    {/* <i class="material-icons">help_outline</i> */}
+                    
                   </div>
                 </div>
               </div>
