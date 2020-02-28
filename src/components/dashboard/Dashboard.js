@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from '../Files/london_postcodes.json'
 import '../../leaflet.filelayer'
+import firebase from '../../firebase';
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
 // import L from "leaflet";
 
@@ -15,7 +16,7 @@ const polygon = [
   [42.699295, 23.313643],
   [42.679295, 23.313643],
 ]
-
+var database = firebase.database();
 var cordinate= [];
 export class Dashboard extends React.Component {
   
@@ -36,6 +37,14 @@ export class Dashboard extends React.Component {
     }
     console.log("CatchMouseClick",Polygon.latlng);
   }
+
+   writeUserData() {
+    firebase.database().ref('messages/').set({
+      cordinate: cordinate
+      
+    });
+  }
+
 
   onCreate = (e) => {
     var layer = e.layer;
@@ -83,7 +92,7 @@ export class Dashboard extends React.Component {
           onEachFeature={this.onEachFeature}
         />
         </Map>
-        <button className="waves-effect waves-light btn-large">Button</button>
+        <button className="waves-effect waves-light btn-large" onClick={this.writeUserData()}>Button</button>
       </div>
     );
   }
