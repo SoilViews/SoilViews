@@ -11,6 +11,7 @@ import CreateProject from './components/projects/CreateProject'
 import Footer from './components/layout/Footer'
 import Profile from '../src/components/Profile/profile'
 import ContactForm from '../src/components/ContactForm/ContactForm'
+import Documentation from "./components/Help/HelpPage";
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
               <Route path='/Profile' component={Profile} />
               <Route path='/ResetPassword' component={ResetPassword} />
               <Route path='/ContactForm' component={ContactForm}/>
+              <Route path='/HelpPage' component={Documentation}/>
               <Route path="/" component={indexPage} />
             </Switch>
           </header>

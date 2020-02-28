@@ -1,5 +1,6 @@
 import React from "react";
 import { compose } from "redux";
+import { Link } from 'react-router-dom';
 export class indexPage extends React.Component {
   render() {
     return (
@@ -24,7 +25,7 @@ export class indexPage extends React.Component {
                     <h2 class="center light-blue-text">
                       {/* <i class="material-icons">account_circle</i> */}
                     </h2>
-                    <h5 class="center btn-large waves-effect waves-light">My Profile</h5>
+                    <Link to='/Profile'><h5 class="center btn-large waves-effect waves-light">My Profile</h5></Link>
                     {/* <i class="material-icons">account_circle</i> */}
                    
                   </div>
@@ -35,7 +36,7 @@ export class indexPage extends React.Component {
                     <h2 class="center light-blue-text">
                       {/* <i class="material-icons">add_circle_outline</i> */}
                     </h2>
-                    <h5 class="center btn-large waves-effect waves-light">New Project</h5>
+                    <Link to='/CreateProject'><h5 class="center btn-large waves-effect waves-light">New Project</h5></Link>
                     {/* <i class="material-icons">add_circle_outline</i> */}
                     
                   </div>
@@ -46,7 +47,7 @@ export class indexPage extends React.Component {
                     <h2 class="center light-blue-text">
                       {/* <i class="material-icons">help_outline</i> */}
                     </h2>
-                    <h5 class="center btn-large waves-effect waves-light">Get Help</h5>
+                    <Link to='/HelpPage'><h5 class="center btn-large waves-effect waves-light">Documentation</h5></Link>
                     {/* <i class="material-icons">help_outline</i> */}
                     
                   </div>

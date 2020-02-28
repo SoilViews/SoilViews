@@ -9,11 +9,11 @@ const Footer = props => {
         <div className="container">
           <div className="row">
             <div className="col l6 s12">
-              <h5 className="white-text">Company Bio</h5>
+              <h5 className="white-text">About SoilViews Web App</h5>
               <p className="grey-text text-lighten-4">
-                We are a team of college students working on this project like
-                it's our full time job. Any amount would help support and
-                continue development on this project and is greatly appreciated.
+                We deliver soil analysis combining Satelite imaging and soil samples.
+                <Link to='/AboutUs' className='brand-logo'>(Read more)</Link>
+                {/* SoilViews Web App gives you analylisis on what crops could grow best on any specific land. Based on quality hyperspectral saatelite imaging and close work with soil specialists we deliver insights that would help you increase your crop yeilds. */}
               </p>
             </div>
             <div className="col l3 s12">
@@ -46,7 +46,7 @@ const Footer = props => {
         </div>
         <div className="footer-copyright">
           <div className="container">
-            Made by{" "}
+            Created by{" "}
             <a
               className="orange-text text-lighten-3"
               href="https://soilviews.com/"
