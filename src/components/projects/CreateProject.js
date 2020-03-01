@@ -72,14 +72,14 @@ class CreateProject extends Component {
 
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <input type="text" placeholder='' id="title" onChange={this.onChangeInput} />
-                                            <label htmlFor="title">Title</label>
+                                            <input type="text" placeholder='Title' id="title" onChange={this.onChangeInput} />
+                                            {/* <label htmlFor="title">Title</label> */}
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <textarea id="content" className="materialize-textarea" onChange={this.onChangeInput}></textarea>
-                                            <label htmlFor="content">Content</label>
+                                            <textarea id="content" placeholder='Content' className="materialize-textarea" onChange={this.onChangeInput}></textarea>
+                                            {/* <label htmlFor="content">Content</label> */}
                                         </div>
                                     </div>
                                     <div className={`${this.errorClass()} error`}>
