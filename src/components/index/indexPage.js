@@ -9,9 +9,9 @@ export class indexPage extends React.Component {
          
           <h1 class="header center orange-text">Welcome to SoilViews Web App</h1>
           <div class="row center">
-            <h5 class="header col s12 light">Get your soil analysis today</h5>
-            <h5 class="header col s12 light">Increase your predictability and crop yields</h5> 
-            <h5 class="header col s12 light">Not magic: we combine soil samples and Copernicus satelite imaging</h5>
+            <p class="header col s12 light">Get your soil analysis today</p>
+            <p class="header col s12 light">Increase your predictability and crop yields</p> 
+            <p class="header col s12 light">Not magic: we combine soil samples and Copernicus satelite imaging</p>
           </div>
           {/* <div class="row center">
             <a href="https://soilviews.com/" id="download-button" class="btn-large waves-effect waves-light orange">Get Started</a>
@@ -21,42 +21,22 @@ export class indexPage extends React.Component {
             <div class="section">
               <div class="row center">
                 <div class="col s12 m4">
-                  <div class="icon-block">
-                    <h2 class="center light-blue-text">
-                      {/* <i class="material-icons">account_circle</i> */}
-                    </h2>
-                    <Link to='/Profile'><h5 class="center btn-large waves-effect waves-light">My Profile</h5></Link>
+                    <Link to='/Profile'><h5 class="center btn waves-effect waves-light">My Profile</h5></Link>
                     {/* <i class="material-icons">account_circle</i> */}
-                   
-                  </div>
                 </div>
-
                 <div class="col s12 m4">
-                  <div class="icon-block">
-                    <h2 class="center light-blue-text">
-                      {/* <i class="material-icons">add_circle_outline</i> */}
-                    </h2>
-                    <Link to='/CreateProject'><h5 class="center btn-large waves-effect waves-light">New Project</h5></Link>
+                    <Link to='/CreateProject'><h5 class="center btn waves-effect waves-light">New Project</h5></Link>
                     {/* <i class="material-icons">add_circle_outline</i> */}
-                    
-                  </div>
                 </div>
-
                 <div class="col s12 m4">
-                  <div class="icon-block">
-                    <h2 class="center light-blue-text">
-                      {/* <i class="material-icons">help_outline</i> */}
-                    </h2>
-                    <Link to='/HelpPage'><h5 class="center btn-large waves-effect waves-light">Documentation</h5></Link>
+                    <Link to='/HelpPage'><h5 class="center btn waves-effect waves-light">Documentation</h5></Link>
                     {/* <i class="material-icons">help_outline</i> */}
-                    
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
     );
   }
 }

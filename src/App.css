@@ -173,7 +173,7 @@ nav .brand-logo {
   align-items: center;
   padding: 0;
   height: 45px;
-  font-size: 1.3em;
+  /* font-size: 1.3em; */
 }
 
 .btn.waves-effect.waves-light i {
@@ -364,7 +364,7 @@ nav .brand-logo {
 }
 
 .page-footer{
-  position: relative;
+  position: absolute;
   bottom: 0;
   width: 100%;
   margin-top:50px;
@@ -467,4 +467,7 @@ background: linear-gradient(90deg, rgba(129,230,217,1) 0%, rgba(79,209,197,1) 10
 }
 a{
   color: #fff !important;
+}
+.footer-copyright{
+  padding: 0px !important;
 }

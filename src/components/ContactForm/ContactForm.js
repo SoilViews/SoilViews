@@ -73,7 +73,6 @@ class ContactForm extends React.Component {
                     <div className="col s12 l10 offset-l1">
                         <div className="card grey lighten-3">
                             <div className="card-content">
-                                <h4 className="card-title center-align">Contact us</h4>
                                 <form onSubmit={this.onSubmitForm}>
 
                                     <div className="row">

@@ -6,7 +6,7 @@ const Profile = (props) => {
     return (
         
         <div className="card-action">
-            <h4 className="card-title center-align">Profile</h4>
+             <h1 class="header center orange-text">My Profile</h1>
             <p> <span >Username: </span>{props.profile.firstName} </p>
             <p> <span >Last Name: </span>{props.profile.lastName} </p>
             <p> <span>Email: </span>{props.profile.email} </p>
