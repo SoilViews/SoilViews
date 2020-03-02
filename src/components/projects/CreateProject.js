@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createrProject } from '../../store/actions/projectActions'
 import { Redirect } from 'react-router-dom'
+import FileUpload from '../../components/FileUpload/index'
+import { Link } from 'react-router-dom';
 
 class CreateProject extends Component {
     constructor(props) {
@@ -82,6 +84,18 @@ class CreateProject extends Component {
                                             {/* <label htmlFor="content">Content</label> */}
                                         </div>
                                     </div>
+                                    
+                                    {/* ********** ********** File upload ******************** */}
+                                 <div class="file-field input-field">
+                                        <div>
+                                            <input type="file" multiple></input>
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input className="file-path validate" type="text" placeholder="Choose or Drop a file here"></input>
+                                        </div>
+                                    </div>
+                                    <Link to='/Dashboard'> <h5>Map your land manually</h5> </Link>
+                                    {/* ********** ********** File upload ******************** */}
                                     <div className={`${this.errorClass()} error`}>
                                         {errors.map(error => (
                                             <p key={error}>Error: {error}</p>
