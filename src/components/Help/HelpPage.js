@@ -1,6 +1,5 @@
  import React from "react";
 import { compose } from "redux";
-import { Link } from 'react-router-dom';
 export class HelpPage extends React.Component {
   render() {
     return (
@@ -11,7 +10,6 @@ export class HelpPage extends React.Component {
           <div class="row center">
             <h5 class="header col s12 light">Learn how to submit a project</h5>
             <h5 class="header col s12 light">How to work with mapping regions</h5> 
-            <h5 class="header col s12 light"></h5>
           </div>
               </div>
             </div>
