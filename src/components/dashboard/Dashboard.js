@@ -5,7 +5,8 @@ import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from '../Files/london_postcodes.json'
 import '../../leaflet.filelayer'
-import firebase from '../../firebase';
+// import firebase from '../../firebase';
+// import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
 // import L from "leaflet";
 
@@ -38,19 +39,23 @@ export class Dashboard extends React.Component {
     console.log("CatchMouseClick",Polygon.latlng);
   }
 
-   writeUserData() {
-    firebase.database().ref('messages/').set({
-      cordinate: cordinate
-      
-    });
-  }
+
 
 
   onCreate = (e) => {
+    // const firestore = getFirestore();
     var layer = e.layer;
     console.log("Polygon Cordinates",layer.getLatLngs())
     console.log('Log_Create_Shape: ', e)
-    cordinate.push(layer);
+    cordinate.push(layer.getLatLngs());
+
+    // firebase.database().firestore.collection('cord').add("asdasd")
+
+
+  //   firebase.database().push(
+  //     cordinate,
+  //     err => console.log(err ? 'error while pushing' : 'successful push')
+  // )
     console.log("Array",cordinate)
     }
 
@@ -92,7 +97,7 @@ export class Dashboard extends React.Component {
           onEachFeature={this.onEachFeature}
         />
         </Map>
-        <button className="waves-effect waves-light btn-large" onClick={this.writeUserData()}>Button</button>
+        <button className="waves-effect waves-light btn-large" >Button</button>
       </div>
     );
   }
