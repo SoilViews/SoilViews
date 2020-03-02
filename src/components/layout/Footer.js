@@ -32,12 +32,12 @@ const Footer = props => {
               <ul>
                 <li>
                   <a className="white-text" href="#!">
-                    Link 1
+                     <Link to='/SignIn' className='brand-logo'>SignIn</Link>
                   </a>
                 </li>
                 <li>
                   <a className="white-text" href="#!">
-                    Link 2
+                   <Link to='/SignUp' className='brand-logo'>SignUp</Link>
                   </a>
                 </li>
               </ul>
