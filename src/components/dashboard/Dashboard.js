@@ -16,7 +16,7 @@ const polygon = [
   [42.699295, 23.313643],
   [42.679295, 23.313643],
 ]
-var database = firebase.database();
+
 var cordinate= [];
 export class Dashboard extends React.Component {
   

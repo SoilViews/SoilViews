@@ -25,7 +25,7 @@ export class indexPage extends React.Component {
                     {/* <i class="material-icons">account_circle</i> */}
                 </div>
                 <div class="col s12 m4">
-                    <Link to='/CreateProject'><h5 class="center btn waves-effect waves-light">New Project</h5></Link>
+                    <Link to='/ContactForm'><h5 class="center btn waves-effect waves-light">Contacts</h5></Link>
                     {/* <i class="material-icons">add_circle_outline</i> */}
                 </div>
                 <div class="col s12 m4">
