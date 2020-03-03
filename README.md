@@ -18,9 +18,9 @@ You will also see any lint errors in the console.
 
 
 
-Deploy the app on branch gh-pages
-URL: https://alvelchev.github.io/SoilViews/
+
+URL: app.soilviews.com
 
 ### 1.Commit all changes in master branch
 ### 2.  `npm run build`
-### 3.  `npm run deploy`	
+### 3.  `firebase deploy`	

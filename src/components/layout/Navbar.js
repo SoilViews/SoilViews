@@ -12,7 +12,9 @@ const Navbar = (props) => {
             <nav>
                 <div className='nav-wrapper'>
                     <div className='container'>
-                        <Link to='/' className='brand-logo'>SoilViews</Link>
+                        <Link to='/' className='brand-logo'>
+                            <img alt="logo" id="sv_logo" src={require('./logo.png')} />
+                        </Link>
                         <ul id='nav-mobile' className='right hide-on-med-and-down'>
                             {links}
                         </ul>
