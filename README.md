@@ -23,3 +23,4 @@ You will also see any lint errors in the console.
 ### 3.  `firebase deploy`	
 
 Deploy URL: app.soilviews.com
+About the project: soilviews.com
