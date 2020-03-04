@@ -1,12 +1,13 @@
 {
   "name": "react-redux",
   "version": "0.1.0",
-  "homepage": "https://alvelchev.github.io/SoilViews/",
   "private": true,
   "dependencies": {
     "@mapbox/togeojson": "^0.16.0",
     "axios": "^0.19.0",
     "firebase": "^7.4.0",
+    "firebase-admin": "^8.9.2",
+    "firebase-functions": "^3.3.0",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
     "leaflet-filelayer": "^1.2.0",

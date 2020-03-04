@@ -471,3 +471,8 @@ a{
 .footer-copyright{
   padding: 0px !important;
 }
+#sv_logo{
+    vertical-align: middle;
+    max-height: 40px;
+    margin-bottom: 5px;
+}
