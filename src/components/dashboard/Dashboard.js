@@ -5,6 +5,8 @@ import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from '../Files/london_postcodes.json'
 import '../../leaflet.filelayer'
+import { connect } from 'react-redux'
+import { saveData } from '../../store/actions/authActions'
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
@@ -18,14 +20,23 @@ const polygon = [
   [42.679295, 23.313643],
 ]
 
-var cordinate= [];
+
 export class Dashboard extends React.Component {
+//   constructor(props) {
+//     super(props)
+
+//     this.state = {
+        
+//       cordinate: [],
+//     }
+// }
   
     //Set location when the map is visualized
     state = {
       lat: 42.696295,
       lng: 23.303643,
-      zoom: 10
+      zoom: 10,
+      cordinate: []
     }
     
   mapRef = createRef()
@@ -43,12 +54,13 @@ export class Dashboard extends React.Component {
 
 
   onCreate = (e) => {
+    const { cordinate } = this.state;
     // const firestore = getFirestore();
     var layer = e.layer;
     console.log("Polygon Cordinates",layer.getLatLngs())
     console.log('Log_Create_Shape: ', e)
     cordinate.push(layer.getLatLngs());
-
+    // this.props.saveData(args_string);
     // firebase.database().firestore.collection('cord').add("asdasd")
 
 
@@ -57,6 +69,10 @@ export class Dashboard extends React.Component {
   //     err => console.log(err ? 'error while pushing' : 'successful push')
   // )
     console.log("Array",cordinate)
+    // JSON.stringify(cordinate)
+    var args_string = JSON.stringify(layer.getLatLngs());
+    console.log(args_string);
+    console.log("Array",Object.values(cordinate));
     }
 
   
@@ -102,5 +118,15 @@ export class Dashboard extends React.Component {
     );
   }
 }
+const mapStateToProps = (state, ownProps) => {
+  return {
+      auth: state.firebase.auth
+  }
+}
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveData: (data) => dispatch(saveData(data))
+  }
+}
 
-export default compose()(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
