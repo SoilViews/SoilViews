@@ -1,6 +1,5 @@
 import React,{createRef}from "react";
 import { Map, TileLayer, FeatureGroup,Polygon,GeoJSON  } from "react-leaflet";
-import { compose } from "redux";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from '../Files/london_postcodes.json'
@@ -22,21 +21,12 @@ const polygon = [
 
 
 export class Dashboard extends React.Component {
-//   constructor(props) {
-//     super(props)
-
-//     this.state = {
-        
-//       cordinate: [],
-//     }
-// }
   
     //Set location when the map is visualized
     state = {
       lat: 42.696295,
       lng: 23.303643,
-      zoom: 10,
-      cordinate: []
+      zoom: 10
     }
     
   mapRef = createRef()
@@ -54,25 +44,15 @@ export class Dashboard extends React.Component {
 
 
   onCreate = (e) => {
-    const { cordinate } = this.state;
-    // const firestore = getFirestore();
     var layer = e.layer;
     console.log("Polygon Cordinates",layer.getLatLngs())
     console.log('Log_Create_Shape: ', e)
-    cordinate.push(layer.getLatLngs());
-    // this.props.saveData(args_string);
-    // firebase.database().firestore.collection('cord').add("asdasd")
 
+    var drawedCord = layer.toGeoJSON().geometry.coordinates;
+    for (const result of drawedCord) this.props.saveData(result);
+    
+    console.log("shape1",drawedCord)
 
-  //   firebase.database().push(
-  //     cordinate,
-  //     err => console.log(err ? 'error while pushing' : 'successful push')
-  // )
-    console.log("Array",cordinate)
-    // JSON.stringify(cordinate)
-    var args_string = JSON.stringify(layer.getLatLngs());
-    console.log(args_string);
-    console.log("Array",Object.values(cordinate));
     }
 
   
@@ -125,7 +105,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 const mapDispatchToProps = (dispatch) => {
   return {
-    saveData: (data) => dispatch(saveData(data))
+    saveData: (cordinates) => dispatch(saveData(cordinates))
   }
 }
 

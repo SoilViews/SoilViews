@@ -55,20 +55,19 @@ export const sendPasswordResetEmail = (emailAddress) => {
         })
       }
 }
-export const saveData = (data) =>{
+export const saveData = (cordinates) =>{
   return(dispatch, getState, { getFirebase, getFirestore }) =>{
-      // TODO: Set types and bindActionCreators
       const firestore = getFirestore();
       const profile = getState().firebase.profile;
       const authorId = getState().firebase.auth.uid;
-      firestore.collection('cord').add({
-        ...data,
+      firestore.collection('cordinates').add({
         authorFirstName: profile.firstName,
         authorLastName: profile.lastName,
         authorId: authorId,
-        createdAt: new Date()
+        createdAt: new Date(),
+        ...cordinates
       }).then(() =>{
-        dispatch({type:'send_message', data})
+        dispatch({type:'send_message', cordinates})
       }).catch((err)=>{
         dispatch({type:'send_message_ERROR', err})
       })

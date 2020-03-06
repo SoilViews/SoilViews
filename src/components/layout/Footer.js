@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
+import { Link,NavLink } from 'react-router-dom';
 
 const Footer = props => {
   return (
@@ -31,14 +31,10 @@ const Footer = props => {
               <h5 className="white-text">Connect</h5>
               <ul>
                 <li>
-                  <a className="white-text" href="#!">
-                     <Link to='/SignIn' className='brand-logo'>SignIn</Link>
-                  </a>
+                      <NavLink to='/SignIn' className="white-text" href="#!">SignIn</NavLink >
                 </li>
-                <li>
-                  <a className="white-text" href="#!">
-                   <Link to='/SignUp' className='brand-logo'>SignUp</Link>
-                  </a>
+                < li>
+                      <NavLink to='/SignUp' className="white-text" href="#!">SignUp</NavLink >
                 </li>
               </ul>
             </div>
@@ -47,12 +43,7 @@ const Footer = props => {
         <div className="footer-copyright">
           <div className="container">
             Created by{" "}
-            <a
-              className="orange-text text-lighten-3"
-              href="https://soilviews.com/"
-            >
-              SoilViews
-            </a>
+            <a className="orange-text text-lighten-3"   href="https://soilviews.com/" >  SoilViews  </a>
           </div>
         </div>
       </footer>
