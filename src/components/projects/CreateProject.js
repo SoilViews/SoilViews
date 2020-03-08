@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createrProject } from '../../store/actions/projectActions'
 import { Redirect } from 'react-router-dom'
-// import FileUpload from '../../components/FileUpload/index'
 import { Link } from 'react-router-dom';
 
 class CreateProject extends Component {

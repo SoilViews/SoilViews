@@ -12,8 +12,6 @@ import Footer from './components/layout/Footer'
 import Profile from '../src/components/Profile/profile'
 import ContactForm from '../src/components/ContactForm/ContactForm'
 import Documentation from "./components/Help/HelpPage";
-// import FileUpload from "./components/FileUpload/index";
-
 
 function App() {
 
