@@ -6,6 +6,7 @@ import london_postcodes from '../Files/london_postcodes.json'
 import '../../leaflet.filelayer'
 import { connect } from 'react-redux'
 import { saveData } from '../../store/actions/authActions'
+import { Redirect } from 'react-router-dom'
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
@@ -59,8 +60,10 @@ export class Dashboard extends React.Component {
 
   render() {
     const position = [this.state.lat, this.state.lng];
-
+    const { auth } = this.props
+    if (!auth.uid) return <Redirect to="/signin" />
     return (   
+      
       <div id="map" className="dashboard container">
         <Map style={{ height: "50vh" }} center={position} zoom={13}
           onClick={this.handleClick}

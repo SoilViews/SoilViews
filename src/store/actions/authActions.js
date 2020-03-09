@@ -36,6 +36,16 @@ export const sendPasswordResetEmail = (emailAddress) => {
     }
   }
 
+   export const sendEmailVerification = () => {
+    return(dispatch, getState, {getFirebase}) => {
+        const firebase = getFirebase();
+        firebase.auth().newUser.sendEmailVerification()
+        .then(()=>{
+            dispatch({type: "sendEmailVerification"})
+        })
+    }
+}
+
   export const sendMessage = (message) =>{
     return(dispatch, getState, { getFirebase, getFirestore }) =>{
         // TODO: Set types and bindActionCreators
@@ -67,9 +77,9 @@ export const saveData = (cordinates) =>{
         createdAt: new Date(),
         ...cordinates
       }).then(() =>{
-        dispatch({type:'send_message', cordinates})
+        dispatch({type:'save_cordinates', cordinates})
       }).catch((err)=>{
-        dispatch({type:'send_message_ERROR', err})
+        dispatch({type:'save_cordinates_ERROR', err})
       })
     }
 }
@@ -81,7 +91,7 @@ export const signUp = (newUser) => {
     return(dispatch,getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
-
+        firebase.auth().newUser.sendEmailVerification();
         firebase.auth().createUserWithEmailAndPassword(
             newUser.email,
             newUser.password
