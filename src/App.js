@@ -12,8 +12,10 @@ import Footer from './components/layout/Footer'
 import Profile from '../src/components/Profile/profile'
 import ContactForm from '../src/components/ContactForm/ContactForm'
 import Documentation from "./components/Help/HelpPage";
-import { LandInputPage } from "./components/Wizard/LandInputPage";
-import { CoordinatesInput } from "./components/Wizard/CoordinatesInput";
+import { LandInputPage } from "./components/Wizard/Select/LandInputPage";
+import { CoordinatesInput } from "./components/Wizard/Select/CoordinatesInput";
+import { UploadFile } from "./components/Wizard/Select/UploadFile";
+import { LandNumberInput } from "./components/Wizard/Select/LandNumberInput";
 
 function App() {
 
@@ -25,7 +27,6 @@ function App() {
       <div className={checked ? "isActive" : "isInactive"}>
         <div className='App' >
           <header>
-          
             <Nabvar></Nabvar>
             <Switch>
               <Route path='/indexPage' component={indexPage} />
@@ -37,9 +38,12 @@ function App() {
               <Route path='/ResetPassword' component={ResetPassword} />
               <Route path='/ContactForm' component={ContactForm}/>
               <Route path='/HelpPage' component={Documentation}/>
-              <Route path='/LandInputPage' component={LandInputPage}/>
+              <Route path='/LandInput' component={LandInputPage}/>
               <Route path='/CoordinatesInput' component={CoordinatesInput}/>
-              <Route path="/" component={indexPage} />
+              <Route path="/UploadFile" component={UploadFile} />
+              <Route path="/LandNumberInput" component={LandNumberInput} />             
+              <Route path="/" component={indexPage} />    
+
             </Switch>
           </header>
           <Footer/>
