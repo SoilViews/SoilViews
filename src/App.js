@@ -12,8 +12,8 @@ import Footer from './components/layout/Footer'
 import Profile from '../src/components/Profile/profile'
 import ContactForm from '../src/components/ContactForm/ContactForm'
 import Documentation from "./components/Help/HelpPage";
-import { LandInputPage } from "./components/Wizard/LandInputPage";
-import { CoordinatesInput } from "./components/Wizard/CoordinatesInput";
+import { LandInputPage } from "./components/Wizard/Select/LandInputPage";
+import { CoordinatesInput } from "./components/Wizard/Select/CoordinatesInput";
 
 function App() {
 
