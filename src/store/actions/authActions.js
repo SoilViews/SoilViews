@@ -1,3 +1,5 @@
+import { Role } from './Role'
+
 export const signIn = (credentials) => {
     return(dispatch, getState, {getFirebase}) => {
         const firebase = getFirebase();
@@ -45,7 +47,6 @@ export const sendPasswordResetEmail = (emailAddress) => {
         })
     }
 }
-
   export const sendMessage = (message) =>{
     return(dispatch, getState, { getFirebase, getFirestore }) =>{
         // TODO: Set types and bindActionCreators
@@ -91,7 +92,7 @@ export const signUp = (newUser) => {
     return(dispatch,getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
-        firebase.auth().newUser.sendEmailVerification();
+        // firebase.auth().newUser.sendEmailVerification();
         firebase.auth().createUserWithEmailAndPassword(
             newUser.email,
             newUser.password
@@ -102,7 +103,8 @@ export const signUp = (newUser) => {
                  initials: newUser.firstName[0] + newUser.lastName[0],
                  email:newUser.email,
                  telephone:newUser.telephone,
-                 city:newUser.city
+                 city:newUser.city,
+                 role: Role.User
              })
         }).then(()=>{
             dispatch({type:'SIGNUP_SUCCESS'})
