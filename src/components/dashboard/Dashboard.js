@@ -60,8 +60,9 @@ export class Dashboard extends React.Component {
 
   render() {
     const position = [this.state.lat, this.state.lng];
-    const { auth } = this.props
+    const { auth,profile } = this.props
     if (!auth.uid) return <Redirect to="/signin" />
+    console.log('User role',profile.role)
     return (   
       
       <div id="map" className="dashboard container">
@@ -103,7 +104,8 @@ export class Dashboard extends React.Component {
 }
 const mapStateToProps = (state, ownProps) => {
   return {
-      auth: state.firebase.auth
+      auth: state.firebase.auth,
+      profile: state.firebase.profile
   }
 }
 const mapDispatchToProps = (dispatch) => {
