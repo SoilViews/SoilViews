@@ -1,6 +1,7 @@
 import React from "react";
 import { compose } from "redux";
 import { Link } from 'react-router-dom';
+
 export class indexPage extends React.Component {
   render() {
     return (
@@ -25,7 +26,7 @@ export class indexPage extends React.Component {
                     {/* <i class="material-icons">account_circle</i> */}
                 </div>
                 <div className="col s12 m4">
-                    <Link to='/CreateProject'><h5 className="center btn waves-effect waves-light">New Project</h5></Link>
+                    <Link to='/LandInputPage'><h5 className="center btn waves-effect waves-light">New Project</h5></Link>
                     {/* <i class="material-icons">add_circle_outline</i> */}
                 </div>
                 <div className="col s12 m4">
