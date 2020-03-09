@@ -12,7 +12,7 @@ export class LandInputPage extends React.Component {
           <h1 class="header center orange-text">Please select an option</h1>
           <div class="row center">
             <Link to='/Dashboard'><h5 className="center btn waves-effect waves-light">Mark your land on the map</h5></Link>
-            <Link to='/'><h5 className="center btn waves-effect waves-light">Enter your land coordinates</h5></Link>
+            <Link to='/CoordinatesInput'><h5 className="center btn waves-effect waves-light">Enter your land coordinates</h5></Link>
             <Link to='/'><h5 className="center btn waves-effect waves-light">Upload a digital File</h5></Link>
             <Link to='/'><h5 className="center btn waves-effect waves-light">Upload an Image or Scan</h5></Link>
             <Link to='/'><h5 className="center btn waves-effect waves-light">Enter your land number</h5></Link>

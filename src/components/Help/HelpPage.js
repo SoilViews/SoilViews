@@ -1,4 +1,4 @@
- import React from "react";
+import React from "react";
 import { compose } from "redux";
 export class HelpPage extends React.Component {
   render() {

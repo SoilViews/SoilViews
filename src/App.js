@@ -13,6 +13,7 @@ import Profile from '../src/components/Profile/profile'
 import ContactForm from '../src/components/ContactForm/ContactForm'
 import Documentation from "./components/Help/HelpPage";
 import { LandInputPage } from "./components/Wizard/LandInputPage";
+import { CoordinatesInput } from "./components/Wizard/CoordinatesInput";
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
               <Route path='/ContactForm' component={ContactForm}/>
               <Route path='/HelpPage' component={Documentation}/>
               <Route path='/LandInputPage' component={LandInputPage}/>
+              <Route path='/CoordinatesInput' component={CoordinatesInput}/>
               <Route path="/" component={indexPage} />
             </Switch>
           </header>
