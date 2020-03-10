@@ -6,7 +6,6 @@ import london_postcodes from '../Files/london_postcodes.json'
 import '../../leaflet.filelayer'
 import { connect } from 'react-redux'
 import { saveData } from '../../store/actions/authActions'
-import { Redirect } from 'react-router-dom'
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
@@ -60,8 +59,8 @@ export class Dashboard extends React.Component {
 
   render() {
     const position = [this.state.lat, this.state.lng];
-    const { auth,profile } = this.props
-    if (!auth.uid) return <Redirect to="/signin" />
+    const {profile } = this.props
+    if (profile.role ==='User' || profile.role ==='Admin' ) {
     console.log('User role',profile.role)
     return (   
       
@@ -100,6 +99,11 @@ export class Dashboard extends React.Component {
         <button className="waves-effect waves-light btn-large" >Button</button>
       </div>
     );
+            } else{
+              return (
+                <h1 className="header center orange-text">You don't have access to this page,please make account to access the page</h1>
+              )
+            }
   }
 }
 const mapStateToProps = (state, ownProps) => {

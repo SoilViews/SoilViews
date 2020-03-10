@@ -12,10 +12,11 @@ import Footer from './components/layout/Footer'
 import Profile from '../src/components/Profile/profile'
 import ContactForm from '../src/components/ContactForm/ContactForm'
 import Documentation from "./components/Help/HelpPage";
-import { LandInputPage } from "./components/Wizard/Select/LandInputPage";
-import { CoordinatesInput } from "./components/Wizard/Select/CoordinatesInput";
-import { UploadFile } from "./components/Wizard/Select/UploadFile";
-import { LandNumberInput } from "./components/Wizard/Select/LandNumberInput";
+import LandInputPage  from "./components/Wizard/Select/LandInputPage";
+import CoordinatesInput from "./components/Wizard/Select/CoordinatesInput";
+import UploadFile  from "./components/Wizard/Select/UploadFile";
+import LandNumberInput from "./components/Wizard/Select/LandNumberInput";
+import AdminPanel from "./components/Admin/AdminPanel";
 
 function App() {
 
@@ -41,7 +42,8 @@ function App() {
               <Route path='/LandInput' component={LandInputPage}/>
               <Route path='/CoordinatesInput' component={CoordinatesInput}/>
               <Route path="/UploadFile" component={UploadFile} />
-              <Route path="/LandNumberInput" component={LandNumberInput} />             
+              <Route path="/LandNumberInput" component={LandNumberInput} />
+              <Route path="/AdminPanel" component={AdminPanel} />               
               <Route path="/" component={indexPage} />    
 
             </Switch>

@@ -4,26 +4,33 @@ import { connect } from 'react-redux'
 import SignedInLinks from './SignedInLinks'
 import SignedOutLinks from './SignedOutLinks'
 
-const Navbar = (props) => {
-    const {auth, profile} = props;
-    const links = auth.uid ? <SignedInLinks profile={profile}/> : <SignedOutLinks/>
-    return (
-        <React.Fragment>
+
+
+export class Navbar extends React.Component {
+
+    render(){
+        const {profile,auth} = this.props;
+        const links = auth.uid ? <SignedInLinks profile={profile}/> : <SignedOutLinks/>
+        return ( 
+            
             <nav>
-                <div className='nav-wrapper'>
-                    <div className='container'>
-                        <Link to='/' className='brand-logo'>
-                            <img alt="logo" id="sv_logo" src={require('./logo.png')} />
-                        </Link>
-                        <ul id='nav-mobile' className='right hide-on-med-and-down'>
-                            {links}
-                        </ul>
-                    </div>
+              
+            <div className='nav-wrapper'>
+                <div className='container'>
+                    <Link to='/' className='brand-logo'>
+                        <img alt="logo" id="sv_logo" src={require('./logo.png')} />
+                    </Link>
+                    <ul id='nav-mobile' className='right hide-on-med-and-down'>
+                        {links}
+                    </ul>
                 </div>
-            </nav>
-        </React.Fragment>
-    )
+            </div>
+        </nav>
+        );
+    }
 }
+
+
 
 
 const mapStateToProps = (state) => {
