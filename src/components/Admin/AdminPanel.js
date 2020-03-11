@@ -26,9 +26,9 @@ export class AdminPanel extends React.Component {
   onLoad1() {
    
   const firestore = getFirestore();
-  var userData = firestore.collection("users").get().then(snapshot => {
+  var userData = firestore.collection("users").get().then(data => {
 
-    snapshot.forEach(doc => {
+    data.forEach(doc => {
   
       console.log( "User",doc.data() );    
      
