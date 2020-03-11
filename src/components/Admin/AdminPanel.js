@@ -12,13 +12,13 @@ export class AdminPanel extends React.Component {
 
     docRef.get().then(function(doc) {
         if (doc.exists) {
-            console.log("Document data:", doc.data());
+            console.log("Get user  data:", doc.data());
         } else {
             // doc.data() will be undefined in this case
-            console.log("No such document!");
+            console.log("No such user data!");
         }
     }).catch(function(error) {
-        console.log("Error getting document:", error);
+        console.log("Error getting user data:", error);
     });
 
 }
@@ -26,12 +26,17 @@ export class AdminPanel extends React.Component {
   onLoad1() {
    
   const firestore = getFirestore();
-  var docRef = firestore.collection("users");
-  docRef.get().then((snapshot) => {
-      snapshot.docs.forEach(doc => {
-        console.log("asdasdsa",docRef)
-      })
-    })
+  var userData = firestore.collection("users").get().then(snapshot => {
+
+    snapshot.forEach(doc => {
+  
+      console.log( "User",doc.data() );    
+     
+  
+    });
+    console.log("UserData",userData)
+  
+  });
   
 
 
@@ -42,8 +47,8 @@ render() {
   return (
     
      <div>
-        <button onClick={this.onLoad}>Load Data</button>
-        <button onClick={this.onLoad1}>Load Data1</button>
+        <button onClick={this.onLoad}>Get specific user data</button>
+        <button onClick={this.onLoad1}>Get all user data</button>
      </div>
 
   );
