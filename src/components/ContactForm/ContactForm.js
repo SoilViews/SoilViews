@@ -38,6 +38,7 @@ class ContactForm extends React.Component {
     errorClass = () => {
         return (this.state.errors.length === 0 ? '' : 'c-error c-validation');
     }
+    
     onSubmitForm = (e) => {
         e.preventDefault();
 
@@ -53,7 +54,7 @@ class ContactForm extends React.Component {
 
         this.props.sendMessage(this.state);
         this.props.history.push('/')
-        window.alert("We will connect you as soon as possible");
+        window.alert("Thank you for your message, we'll get in touch soon.");
     }
     onChangeInput = (e) => {
         this.setState({

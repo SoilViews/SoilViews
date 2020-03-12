@@ -66,6 +66,8 @@ export const sendPasswordResetEmail = (emailAddress) => {
         })
       }
 }
+
+//Save the map coordinated to the filestore
 export const saveData = (cordinates) =>{
   return(dispatch, getState, { getFirebase, getFirestore }) =>{
       const firestore = getFirestore();
@@ -85,9 +87,7 @@ export const saveData = (cordinates) =>{
     }
 }
     
-
-
-
+//Save New Users to the firestore
 export const signUp = (newUser) => {
     return(dispatch,getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
@@ -111,5 +111,25 @@ export const signUp = (newUser) => {
         }).catch((err)=>{
             dispatch({type:'SIGNUP_ERROR',err})
         })
+    }
+}
+
+//Save Orders Data to the firestore
+export const saveOrderData = (orders) =>{
+  return(dispatch, getState, { getFirebase, getFirestore }) =>{
+      const firestore = getFirestore();
+      const profile = getState().firebase.profile;
+      const authorId = getState().firebase.auth.uid;
+      firestore.collection('orders').add({
+        authorFirstName: profile.firstName,
+        authorLastName: profile.lastName,
+        authorId: authorId,
+        createdAt: new Date(),
+        ...orders
+      }).then(() =>{
+        dispatch({type:'save_orders', orders})
+      }).catch((err)=>{
+        dispatch({type:'save_orders_ERROR', err})
+      })
     }
 }
