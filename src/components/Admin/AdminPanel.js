@@ -52,6 +52,7 @@ export class AdminPanel extends React.Component {
        
     
       });
+      UserData.map((user) => { return (console.log(user.city));});
       console.log("User:", UserData); 
     });
     
@@ -60,15 +61,31 @@ export class AdminPanel extends React.Component {
   }
 
 
-render() {
-  return (
-    
-     <div>
-        <button onClick={this.onLoad}>Get specific user data</button>
-        <button onClick={this.onLoad1}>Get all user data</button>
-     </div>
 
-  );
-}
-}
-export default compose()(AdminPanel);
+  render() {
+
+    return(
+       <div>
+          <button onClick={this.onLoad}>Get specific user data</button>
+          <button onClick={this.onLoad1}>Get all user data</button>
+          <table>
+          <tbody>
+            
+              {UserData.map((user) => {
+                            return  (<tr>
+                                 <td>{user.city}</td>
+                                 <td>{user.email}</td>
+                                 <td>{user.firstName}</td>
+                                 <td>{user.initials}</td>
+                                 <td>{user.lastName}</td>
+                              </tr>);}
+              )}     
+        </tbody>
+      </table>
+       </div>
+  
+    );
+  }
+  }
+  export default compose()(AdminPanel);
+  
