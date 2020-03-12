@@ -11,16 +11,15 @@ export class LandInputPage extends React.Component {
 
       this.state = {
         landInput: '',
-        uploadedFile: '',
-        status: ''
+        fileURL: '',
+        status: 'submitted'
       }
   }
 
   onSubmitForm = (e) => {
     e.preventDefault();
 
-    const { landInput,uploadedFile,status} = this.state;
-
+    // const { landInput,fileURL,status} = this.state;
     this.props.saveOrderData(this.state);
     this.props.history.push('/')
     window.alert("Thank you for your order. You can track its progress on 'My Orders' page");
@@ -63,13 +62,7 @@ export class LandInputPage extends React.Component {
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <input type="text" placeholder='orderStatus' id="status" onChange={this.onChangeInput} />
-                                            
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <input id="uploadedFile" placeholder='uploadedFile' onChange={this.onChangeInput}></input>
+                                            <input id="fileURL" placeholder='fileURL' onChange={this.onChangeInput}></input>
                                            
                                         </div>
                                     </div>
