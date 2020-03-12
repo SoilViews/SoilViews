@@ -1,9 +1,9 @@
 import React from "react";
 import { compose } from "redux";
-import { getState, getFirestore,getFirebase } from 'redux-firestore';
+import {getFirestore } from 'redux-firestore';
 
 
-
+var UserData= [];
 export class AdminPanel extends React.Component {
  
   onLoad  ()  {
@@ -12,7 +12,9 @@ export class AdminPanel extends React.Component {
 
     docRef.get().then(function(doc) {
         if (doc.exists) {
-            console.log("Get user  data:", doc.data());
+            // console.log("Get user  data:", doc.data());
+            UserData.push(doc.data());
+            console.log("Get user  data:", UserData);
         } else {
             // doc.data() will be undefined in this case
             console.log("No such user data!");
@@ -23,19 +25,19 @@ export class AdminPanel extends React.Component {
 
 }
 
+
   onLoad1() {
-   
   const firestore = getFirestore();
-  var userData = firestore.collection("users").get().then(data => {
+  firestore.collection("users").get().then(data => {
 
     data.forEach(doc => {
-  
-      console.log( "User",doc.data() );    
+      
+      console.log( "User",doc.data());
+      UserData.push(doc.data());   
      
   
     });
-    console.log("UserData",userData)
-  
+    console.log("User:", UserData); 
   });
   
 
