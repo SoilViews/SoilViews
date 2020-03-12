@@ -28,21 +28,36 @@ export class AdminPanel extends React.Component {
 
   onLoad1() {
   const firestore = getFirestore();
-  firestore.collection("users").get().then(data => {
+  var userData = firestore.collection("users").get().then(data => {
 
     data.forEach(doc => {
       
-      console.log( "User",doc.data());
+      // console.log( "User",doc.data());
       UserData.push(doc.data());   
      
   
     });
     console.log("User:", UserData); 
   });
+  }
   
-
-
-}
+  componentDidMount() {
+    const firestore = getFirestore();
+    firestore.collection("users").get().then(data => {
+  
+      data.forEach(doc => {
+        
+        // console.log( "User",doc.data());
+        UserData.push(doc.data());   
+       
+    
+      });
+      console.log("User:", UserData); 
+    });
+    
+  
+  
+  }
 
 
 render() {
