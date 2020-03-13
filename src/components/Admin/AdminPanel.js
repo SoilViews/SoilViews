@@ -3,9 +3,17 @@ import { compose } from "redux";
 import {getFirestore } from 'redux-firestore';
 
 
-var UserData= [];
+var UserData1= [];
 export class AdminPanel extends React.Component {
- 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      UserData: []
+    }
+
+}
+
   onLoad  ()  {
     const firestore = getFirestore();
     var docRef = firestore.collection("users").doc("1M6e9zhW8PSn8mvStzTK8mU5e652");
@@ -13,8 +21,8 @@ export class AdminPanel extends React.Component {
     docRef.get().then(function(doc) {
         if (doc.exists) {
             // console.log("Get user  data:", doc.data());
-            UserData.push(doc.data());
-            console.log("Get user  data:", UserData);
+            UserData1.push(doc.data());
+            console.log("Get user  data:", UserData1);
         } else {
             // doc.data() will be undefined in this case
             console.log("No such user data!");
@@ -25,34 +33,20 @@ export class AdminPanel extends React.Component {
 
 }
 
-
-  onLoad1() {
-  const firestore = getFirestore();
-  var userData = firestore.collection("users").get().then(data => {
-
-    data.forEach(doc => {
-      
-      // console.log( "User",doc.data());
-      UserData.push(doc.data());   
-     
-  
-    });
-    console.log("User:", UserData); 
-  });
-  }
   
   componentDidMount() {
+    const { UserData } = this.state;
     const firestore = getFirestore();
     firestore.collection("users").get().then(data => {
   
       data.forEach(doc => {
-        
+
         // console.log( "User",doc.data());
         UserData.push(doc.data());   
        
     
       });
-      UserData.map((user) => { return (console.log(user.city));});
+      // UserData.map((user) => { return (console.log(user.city));});
       console.log("User:", UserData); 
     });
     
@@ -63,16 +57,17 @@ export class AdminPanel extends React.Component {
 
 
   render() {
-
+    const { UserData } = this.state;  
+    
     return(
        <div>
           <button onClick={this.onLoad}>Get specific user data</button>
-          <button onClick={this.onLoad1}>Get all user data</button>
           <table>
           <tbody>
             
               {UserData.map((user) => {
-                            return  (<tr>
+                            return (
+                              <tr key={Math.random()}>
                                  <td>{user.city}</td>
                                  <td>{user.email}</td>
                                  <td>{user.firstName}</td>
