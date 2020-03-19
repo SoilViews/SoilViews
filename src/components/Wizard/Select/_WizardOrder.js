@@ -1,18 +1,26 @@
 import React from "react";
-import { compose } from "redux";
-import { Link } from 'react-router-dom';
 import { saveOrderData} from '../../../store/actions/authActions';
 import { connect } from 'react-redux';
 
 
-export class LandInputPage extends React.Component {
+export class WizardOrder extends React.Component {
   constructor(props){
     super(props)
 
       this.state = {
-        landInput: '',
-        fileURL: '',
-        status: 'submitted'
+      
+        fileURL: '',                  //populates When file is uploaded
+        status: 'submitted',          //initial status
+        landNumber: '',               //populates when landNumber is typed
+        coordinatesInput: {           //populates when coordinated are entered manually
+          lat:[],
+          lon:[]
+        },
+        cropTypesChosen: [],          //populates when crops are chosen
+        notes: '',
+        cost:'',
+        
+
       }
   }
 
@@ -47,36 +55,7 @@ export class LandInputPage extends React.Component {
           //          </div>
           //         </div>
         //         </div>
-
-                  <div className="row">
-                    <div className="col s12 l10 offset-l1">
-                        <div className="card grey lighten-3">
-                            <div className="card-content">
-                                <form onSubmit={this.onSubmitForm}>
-
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <input type="text" placeholder='landInputType' id="landInput" onChange={this.onChangeInput} />
-                                            
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <input id="fileURL" placeholder='fileURL' onChange={this.onChangeInput}></input>
-                                           
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="row center-align">
-                                        <button className="btn waves-effect waves-light" type="submit" name="action">submit <i className="material-icons right">send</i> </button>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+        <div></div>
     );
   }
 }
@@ -95,4 +74,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LandInputPage)
+export default connect(mapStateToProps, mapDispatchToProps)(WizardOrder)

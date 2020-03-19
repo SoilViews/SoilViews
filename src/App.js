@@ -12,11 +12,13 @@ import Footer from './components/layout/Footer'
 import Profile from '../src/components/Profile/profile'
 import ContactForm from '../src/components/ContactForm/ContactForm'
 import Documentation from "./components/Help/HelpPage";
-import LandInputPage  from "./components/Wizard/Select/LandInputPage";
-import CoordinatesInput from "./components/Wizard/Select/CoordinatesInput";
-import UploadFile  from "./components/Wizard/Select/UploadFile";
-import LandNumberInput from "./components/Wizard/Select/LandNumberInput";
+//import WizardOrder  from "./components/Wizard/Select/_WizardOrder";
+// import CoordinatesInput from "./components/Wizard/Select/CoordinatesInput";
+// import UploadFile  from "./components/Wizard/Select/UploadFile";
+// import LandNumberInput from "./components/Wizard/Select/LandNumberInput";
 import AdminPanel from "./components/Admin/AdminPanel";
+//import Wizard from "./components/Wizard/_Wizard"
+
 
 function App() {
 
@@ -32,18 +34,15 @@ function App() {
             <Switch>
               <Route path='/indexPage' component={indexPage} />
               <Route path='/SignIn' component={SignIn} />
-              <Route path='/SignUp' component={SignUp} />
+              {/* <Route path='/SignUp' component={SignUp} /> */}
               <Route path='/CreateProject' component={CreateProject} />
               <Route path='/Dashboard' component={Dashboard} />
               <Route path='/Profile' component={Profile} />
               <Route path='/ResetPassword' component={ResetPassword} />
               <Route path='/ContactForm' component={ContactForm}/>
               <Route path='/HelpPage' component={Documentation}/>
-              <Route path='/LandInput' component={LandInputPage}/>
-              <Route path='/CoordinatesInput' component={CoordinatesInput}/>
-              <Route path="/UploadFile" component={UploadFile} />
-              <Route path="/LandNumberInput" component={LandNumberInput} />
               <Route path="/AdminPanel" component={AdminPanel} />               
+              {/*<Route path="/NewOrder" component={Wizard} /> */}               
               <Route path="/" component={indexPage} />    
 
             </Switch>
