@@ -34,7 +34,7 @@ export class AdminPanel extends React.Component {
 }
 
   
-  componentDidMount() {
+  componentWillMount() {
     const { UserData } = this.state;
     const firestore = getFirestore();
     firestore.collection("users").get().then(data => {
@@ -63,18 +63,32 @@ export class AdminPanel extends React.Component {
        <div>
           <button onClick={this.onLoad}>Get specific user data</button>
           <table>
+          <th>city</th>
+          <th>email</th>
+          <th>firstName</th>
+          <th>initials</th>
+          <th>Order Status</th>
+          <th>Actions</th>
+          {UserData.map((user) => {
+               
+               return (
+                 
+                 <tr key={Math.random()}>
+                    <td>{user.city}</td>
+                    <td>{user.email}</td>
+                    <td>{user.firstName}</td>
+                    <td>{user.initials}</td>
+                    <td>{user.lastName}</td>
+                    <td>
+                       <button>Edit</button>
+                       <button>Delete</button>
+                    </td>
+                    
+                 </tr>);}
+ )}     
           <tbody>
             
-              {UserData.map((user) => {
-                            return (
-                              <tr key={Math.random()}>
-                                 <td>{user.city}</td>
-                                 <td>{user.email}</td>
-                                 <td>{user.firstName}</td>
-                                 <td>{user.initials}</td>
-                                 <td>{user.lastName}</td>
-                              </tr>);}
-              )}     
+             
         </tbody>
       </table>
        </div>
@@ -82,5 +96,5 @@ export class AdminPanel extends React.Component {
     );
   }
   }
-  export default compose()(AdminPanel);
+  export default compose()(AdminPanel)
   
