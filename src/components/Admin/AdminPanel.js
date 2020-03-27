@@ -14,24 +14,7 @@ export class AdminPanel extends React.Component {
 
 }
 
-  onLoad  ()  {
-    const firestore = getFirestore();
-    var docRef = firestore.collection("users").doc("1M6e9zhW8PSn8mvStzTK8mU5e652");
 
-    docRef.get().then(function(doc) {
-        if (doc.exists) {
-            // console.log("Get user  data:", doc.data());
-            UserData1.push(doc.data());
-            console.log("Get user  data:", UserData1);
-        } else {
-            // doc.data() will be undefined in this case
-            console.log("No such user data!");
-        }
-    }).catch(function(error) {
-        console.log("Error getting user data:", error);
-    });
-
-}
 
   
   componentWillMount() {
@@ -67,7 +50,7 @@ export class AdminPanel extends React.Component {
           <th>email</th>
           <th>firstName</th>
           <th>initials</th>
-          <th>Order Status</th>
+          <th>lastName</th>
           <th>Actions</th>
           {UserData.map((user) => {
                
