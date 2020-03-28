@@ -3,7 +3,6 @@ import { compose } from "redux";
 import {getFirestore } from 'redux-firestore';
 
 
-var UserData1= [];
 export class AdminPanel extends React.Component {
   constructor(props) {
     super(props)
