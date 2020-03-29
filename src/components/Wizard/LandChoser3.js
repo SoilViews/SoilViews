@@ -16,12 +16,13 @@ class LandChoser3 extends React.Component {
   handleChange = selectedOption => {
     this.setState(
         { selectedOption },
-        () => console.log(`Option selected:`, this.state.selectedOption)
+        () => console.log(`Option selected:`, this.state.selectedOption),
       );
       // alert('you selected' , this.state);
   };
   render() {
     const {selectedOption} = this.state;
+    const getOptionValue = typeof this.state.selected === 'string' ? this.state.selected : this.state.selected.label
 
     return (
       <div>
@@ -30,14 +31,7 @@ class LandChoser3 extends React.Component {
           onChange={this.handleChange}
           options={options}
         />
-        <div>
-          {/* Сработи ли това, 
-          идеята ми е да се рендърва страницата 
-          за съответото действие направо в стъпката и 
-          после да се продължи напред */}
-          {/* You selected: {this.state.selectedOption} */}
-        <p></p>
-        </div>
+        <p>{ selectedOption }</p>
       </div>
     );
   }

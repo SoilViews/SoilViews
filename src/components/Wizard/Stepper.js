@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 // import CenteredTabs from './LandChoser2'
 import LandChoser3 from './LandChoser3'
+import LandChoser4 from './LandChoser4'
 
 import { Select } from '@material-ui/core';
 
@@ -29,20 +30,18 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ['Welcome', 'Select Land Input', 'Choose culture type', 'Payment', 'Review your order'];
+  return ['Select Land Input', 'Choose culture type', 'Payment', 'Review your order'];
 }
 
 function getStepContent(step) {
   switch (step) {
     case 0:
-        return 'Welcome';
+      return <LandChoser4/>;
     case 1:
-      return <LandChoser3/>;
-    case 2:
       return 'Checkbox items to choose from';
-    case 3:
+    case 2:
       return 'Different payments methods';
-    case 4:
+    case 3:
       return 'Order review - show everything selected';
     default:
       return 'Unknown step';
