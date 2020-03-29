@@ -30,13 +30,14 @@ class LandChoser3 extends React.Component {
           onChange={this.handleChange}
           options={options}
         />
-        <div>
-          {/* Сработи ли това, 
-          идеята ми е да се рендърва страницата 
-          за съответото действие направо в стъпката и 
-          после да се продължи напред */}
-          {/* You selected: {this.state.selectedOption} */}
-        <p></p>
+       <div>
+          {selectedOption && selectedOption.value === "LandNumberInput" ? (
+             <button className="waves-effect waves-light btn-large" >LandNumberInput</button>
+          ) : selectedOption && selectedOption.value === "CoordinatesInput" ? (
+            <button className="waves-effect waves-light btn-large" >CoordinatesInput</button>
+          ): selectedOption && selectedOption.value === "UploadFile" ? (
+            <button className="waves-effect waves-light btn-large" >UploadFile</button>
+          ) : null}
         </div>
       </div>
     );
