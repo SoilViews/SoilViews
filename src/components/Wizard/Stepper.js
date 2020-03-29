@@ -36,7 +36,7 @@ function getSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <LandChoser4/>;
+      return <LandChoser3 />;
     case 1:
       return 'Checkbox items to choose from';
     case 2:

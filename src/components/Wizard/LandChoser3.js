@@ -1,6 +1,9 @@
 import React from 'react';
 import Select from 'react-select';
 import LandNumberInput from './LandNumberInput'
+import UloadFile from './UploadFile'
+import Dashboard from '../dashboard/Dashboard'
+import CoordinatesInput from './CoordinatesInput'
  
 const options = [
   { value: 'dashboard', label: 'Map' },
@@ -22,7 +25,6 @@ class LandChoser3 extends React.Component {
   };
   render() {
     const {selectedOption} = this.state;
-    const getOptionValue = typeof this.state.selected === 'string' ? this.state.selected : this.state.selected.label
 
     return (
       <div>
@@ -33,12 +35,14 @@ class LandChoser3 extends React.Component {
         />
        <div>
           {selectedOption && selectedOption.value === "LandNumberInput" ? (
-             <button className="waves-effect waves-light btn-large" >LandNumberInput</button>
+             <LandNumberInput />
           ) : selectedOption && selectedOption.value === "CoordinatesInput" ? (
-            <button className="waves-effect waves-light btn-large" >CoordinatesInput</button>
-          ): selectedOption && selectedOption.value === "UploadFile" ? (
-            <button className="waves-effect waves-light btn-large" >UploadFile</button>
-          ) : null}
+            <CoordinatesInput />
+          ) : selectedOption && selectedOption.value === "UploadFile" ? (
+            <UloadFile />
+          ) : selectedOption && selectedOption.value === "dashboard" ? (
+            <Dashboard />
+          )  : null}
         </div>
       </div>
     );
