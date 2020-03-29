@@ -6,6 +6,7 @@ import london_postcodes from '../Files/london_postcodes.json'
 import '../../leaflet.filelayer'
 import { connect } from 'react-redux'
 import { saveData } from '../../store/actions/authActions'
+import { saveAs } from 'file-saver';  
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
@@ -53,6 +54,27 @@ export class Dashboard extends React.Component {
     
     console.log("shape1",drawedCord)
 
+    var data = layer.toGeoJSON();
+    var convertedData = 'text/json;charset=utf-8,' + JSON.stringify(data);
+    console.log(convertedData);
+    var FileSaver = require('file-saver');
+    var blob = new Blob([convertedData], {type: "text/plain;charset=utf-8"});
+    FileSaver.saveAs(blob, "cordinates.json");
+
+    }
+
+    saveToFile() {
+      var FileSaver = require('file-saver');
+     var blob = new Blob(["Hello, world!"], {type: "text/plain;charset=utf-8"});
+     FileSaver.saveAs(blob, "hello world.txt");
+    }
+    
+    //for future upgrade
+    saveToFile1(content, filename) {
+      var file = filename + '.geojson';
+      saveAs(new File([JSON.stringify(content)], file, {
+        type: "text/plain;charset=utf-8"
+      }), file);
     }
 
   
@@ -96,7 +118,7 @@ export class Dashboard extends React.Component {
           onEachFeature={this.onEachFeature}
         />
         </Map>
-        <button className="waves-effect waves-light btn-large" >Button</button>
+        <button className="waves-effect waves-light btn-large" onClick={this.saveToFile}>Export cordinates</button>
       </div>
     );
             } else{
