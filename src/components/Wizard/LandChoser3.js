@@ -36,7 +36,7 @@ class LandChoser3 extends React.Component {
           за съответото действие направо в стъпката и 
           после да се продължи напред */}
           {/* You selected: {this.state.selectedOption} */}
-        <p>{this.state.selectedOption.value}</p>
+        <p></p>
         </div>
       </div>
     );

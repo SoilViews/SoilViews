@@ -17,7 +17,7 @@ import Documentation from "./components/Help/HelpPage";
 // import UploadFile  from "./components/Wizard/Select/UploadFile";
 // import LandNumberInput from "./components/Wizard/Select/LandNumberInput";
 import AdminPanel from "./components/Admin/AdminPanel";
-//import Wizard from "./components/Wizard/_Wizard"
+import Wizard from "./components/Wizard/Wizard"
 
 
 function App() {
@@ -42,7 +42,7 @@ function App() {
               <Route path='/ContactForm' component={ContactForm}/>
               <Route path='/HelpPage' component={Documentation}/>
               <Route path="/AdminPanel" component={AdminPanel} />               
-              {/*<Route path="/NewOrder" component={Wizard} /> */}               
+              <Route path="/NewOrder" component={Wizard} />
               <Route path="/" component={indexPage} />    
 
             </Switch>
