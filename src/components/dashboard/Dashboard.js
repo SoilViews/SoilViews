@@ -7,7 +7,8 @@ import '../../leaflet.filelayer'
 import { connect } from 'react-redux'
 import { saveData } from '../../store/actions/authActions'
 import { saveAs } from 'file-saver';  
-import {storage} from '../../firebase/index'
+import {storage,firebase} from '../../firebase/index'
+import FileUploader from "react-firebase-file-uploader";
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
@@ -26,6 +27,8 @@ export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      filenames: [],
+      downloadURLs: [],
       lat: 42.696295,
       lng: 23.303643,
       zoom: 10,
@@ -103,7 +106,9 @@ console.log("asd")
 
   handleUpload = () => {
     const { image } = this.state;
-    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    const {profile } = this.props
+    const filename= profile.firstName +"_"+ image.name;
+    const uploadTask = storage.ref(`UploadedFiles/${filename}`).put(image);
     uploadTask.on(
       "state_changed",
       snapshot => {
@@ -120,8 +125,8 @@ console.log("asd")
       () => {
         // complete function ...
         storage
-          .ref("images")
-          .child(image.name)
+          .ref("UploadedFiles")
+          .child(filename)
           .getDownloadURL()
           .then(url => {
             this.setState({ url });
@@ -129,8 +134,6 @@ console.log("asd")
       }
     );
   };
-
-  
 
   render() {
     const position = [this.state.lat, this.state.lng];
@@ -206,16 +209,10 @@ console.log("asd")
             <input className="file-path validate" type="text" />
           </div>
         </div>
-        <button
-          onClick={this.handleUpload}
-          className="waves-effect waves-light btn"
-        >
-          Upload
-        </button>
+        <button onClick={this.handleUpload} className="waves-effect waves-light btn" > Upload  </button>
         <br />
         <br />
-        <img
-          src={this.state.url || "https://via.placeholder.com/400x300"}
+        <img src={this.state.url || "https://via.placeholder.com/400x300"}
           alt="Uploaded Images"
           height="300"
           width="400"
