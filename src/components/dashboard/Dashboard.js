@@ -7,6 +7,7 @@ import '../../leaflet.filelayer'
 import { connect } from 'react-redux'
 import { saveData } from '../../store/actions/authActions'
 import { saveAs } from 'file-saver';  
+import {storage} from '../../firebase/index'
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
@@ -22,14 +23,19 @@ const polygon = [
 
 
 export class Dashboard extends React.Component {
-  
-    //Set location when the map is visualized
-    state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       lat: 42.696295,
       lng: 23.303643,
-      zoom: 10
-    }
-    
+      zoom: 10,
+      image: null,
+      url: "",
+      progress: 0
+    };
+  }
+    //Set location when the map is visualized
+   
   mapRef = createRef()
 
   handleClick = () => {
@@ -77,6 +83,53 @@ export class Dashboard extends React.Component {
       }), file);
     }
 
+    loadFile(event) {
+
+      var input = event.target;
+var reader = new FileReader();
+
+// Read the file
+reader.readAsText(input.files[0]);
+console.log("asd")
+
+  }
+
+  handleChange = e => {
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      this.setState(() => ({ image }));
+    }
+  };
+
+  handleUpload = () => {
+    const { image } = this.state;
+    const uploadTask = storage.ref(`images/${image.name}`).put(image);
+    uploadTask.on(
+      "state_changed",
+      snapshot => {
+        // progress function ...
+        const progress = Math.round(
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+        );
+        this.setState({ progress });
+      },
+      error => {
+        // Error function ...
+        console.log(error);
+      },
+      () => {
+        // complete function ...
+        storage
+          .ref("images")
+          .child(image.name)
+          .getDownloadURL()
+          .then(url => {
+            this.setState({ url });
+          });
+      }
+    );
+  };
+
   
 
   render() {
@@ -118,7 +171,56 @@ export class Dashboard extends React.Component {
           onEachFeature={this.onEachFeature}
         />
         </Map>
+        <br />
+        <br />
+        <br />
         <button className="waves-effect waves-light btn-large" onClick={this.saveToFile}>Export cordinates</button>
+        <br />
+        <br />
+        <br />
+        <div class="row">
+      <label for="fileToUpload">Select a File to Upload</label><br />
+      <input type="file"  id="fileToUpload"/>
+   </div>
+   <input type="button" onClick={this.loadFile} value="Upload" />
+   <br />
+        <br />
+        <br />     
+        <div className="center">
+          <br/>
+          <h2 className="green-text">Soilview Uploader</h2>
+          <br/>
+          <br/>
+        <div className="row">
+          <progress value={this.state.progress} max="100" className="progress" />
+        </div>
+        <br />
+        <br />
+        <br />
+        <div className="file-field input-field">
+          <div className="btn">
+            <span>File</span>
+            <input type="file" onChange={this.handleChange} />
+          </div>
+          <div className="file-path-wrapper">
+            <input className="file-path validate" type="text" />
+          </div>
+        </div>
+        <button
+          onClick={this.handleUpload}
+          className="waves-effect waves-light btn"
+        >
+          Upload
+        </button>
+        <br />
+        <br />
+        <img
+          src={this.state.url || "https://via.placeholder.com/400x300"}
+          alt="Uploaded Images"
+          height="300"
+          width="400"
+        />
+      </div>
       </div>
     );
             } else{
