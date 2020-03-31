@@ -7,7 +7,7 @@ import '../../leaflet.filelayer'
 import { connect } from 'react-redux'
 import { saveData } from '../../store/actions/authActions'
 import { saveAs } from 'file-saver';  
-import {storage,firebase} from '../../firebase/index'
+import {storage,storageRef} from '../../firebase/index'
 import FileUploader from "react-firebase-file-uploader";
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
@@ -135,11 +135,41 @@ console.log("asd")
     );
   };
 
+//   makeDowload() {
+//     FileSystem.downloadAsync(
+//      'http://gahp.net/wp-content/uploads/2017/09/sample.pdf',
+//      FileSystem.documentDirectory + 'small.pdf'
+//    )
+//      .then(({ uri }) => {
+//        console.log('Finished downloading to ', uri);
+//      })
+//      .catch(error => {
+//        console.error(error);
+//      });
+
+//  }
+
+
+  showFileUrl(){
+   storageRef.child('UploadedFiles/').listAll().then(function(res) {
+      res.items.forEach(function(folderRef) {
+        console.log("folderRef",folderRef.toString());
+        this.displayFile(folderRef);
+      });
+      res.items.forEach(function(itemRef) {
+        // All the items under listRef.
+      });
+    }).catch(function(error) {
+      // Uh-oh, an error occurred!
+    });
+  }
+
   render() {
     const position = [this.state.lat, this.state.lng];
     const {profile } = this.props
     if (profile.role ==='User' || profile.role ==='Admin' ) {
     console.log('User role',profile.role)
+    console.log("URL",this.state.url)
     return (   
       
       <div id="map" className="dashboard container">
@@ -177,7 +207,7 @@ console.log("asd")
         <br />
         <br />
         <br />
-        <button className="waves-effect waves-light btn-large" onClick={this.saveToFile}>Export cordinates</button>
+        <button className="waves-effect waves-light btn-large" onClick={this.showFileUrl}>Export cordinates</button>
         <br />
         <br />
         <br />
@@ -218,6 +248,11 @@ console.log("asd")
           width="400"
         />
       </div>
+      <button          
+          title="baixar"
+          onPress={() => {
+            this.makeDowload();
+          }}/>
       </div>
     );
             } else{

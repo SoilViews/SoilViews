@@ -21,8 +21,9 @@ const firebaseConfig = {
   firebase.firestore().settings({});
 
   const storage = firebase.storage()
+  const storageRef=storage.ref()
  firebase.database();
   
  export  {
-  storage, firebase as default
+  storageRef,storage, firebase as default
 }
