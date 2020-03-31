@@ -8,7 +8,9 @@ import { connect } from 'react-redux'
 import { saveData } from '../../store/actions/authActions'
 import { saveAs } from 'file-saver';  
 import {storage,storageRef} from '../../firebase/index'
-//import FileUploader from "react-firebase-file-uploader"; Не се използваше, а даваше грешка
+import firebase from 'firebase';
+import FileUploader from "react-firebase-file-uploader";
+
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
@@ -34,7 +36,11 @@ export class Dashboard extends React.Component {
       zoom: 10,
       image: null,
       url: "",
-      progress: 0
+      progress: 0,
+      files: [],
+      uploadValue: 0,
+      filesMetadata:[], 
+      rows:  [] 
     };
   }
     //Set location when the map is visualized
@@ -135,51 +141,42 @@ console.log("asd")
     );
   };
 
-//   makeDowload() {
-//     FileSystem.downloadAsync(
-//      'http://gahp.net/wp-content/uploads/2017/09/sample.pdf',
-//      FileSystem.documentDirectory + 'small.pdf'
-//    )
-//      .then(({ uri }) => {
-//        console.log('Finished downloading to ', uri);
-//      })
-//      .catch(error => {
-//        console.error(error);
-//      });
 
-//  }
+
 
 
   showFileUrl(){
+   
    storageRef.child('UploadedFiles/').listAll().then(function(res) {
       res.items.forEach(function(folderRef) {
         console.log("folderRef",folderRef.toString());
-        this.displayFile(folderRef);
+        var blob = null;
+        var xhr = new XMLHttpRequest(); 
+        xhr.open("GET", "downloadURL"); 
+        xhr.responseType = "blob";
+        xhr.onload = function() 
+        {
+        blob = xhr.response;//xhr.response is now a blob object
+        console.log(blob);
+    }
+        xhr.send();
       });
-      res.items.forEach(function(itemRef) {
-        // All the items under listRef.
-      });
+      
     }).catch(function(error) {
-      // Uh-oh, an error occurred!
+      
     });
   }
 
   render() {
     const position = [this.state.lat, this.state.lng];
-    const {profile } = this.props
+    const {profile } = this.props;
     if (profile.role ==='User' || profile.role ==='Admin' ) {
     console.log('User role',profile.role)
     console.log("URL",this.state.url)
     return (   
       
-      <div 
-        id="map" 
-        className="dashboard container"
-      >
-        <Map 
-          style={{ height: "50vh" }} 
-          center={position} 
-          zoom={13}
+      <div id="map" className="dashboard container">
+        <Map style={{ height: "50vh" }} center={position} zoom={13}
           onClick={this.handleClick}
           onCreate={this.onCreate}
           onLocationfound={this.handleLocationFound}>
@@ -217,8 +214,8 @@ console.log("asd")
         <br />
         <br />
         <br />
-        <div class="row">
-      <label for="fileToUpload">Select a File to Upload</label><br />
+        <div className="row">
+      <label htmlFor="fileToUpload">Select a File to Upload</label><br />
       <input type="file"  id="fileToUpload"/>
    </div>
    <input type="button" onClick={this.loadFile} value="Upload" />
@@ -254,11 +251,6 @@ console.log("asd")
           width="400"
         />
       </div>
-      <button          
-          title="baixar"
-          onPress={() => {
-            this.makeDowload();
-          }}/>
       </div>
     );
             } else{
