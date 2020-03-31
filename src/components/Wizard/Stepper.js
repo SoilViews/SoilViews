@@ -8,6 +8,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import LandChoser3 from './LandChoser3'
+import { useHistory } from "react-router-dom"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -46,6 +47,7 @@ export default function VerticalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
+  const history = useHistory();
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -61,6 +63,8 @@ export default function VerticalLinearStepper() {
 
   const handleDone = () => {
     window.alert('Thank you for your order. You can check your order status on "My orders" page')
+    // setActiveStep(0);
+    history.push("/");
   };
 
   return (
