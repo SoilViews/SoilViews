@@ -10,6 +10,7 @@ import { saveAs } from 'file-saver';
 import {storage,storageRef} from '../../firebase/index'
 import firebase from 'firebase';
 import FileUploader from "react-firebase-file-uploader";
+import JSZip from 'jszip' 
 
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
@@ -153,12 +154,18 @@ console.log("asd")
         var blob = null;
         var xhr = new XMLHttpRequest(); 
         xhr.open("GET", "downloadURL"); 
-        xhr.responseType = "blob";
+        xhr.responseType = "blob";       
         xhr.onload = function() 
         {
         blob = xhr.response;//xhr.response is now a blob object
-        console.log(blob);
+        console.log("BLOB",blob)
+        
+        // var path = storageRef.child('UploadedFiles/').getDownloadURL(folderRef);
+        // var zip = new JSZip();
+        // zip.file(path,blob);
     }
+    
+        xhr.open('GET', folderRef);
         xhr.send();
       });
       
@@ -166,6 +173,11 @@ console.log("asd")
       
     });
   }
+
+//   componentDidMount() {
+//      storageRef.child('UploadedFiles/').getDownloadURL().then(this.showFileUrl);
+
+// }
 
   render() {
     const position = [this.state.lat, this.state.lng];

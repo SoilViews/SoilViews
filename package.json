@@ -12,6 +12,7 @@
     "firebase": "^7.4.0",
     "firebase-admin": "^8.9.2",
     "firebase-functions": "^3.3.0",
+    "jszip": "^3.2.2",
     "leaflet": "^1.6.0",
     "leaflet-draw": "^1.0.4",
     "leaflet-filelayer": "^1.2.0",
