@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { saveData } from '../../store/actions/authActions'
 import { saveAs } from 'file-saver';  
 import {storage,storageRef} from '../../firebase/index'
-import FileUploader from "react-firebase-file-uploader";
+//import FileUploader from "react-firebase-file-uploader"; Не се използваше, а даваше грешка
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
@@ -172,8 +172,14 @@ console.log("asd")
     console.log("URL",this.state.url)
     return (   
       
-      <div id="map" className="dashboard container">
-        <Map style={{ height: "50vh" }} center={position} zoom={13}
+      <div 
+        id="map" 
+        className="dashboard container"
+      >
+        <Map 
+          style={{ height: "50vh" }} 
+          center={position} 
+          zoom={13}
           onClick={this.handleClick}
           onCreate={this.onCreate}
           onLocationfound={this.handleLocationFound}>

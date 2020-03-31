@@ -27,7 +27,7 @@ class LandChoser3 extends React.Component {
     const {selectedOption} = this.state;
 
     return (
-      <div>
+      <div className="overlay">
         <Select
           value={selectedOption}
           onChange={this.handleChange}

@@ -7,11 +7,7 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-// import CenteredTabs from './LandChoser2'
 import LandChoser3 from './LandChoser3'
-import LandChoser4 from './LandChoser4'
-
-import { Select } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ['Select Land Input', 'Choose culture type', 'Payment', 'Review your order'];
+  return ['Select Land Input', 'Choose culture type', 'Review your order'];
 }
 
 function getStepContent(step) {
@@ -40,9 +36,7 @@ function getStepContent(step) {
     case 1:
       return 'Checkbox items to choose from';
     case 2:
-      return 'Different payments methods';
-    case 3:
-      return 'Order review - show everything selected';
+      return 'Review';
     default:
       return 'Unknown step';
   }
@@ -61,12 +55,12 @@ export default function VerticalLinearStepper() {
     setActiveStep(prevActiveStep => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
 
   const handleDone = () => {
-    window.alert('Done')
+    window.alert('Thank you for your order. You can check your order status on "My orders" page')
   };
 
   return (
@@ -92,7 +86,7 @@ export default function VerticalLinearStepper() {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Review' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Next' : 'Next'}
                   </Button>
                 </div>
               </div>
@@ -105,7 +99,7 @@ export default function VerticalLinearStepper() {
           square elevation={0} 
           className={classes.resetContainer}
         >
-          <Typography>Thank you for your order. You can track its progress on 'My Orders' page</Typography>
+          <Typography>Payment Options</Typography>
           <Button
               disabled={activeStep === 0}
               onClick={handleBack}
