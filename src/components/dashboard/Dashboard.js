@@ -174,6 +174,54 @@ console.log("asd")
     });
   }
 
+  showFileUrl1(){
+   
+    storageRef.child('UploadedFiles/Alexander_Picture.png').getDownloadURL().then(function(url) {
+      // `url` is the download URL for 'images/stars.jpg'
+      console.log(url);
+      // This can be downloaded directly:
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.response.set('Access-Control-Allow-Origin', '*'); 
+      xhr.onload = function(event) {
+        var blob = xhr.response;
+      };
+      xhr.open('GET', url);
+      xhr.send();
+    
+      console.log(url)
+    }).catch(function(error) {
+      // Handle any errors
+    });
+   }
+
+
+   showFileUrl3(){
+   
+    storageRef.child('UploadedFiles/').listAll().then(function(res) {
+       res.items.forEach(function(folderRef) {
+         console.log("folderRef",folderRef.toString());
+         var blob = null;
+         var xhr = new XMLHttpRequest(); 
+         xhr.open("GET", "downloadURL"); 
+         xhr.responseType = "blob";       
+         xhr.onload = function() 
+         {
+         blob = xhr.response;//xhr.response is now a blob object
+         console.log("BLOB",blob)
+         
+         // var path = storageRef.child('UploadedFiles/').getDownloadURL(folderRef);
+         // var zip = new JSZip();
+         // zip.file(path,blob);
+     }
+     
+       
+       });
+       
+     }).catch(function(error) {
+       
+     });
+   }
 //   componentDidMount() {
 //      storageRef.child('UploadedFiles/').getDownloadURL().then(this.showFileUrl);
 
@@ -223,6 +271,8 @@ console.log("asd")
         <br />
         <br />
         <button className="waves-effect waves-light btn-large" onClick={this.showFileUrl}>Export cordinates</button>
+        <button className="waves-effect waves-light btn-large" onClick={this.showFileUrl1}>Export cordinates1</button>
+        <button className="waves-effect waves-light btn-large" onClick={this.showFileUrl3}>Export cordinates3</button>
         <br />
         <br />
         <br />
