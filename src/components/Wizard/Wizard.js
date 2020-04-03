@@ -1,5 +1,5 @@
 import React from "react";
-import { saveOrderData} from '../../store/actions/authActions';
+import { saveOrderData} from '../../store/actions/newOrder';
 import { connect } from 'react-redux';
 import VerticalLinearStepper from './Stepper'
 

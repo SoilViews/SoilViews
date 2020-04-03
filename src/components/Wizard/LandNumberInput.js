@@ -1,13 +1,11 @@
 import React from "react";
-import { compose } from "redux";
-export class LandNumberInput extends React.Component {
-  render() {
-    return (
-        <div class="container">
-          <p>Hi</p>
-              </div>
 
+  const LandNumberInput = (props) => {
+    return (
+        <div className="container">
+          <input type="text" placeholder='Enter land number' id="landNumber" onChange={props.handleChildChange}/>
+        </div>
     );
   }
-}
-export default compose()(LandNumberInput);
+
+export default LandNumberInput

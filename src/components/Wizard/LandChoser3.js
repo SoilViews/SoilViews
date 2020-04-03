@@ -9,12 +9,13 @@ const options = [
   { value: 'dashboard', label: 'Map' },
   { value: 'LandNumberInput', label: 'Enter Land Number' },
   { value: 'CoordinatesInput', label: 'Enter Land Coordinates' },
-  { value: 'UploadFile', label: 'Upload a file' },
+  { value: 'UploadFile', label: 'Upload a file' }
 ];
 
 class LandChoser3 extends React.Component {
   state = {
     selectedOption: null,
+    LandNumber:''
   };
   handleChange = selectedOption => {
     this.setState(
@@ -23,6 +24,13 @@ class LandChoser3 extends React.Component {
       );
       // alert('you selected' , this.state);
   };
+
+  handleChildChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    })
+  }
+
   render() {
     const {selectedOption} = this.state;
 
@@ -35,7 +43,7 @@ class LandChoser3 extends React.Component {
         />
        <div>
           {selectedOption && selectedOption.value === "LandNumberInput" ? (
-             <LandNumberInput />
+             <LandNumberInput handleChildChange = {this.handleChildChange.bind(this)}/>
           ) : selectedOption && selectedOption.value === "CoordinatesInput" ? (
             <CoordinatesInput />
           ) : selectedOption && selectedOption.value === "UploadFile" ? (
@@ -50,4 +58,3 @@ class LandChoser3 extends React.Component {
 }
 
 export default LandChoser3
-
