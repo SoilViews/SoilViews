@@ -178,18 +178,21 @@ console.log("asd")
    
     storageRef.child('UploadedFiles/Alexander_Picture.png').getDownloadURL().then(function(url) {
       // `url` is the download URL for 'images/stars.jpg'
-      console.log(url);
+      // this.setState({ url: url })
+      console.log(url)
+      xhr.open('GET', url);
       // This can be downloaded directly:
       var xhr = new XMLHttpRequest();
       xhr.responseType = 'blob';
       xhr.response.set('Access-Control-Allow-Origin', '*'); 
       xhr.onload = function(event) {
         var blob = xhr.response;
+        // console.log(blob)
       };
       xhr.open('GET', url);
       xhr.send();
     
-      console.log(url)
+      console.log("GET")
     }).catch(function(error) {
       // Handle any errors
     });
