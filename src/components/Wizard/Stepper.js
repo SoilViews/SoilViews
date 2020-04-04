@@ -7,9 +7,7 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-// import LandChoser3 from './LandChoser3'
 import { useHistory } from "react-router-dom"
-//TEST
 import Select from 'react-select';
 import Dashboard from '../dashboard/Dashboard'
 
@@ -29,14 +27,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+//Steps list
 function getSteps() {
   return ['Select Land Input', 'Choose culture type', 'Review your order'];
 }
 
+//Steps Content
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <LandChoser3 />;
+      return <LandChoser />;
     case 1:
       return 'Checkbox items to choose from';
     case 2:
@@ -66,6 +66,7 @@ export default function VerticalLinearStepper() {
 
   const handleDone = () => {
     window.alert('Thank you for your order. You can check your order status on "My orders" page')
+    // TODO: Add new project button
     // setActiveStep(0);
     history.push("/");
   };
@@ -127,7 +128,7 @@ export default function VerticalLinearStepper() {
     </div>
   );
 }
-//TEST
+//Landchoser input options
 const options = [
   { value: 'dashboard', label: 'Map' },
   { value: 'LandNumberInput', label: 'Enter Land Number' },
@@ -135,16 +136,17 @@ const options = [
   { value: 'UploadFile', label: 'Upload a file' }
 ];
 
-class LandChoser3 extends React.Component {
+class LandChoser extends React.Component {
   constructor(props){
     super(props)
- this.state = {
-    selectedOption: null,
-    landNumber:'',
-    landCoordinates:'',
-    fileURL: ''
+     this.state = {
+      selectedOption: null,
+      landNumber:'',
+      landCoordinates:'',
+      fileURL: ''
   };
 }
+//This verifies which option is selected from the dropdown
   handleChange = selectedOption => {
     this.setState(
         { selectedOption },
@@ -153,6 +155,7 @@ class LandChoser3 extends React.Component {
       // alert('you selected' , this.state);
   };
 
+//This listen for changes in the input field on every different input type
   handleChildChange = (e) => {
     this.setState({
       [e.target.id]: e.target.value
@@ -169,7 +172,8 @@ class LandChoser3 extends React.Component {
           onChange={this.handleChange}
           options={options}
         />
-       <div>
+              {/* Start of the input fields selector */}
+       <div> 
           {selectedOption && selectedOption.value === "LandNumberInput" ? (
              <LandNumberInput 
               handleChildChange = {this.handleChildChange.bind(this)}
@@ -191,7 +195,7 @@ class LandChoser3 extends React.Component {
   }
 }
 
-
+// All stateless input fields 
 const LandNumberInput = (props) => {
   return (
       <div className="container">
