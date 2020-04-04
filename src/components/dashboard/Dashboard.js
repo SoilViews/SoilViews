@@ -10,7 +10,7 @@ import { saveAs } from 'file-saver';
 import {storage,storageRef} from '../../firebase/index'
 import firebase from 'firebase';
 import FileUploader from "react-firebase-file-uploader";
-import JSZip from 'jszip' 
+// import JSZip from 'jszip' 
 
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
