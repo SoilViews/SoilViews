@@ -10,6 +10,7 @@ import { saveAs } from 'file-saver';
 import {storage,storageRef} from '../../firebase/index'
 import firebase from 'firebase';
 import FileUploader from "react-firebase-file-uploader";
+import { Link } from 'react-router-dom';
 // import JSZip from 'jszip' 
 
 // import firebase from '../../firebase';
@@ -24,7 +25,7 @@ const polygon = [
   [42.699295, 23.313643],
   [42.679295, 23.313643],
 ]
-
+const urls = [];
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -142,8 +143,12 @@ console.log("asd")
     );
   };
 
+  
+  check(){
+    // const urls = this.state.downloadURLs;
+      console.log("asd",urls)
 
-
+  }
 
 
   showFileUrl(){
@@ -152,6 +157,7 @@ console.log("asd")
       res.items.forEach(function(folderRef) {
         folderRef.getDownloadURL().then(function(url) {
           console.log('Got download URL',url);
+          urls.push(url);
          });
         console.log("folderRef",folderRef.toString());
         var blob = null;
@@ -172,14 +178,41 @@ console.log("asd")
       });
       
     }).catch(function(error) {
-      
+      console.log(error)
     });
   }
 
-//   componentDidMount() {
-//      storageRef.child('UploadedFiles/').getDownloadURL().then(this.showFileUrl);
+  componentDidMount() {
+    storageRef.child('UploadedFiles/').listAll().then(function(res) {
+      res.items.forEach(function(folderRef) {
+        folderRef.getDownloadURL().then(function(url) {
+          console.log('Got download URL',url);
+          urls.push(url);
+         });
+        console.log("folderRef",folderRef.toString());
+        var blob = null;
+        var xhr = new XMLHttpRequest(); 
+        xhr.open("GET", "downloadURL"); 
+        xhr.responseType = "blob";       
+        xhr.onload = function() 
+        {
+        blob = xhr.response;//xhr.response is now a blob object
+        console.log("BLOB",blob)
+       
+        
+        // var path = storageRef.child('UploadedFiles/').getDownloadURL(folderRef);
+        // var zip = new JSZip();
+        // zip.file(path,blob);
+    }
+    
+        xhr.send();
+      });
+      
+    }).catch(function(error) {
+      console.log(error)
+    });
 
-// }
+}
 
   render() {
     const position = [this.state.lat, this.state.lng];
@@ -225,8 +258,20 @@ console.log("asd")
         <br />
         <br />
         <button className="waves-effect waves-light btn-large" onClick={this.showFileUrl}>Export cordinates(Get firebase storage)</button>
+        <button className="waves-effect waves-light btn-large" onClick={this.check}>Check</button>
         <br />
         <br />
+        <table>
+          <tbody>
+            
+              {urls.map((user) => {
+                            return (
+                              <tr key={Math.random()}>
+                                  <td>{user}</td>
+                              </tr>);}
+              )}     
+        </tbody>
+      </table>
         <br />
         <br />     
         <div className="center">
