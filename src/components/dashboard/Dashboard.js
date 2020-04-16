@@ -95,125 +95,12 @@ export class Dashboard extends React.Component {
       }), file);
     }
 
-    loadFile(event) {
-
-      var input = event.target;
-var reader = new FileReader();
-
-// Read the file
-reader.readAsText(input.files[0]);
-console.log("asd")
-
-  }
-
-  handleChange = e => {
-    if (e.target.files[0]) {
-      const image = e.target.files[0];
-      this.setState(() => ({ image }));
-    }
-  };
-
-  handleUpload = () => {
-    const { image } = this.state;
-    const {profile } = this.props
-    const filename= profile.firstName +"_"+ image.name;
-    const uploadTask = storage.ref(`UploadedFiles/${filename}`).put(image);
-    uploadTask.on(
-      "state_changed",
-      snapshot => {
-        // progress function ...
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        this.setState({ progress });
-      },
-      error => {
-        // Error function ...
-        console.log(error);
-      },
-      () => {
-        // complete function ...
-        storage
-          .ref("UploadedFiles")
-          .child(filename)
-          .getDownloadURL()
-          .then(url => {
-            this.setState({ url });
-          });
-      }
-    );
-  };
-
-  
-  check(){
-    // const urls = this.state.downloadURLs;
-      console.log("asd",urls)
-
-  }
 
 
-  showFileUrl(){
-   
-   storageRef.child('UploadedFiles/').listAll().then(function(res) {
-      res.items.forEach(function(folderRef) {
-        folderRef.getDownloadURL().then(function(url) {
-          console.log('Got download URL',url);
-          urls.push(url);
-         });
-        console.log("folderRef",folderRef.toString());
-        var blob = null;
-        var xhr = new XMLHttpRequest(); 
-        xhr.open("GET", "downloadURL"); 
-        xhr.responseType = "blob";       
-        xhr.onload = function() 
-        {
-        blob = xhr.response;//xhr.response is now a blob object
-        console.log("BLOB",blob)
-        
-        // var path = storageRef.child('UploadedFiles/').getDownloadURL(folderRef);
-        // var zip = new JSZip();
-        // zip.file(path,blob);
-    }
-    
-        xhr.send();
-      });
-      
-    }).catch(function(error) {
-      console.log(error)
-    });
-  }
 
   componentDidMount() {
-    storageRef.child('UploadedFiles/').listAll().then(function(res) {
-      res.items.forEach(function(folderRef) {
-        folderRef.getDownloadURL().then(function(url) {
-          console.log('Got download URL',url);
-          urls.push(url);
-         });
-        console.log("folderRef",folderRef.toString());
-        var blob = null;
-        var xhr = new XMLHttpRequest(); 
-        xhr.open("GET", "downloadURL"); 
-        xhr.responseType = "blob";       
-        xhr.onload = function() 
-        {
-        blob = xhr.response;//xhr.response is now a blob object
-        console.log("BLOB",blob)
-       
-        
-        // var path = storageRef.child('UploadedFiles/').getDownloadURL(folderRef);
-        // var zip = new JSZip();
-        // zip.file(path,blob);
-    }
-    
-        xhr.send();
-      });
-      
-    }).catch(function(error) {
-      console.log(error)
-    });
 
-}
+  }
 
   render() {
     const position = [this.state.lat, this.state.lng];
@@ -268,48 +155,10 @@ console.log("asd")
         <br />
         <br />
         <br />
-        <button className="waves-effect waves-light btn-large" onClick={this.showFileUrl}>Export cordinates(Get firebase storage)</button>
-        <button className="waves-effect waves-light btn-large" onClick={this.check}>Check</button>
-        <br />
-        <br />
-        <table>
-          <tbody>
-            
-              {urls.map((user) => {
-                            return (
-                              <tr key={Math.random()}>
-                                  <td>{user}</td>
-                              </tr>);}
-              )}     
-        </tbody>
-      </table>
         <br />
         <br />     
-        <div className="center">
-          <br/>
-          <h2 className="green-text">Soilview File Uploader</h2>
-          <br/>
-        <br />
-        <div className="file-field input-field">
-          <div className="btn">
-            <span>File</span>
-            <input type="file" onChange={this.handleChange} />
-          </div>
-          <div className="file-path-wrapper">
-            <input className="file-path validate" type="text" />
-          </div>
-        </div>
-        <button onClick={this.handleUpload} className="waves-effect waves-light btn" > Upload  </button>
-        <br />
-        <br />
-        <img src={this.state.url || "https://via.placeholder.com/400x300"}
-          alt="Uploaded Images"
-          height="300"
-          width="400"
-        />
-      </div>
-      </div>
-    );
+     </div>
+         );
             } else{
               return (
                 <h1 className="header center orange-text">You don't have access to this page,please make account to access the page</h1>
@@ -317,7 +166,7 @@ console.log("asd")
             }
   }
 }
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
       auth: state.firebase.auth,
       profile: state.firebase.profile
