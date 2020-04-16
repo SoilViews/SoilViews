@@ -26,11 +26,19 @@ function getSteps() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return 'Select campaign settings...';
+      return ( <div>
+        <h3>Map your crop from satellite</h3>
+        <p>Use satellite imagery to visualise the crop variation within your fields. Furthermore, you can easily create variation maps and prescription files to control the application rate of your fertilizer spreader or sprayer. Zoom into your field by using the search box to find your location! The background map is there to help you find your field and has nothing to do with current satellite imagery.</p>
+      </div>);
     case 1:
-      return 'What is an ad group anyways?';
+      return (<ol>
+        <h3>Find your block and chose satellite image</h3>
+        <li>Find the parcel you would like to have a closer look at. Enter the location in the search field at the top left. You can also zoom in and out by using the + and - buttons and navigate by dragging the map to where you want to go.</li>
+        <li>Draw one or more parcels in the background map</li>
+        <li>When you have selected parcels, click on Save</li>
+      </ol>);
     case 2:
-      return 'This is the bit I really care about!';
+      return 'Your land cordinates will be saved!';
     default:
       return 'Unknown step';
   }
@@ -120,14 +128,16 @@ export default function HorizontalLinearStepper() {
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Back
               </Button>
+              
               {isStepOptional(activeStep) && (
+                
                 <Button
                   variant="contained"
                   color="primary"
                   onClick={handleSkip}
                   className={classes.button}
                 >
-                  Skip
+                  Draw a polygon
                 </Button>
               )}
 

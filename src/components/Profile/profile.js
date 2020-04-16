@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { storage, storageRef } from '../../firebase/index'
+import { storage } from '../../firebase/index'
 
 export class Profile extends React.Component {
     constructor(props) {

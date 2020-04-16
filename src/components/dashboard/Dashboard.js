@@ -7,10 +7,6 @@ import '../../leaflet.filelayer'
 import { connect } from 'react-redux'
 import { saveData } from '../../store/actions/authActions'
 import { saveAs } from 'file-saver';  
-import {storage,storageRef} from '../../firebase/index'
-import firebase from 'firebase';
-import FileUploader from "react-firebase-file-uploader";
-import { Link } from 'react-router-dom';
 import HorizontalLinearStepper from '../Wizard/HorizontalLinearStepper'
 // import JSZip from 'jszip' 
 
@@ -26,7 +22,6 @@ const polygon = [
   [42.699295, 23.313643],
   [42.679295, 23.313643],
 ]
-const urls = [];
 
 export class Dashboard extends React.Component {
   constructor(props) {
@@ -110,13 +105,6 @@ export class Dashboard extends React.Component {
     console.log("URL",this.state.url)
     return (  
       <div id="map" className="dashboard container">
-        <div>
-          <h3>Map your crop from satellite</h3>
-        </div>
-         <div>
-          <p>Use satellite imagery to visualise the crop variation within your fields. Furthermore, you can easily create variation maps and prescription files to control the application rate of your fertilizer spreader or sprayer. Zoom into your field by using the search box to find your location! The background map is there to help you find your field and has nothing to do with current satellite imagery.</p>
-        </div>
-       
         <br />
         <HorizontalLinearStepper/>
         <br />

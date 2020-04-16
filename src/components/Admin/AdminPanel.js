@@ -9,7 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import {storage,storageRef} from '../../firebase/index'
+import {storageRef} from '../../firebase/index'
 
 const urls = [];
 export class AdminPanel extends React.Component {
