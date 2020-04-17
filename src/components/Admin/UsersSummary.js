@@ -10,6 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom'
 
 class UsersSummary extends React.Component {
 
@@ -59,7 +60,7 @@ class UsersSummary extends React.Component {
                     <StyledTableCell>{user.initials}</StyledTableCell>
                     <StyledTableCell>{user.lastName}</StyledTableCell>
                     <StyledTableCell>
-                      <button className="waves-effect waves-light btn-small">Edit</button>
+                    <Link className="btn waves-effect waves-light"  to={'edit/' + user.id}  title="More Info">Edit</Link>
                       <button className="waves-effect waves-light btn-small">Delete</button>
                     </StyledTableCell>
                     </StyledTableRow>

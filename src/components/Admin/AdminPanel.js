@@ -102,7 +102,7 @@ export class AdminPanel extends React.Component {
           </div>
         <div className='col s12 m3 offset-m1'>
           <h2>Users:</h2>
-          <UsersList users={users}></UsersList>
+          <UsersList id={this.props.uid} users={users}></UsersList>
         </div>
       </div>
     )

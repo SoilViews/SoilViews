@@ -17,6 +17,7 @@ import Documentation from "./components/Help/HelpPage";
 // import UploadFile  from "./components/Wizard/Select/UploadFile";
 // import LandNumberInput from "./components/Wizard/Select/LandNumberInput";
 import AdminPanel from "./components/Admin/AdminPanel";
+import EditUser from "./components/Admin/EditUser";
 import Wizard from "./components/Wizard/Wizard"
 
 
@@ -33,6 +34,7 @@ function App() {
             <Nabvar></Nabvar>
             <Switch>
               <Route path='/indexPage' component={indexPage} />
+              <Route path='/edit/:id' component={EditUser} />
               <Route path='/SignIn' component={SignIn} />
               {/* <Route path='/SignUp' component={SignUp} /> */}
               <Route path='/CreateProject' component={CreateProject} />
