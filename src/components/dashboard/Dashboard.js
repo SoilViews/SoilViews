@@ -108,6 +108,7 @@ export class Dashboard extends React.Component {
         <br />
         <HorizontalLinearStepper/>
         <br />
+        <hr />
         <br />
         <Map style={{ height: "50vh" }} center={position} zoom={13}
           onClick={this.handleClick}

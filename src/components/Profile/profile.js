@@ -55,6 +55,7 @@ export class Profile extends React.Component {
             <div>
                 <div className="card-action">
              <h1 class="header center orange-text">My Profile</h1>
+             <hr />
             <p> <span >Username: </span>{this.props.profile.firstName} </p>
             <p> <span >Last Name: </span>{this.props.profile.lastName} </p>
             <p> <span>Email: </span>{this.props.profile.email} </p>

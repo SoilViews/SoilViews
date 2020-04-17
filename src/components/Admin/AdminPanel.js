@@ -79,6 +79,7 @@ export class AdminPanel extends React.Component {
         <div className='row'>
           <div className="col s12 m8">
             <h2>Notifications:</h2>
+            <hr />
           </div>
           <div className='col s12 m8'>
             <Notifications notifications={notifications}></Notifications>
@@ -102,6 +103,7 @@ export class AdminPanel extends React.Component {
           </div>
         <div className='col s12 m3 offset-m1'>
           <h2>Users:</h2>
+          <hr />
           <UsersList id={this.props.uid} users={users}></UsersList>
         </div>
       </div>

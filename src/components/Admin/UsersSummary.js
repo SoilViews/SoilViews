@@ -61,7 +61,10 @@ class UsersSummary extends React.Component {
                     <StyledTableCell>{user.lastName}</StyledTableCell>
                     <StyledTableCell>
                     <Link className="btn waves-effect waves-light"  to={'edit/' + user.id}  title="More Info">Edit</Link>
-                      <button className="waves-effect waves-light btn-small">Delete</button>
+                    <br/>
+                    <hr />
+                    <br/>
+                    <button className="btn waves-effect waves-light" type="submit" name="action" onClick={(e) => deleteProject(e, user.id)}>Delete<i className="large material-icons">delete_forever</i></button>
                     </StyledTableCell>
                     </StyledTableRow>
             </TableBody>
