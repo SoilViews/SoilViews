@@ -30,7 +30,7 @@ class EditUser extends Component {
                 key: '',
                 city: '',
             });
-            this.props.history.push(`/dashboard`)
+            this.props.history.push(`/AdminPanel`)
         })
             .catch((error) => {
                 console.error("Error adding document: ", error);
