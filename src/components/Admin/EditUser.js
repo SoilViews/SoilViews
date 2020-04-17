@@ -31,7 +31,7 @@ class EditUser extends Component {
                 city: '',
             });
             this.props.history.push(`/AdminPanel`)
-        })
+        })  
             .catch((error) => {
                 console.error("Error adding document: ", error);
             });
@@ -46,7 +46,7 @@ class EditUser extends Component {
                 const users = doc.data();
                 this.setState({
                     key: doc.id,
-                    title: users.city
+                    city: users.city
 
                 });
 
@@ -72,7 +72,7 @@ class EditUser extends Component {
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h3 class="panel-title">
-                            EDIT USER
+                            EDIT  USER
                         </h3>
                     </div>
                     <div class="panel-body">
