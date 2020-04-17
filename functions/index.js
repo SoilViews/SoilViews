@@ -35,7 +35,7 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
              doc => {
                  const newUser = doc.data();
                  const notification = {
-                     content: 'Joined the party',
+                     content: 'Registered in SoilViews',
                      user: `${newUser.firstName} ${newUser.lastName}`,
                      time: admin.firestore.FieldValue.serverTimestamp()
                  }
