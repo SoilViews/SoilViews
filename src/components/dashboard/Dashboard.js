@@ -73,10 +73,10 @@ export class Dashboard extends React.Component {
 
   saveToFile() {
     var FileSaver = require("file-saver");
-    var blob = new Blob(["Hello, world!"], {
+    var blob = new Blob(["Greetings from SoilViews!"], {
       type: "text/plain;charset=utf-8",
     });
-    FileSaver.saveAs(blob, "hello world.txt");
+    FileSaver.saveAs(blob, "Greetings from SoilViews.txt");
   }
 
   //for future upgrade
@@ -143,6 +143,12 @@ export class Dashboard extends React.Component {
           <br />
           <br />
           <br />
+          <button
+            className="waves-effect waves-light btn"
+            onClick={this.saveToFile}
+          >
+            Download file
+          </button>
           <br />
           <br />
         </div>
