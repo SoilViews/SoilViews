@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/actions/authActions";
-import { storage } from "../../firebase/index";
 
 class SignUp extends Component {
   constructor(props) {
@@ -39,7 +38,6 @@ class SignUp extends Component {
       password,
       city,
       telephone,
-      imageurl,
     } = this.state;
 
     const errors = this.validate(

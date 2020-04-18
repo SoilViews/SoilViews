@@ -9,12 +9,16 @@ class EditUser extends Component {
     this.state = {
       key: "",
       city: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      telephone: "",
     };
   }
 
   onSubmit = (e) => {
     e.preventDefault();
-    const { city } = this.state;
+    const { city, email, firstName, lastName, telephone } = this.state;
 
     const updateRef = firebase
       .firestore()
@@ -24,6 +28,10 @@ class EditUser extends Component {
     updateRef
       .update({
         city,
+        email,
+        firstName,
+        lastName,
+        telephone,
       })
       .then((docRef) => {
         this.setState({
@@ -102,7 +110,7 @@ class EditUser extends Component {
                 <input
                   type="text"
                   class="form-control"
-                  name="city"
+                  name="email"
                   value={this.state.email}
                   onChange={this.onChange}
                   placeholder="Title"
@@ -113,7 +121,7 @@ class EditUser extends Component {
                 <input
                   type="text"
                   class="form-control"
-                  name="city"
+                  name="firstName"
                   value={this.state.firstName}
                   onChange={this.onChange}
                   placeholder="Title"
@@ -124,7 +132,7 @@ class EditUser extends Component {
                 <input
                   type="text"
                   class="form-control"
-                  name="city"
+                  name="lastName"
                   value={this.state.lastName}
                   onChange={this.onChange}
                   placeholder="Title"
@@ -135,7 +143,7 @@ class EditUser extends Component {
                 <input
                   type="text"
                   class="form-control"
-                  name="city"
+                  name="telephone"
                   value={this.state.telephone}
                   onChange={this.onChange}
                   placeholder="Title"
@@ -143,14 +151,7 @@ class EditUser extends Component {
               </div>
               <div class="form-group">
                 <label for="title">Initials:</label> <br />
-                <input
-                  type="text"
-                  class="form-control"
-                  name="city"
-                  value={this.state.initials}
-                  onChange={this.onChange}
-                  placeholder="Title"
-                />
+                <p>{this.state.initials}</p>
               </div>
               <button type="submit" class="btn btn-success">
                 Submit
