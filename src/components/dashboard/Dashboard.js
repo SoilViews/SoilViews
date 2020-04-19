@@ -135,7 +135,7 @@ export class Dashboard extends React.Component {
             <div className="geojson-toggle">
               <label>Show Geojson </label>
               <input
-                style={{ opacity: 1 }}
+                style={{ opacity: 1, pointerEvents: "auto" }}
                 type="checkbox"
                 name="layertoggle"
                 id="layertoggle"
