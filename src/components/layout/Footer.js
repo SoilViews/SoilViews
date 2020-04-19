@@ -53,11 +53,7 @@ const Footer = (props) => {
         </div>
         <div className="footer-copyright">
           <div className="container">
-            Created by{" "}
-            <a className="white-text" href="#!" href="https://soilviews.com/">
-              {" "}
-              SoilViews{" "}
-            </a>
+            Created by <a href="https://soilviews.com/"> SoilViews </a>
           </div>
         </div>
       </footer>
