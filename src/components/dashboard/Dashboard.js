@@ -9,13 +9,12 @@ import { connect } from "react-redux";
 import { saveData } from "../../store/actions/authActions";
 import { saveAs } from "file-saver";
 import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
-import GeojsonLayer from "./GeojsonLayer";
+import "../dashboard/GeojsonLayer.css";
 // import JSZip from 'jszip'
-
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
-import L from "leaflet";
+// import L from "leaflet";
 
 //Hardcoded cordinates of polygons
 const polygon = [
@@ -132,10 +131,11 @@ export class Dashboard extends React.Component {
               />
             </div>
             {this.state.geojsonvisible && <GeojsonLayer url="geojson.json" />} */}
-            /////////////////WORK//////////////////
+            {/* /////////////////WORK////////////////// */}
             <div className="geojson-toggle">
-              <label htmlFor="layertoggle">Toggle Geojson </label>
+              <label>Show Geojson </label>
               <input
+                style={{ opacity: 1 }}
                 type="checkbox"
                 name="layertoggle"
                 id="layertoggle"
@@ -150,7 +150,7 @@ export class Dashboard extends React.Component {
                 value={this.state.geojsonvisible}
               />
             )}
-            ///////////////////////////////////////
+            {/* /////////////////////////////////////// */}
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
