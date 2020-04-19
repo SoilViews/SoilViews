@@ -3,17 +3,19 @@ import { Map, TileLayer, FeatureGroup, Polygon, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from "../Files/london_postcodes.json";
+import geojson from "../Files/geojson.json";
 import "../../leaflet.filelayer";
 import { connect } from "react-redux";
 import { saveData } from "../../store/actions/authActions";
 import { saveAs } from "file-saver";
 import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
+import GeojsonLayer from "./GeojsonLayer";
 // import JSZip from 'jszip'
 
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
-// import L from "leaflet";
+import L from "leaflet";
 
 //Hardcoded cordinates of polygons
 const polygon = [
@@ -39,6 +41,7 @@ export class Dashboard extends React.Component {
       uploadValue: 0,
       filesMetadata: [],
       rows: [],
+      geojsonvisible: false,
     };
   }
   //Set location when the map is visualized
@@ -90,6 +93,12 @@ export class Dashboard extends React.Component {
     );
   }
 
+  onGeojsonToggle = (e) => {
+    this.setState({
+      geojsonvisible: e.currentTarget.checked,
+    });
+  };
+
   componentDidMount() {}
 
   render() {
@@ -104,7 +113,6 @@ export class Dashboard extends React.Component {
           <HorizontalLinearStepper />
           <br />
           <hr />
-          <br />
           <Map
             style={{ height: "50vh" }}
             center={position}
@@ -113,6 +121,36 @@ export class Dashboard extends React.Component {
             onCreate={this.onCreate}
             onLocationfound={this.handleLocationFound}
           >
+            {/* <div className="geojson-toggle">
+              <label htmlFor="layertoggle">Toggle Geojson </label>
+              <input
+                type="checkbox"
+                name="layertoggle"
+                id="layertoggle"
+                value={this.state.geojsonvisible}
+                onChange={this.onGeojsonToggle}
+              />
+            </div>
+            {this.state.geojsonvisible && <GeojsonLayer url="geojson.json" />} */}
+            /////////////////WORK//////////////////
+            <div className="geojson-toggle">
+              <label htmlFor="layertoggle">Toggle Geojson </label>
+              <input
+                type="checkbox"
+                name="layertoggle"
+                id="layertoggle"
+                value={this.state.geojsonvisible}
+                onChange={this.onGeojsonToggle}
+              />
+            </div>
+            {this.state.geojsonvisible && (
+              <GeoJSON
+                data={geojson}
+                style={this.geoJSONStyle}
+                value={this.state.geojsonvisible}
+              />
+            )}
+            ///////////////////////////////////////
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
