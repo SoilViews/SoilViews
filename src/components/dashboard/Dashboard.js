@@ -10,6 +10,7 @@ import { saveData } from "../../store/actions/authActions";
 import { saveAs } from "file-saver";
 import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
 import "../dashboard/GeojsonLayer.css";
+import Search from "react-leaflet-search";
 // import JSZip from 'jszip'
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
@@ -120,6 +121,7 @@ export class Dashboard extends React.Component {
             onCreate={this.onCreate}
             onLocationfound={this.handleLocationFound}
           >
+            <Search />
             {/* <div className="geojson-toggle">
               <label htmlFor="layertoggle">Toggle Geojson </label>
               <input

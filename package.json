@@ -28,6 +28,7 @@
     "react-history": "^0.18.2",
     "react-leaflet": "^2.6.1",
     "react-leaflet-draw": "^0.19.0",
+    "react-leaflet-search": "^1.0.3",
     "react-redux": "^5.1.1",
     "react-redux-firebase": "^2.2.4",
     "react-router": "^5.1.2",
