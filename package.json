@@ -1,6 +1,7 @@
 {
   "name": "react-redux",
   "version": "0.1.0",
+  "homepage": "https://soilviews.github.io/SoilViews/",
   "private": true,
   "dependencies": {
     "@mapbox/togeojson": "^0.16.0",
