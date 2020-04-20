@@ -1,5 +1,13 @@
 import React, { createRef } from "react";
-import { Map, TileLayer, FeatureGroup, Polygon, GeoJSON } from "react-leaflet";
+import {
+  Map,
+  TileLayer,
+  FeatureGroup,
+  Polygon,
+  GeoJSON,
+  Marker,
+  Popup,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from "../Files/london_postcodes.json";
@@ -11,6 +19,8 @@ import { saveAs } from "file-saver";
 import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
 import "../dashboard/GeojsonLayer.css";
 import Search from "react-leaflet-search";
+import Basemap from "./Basemap";
+import "./Map.css";
 // import JSZip from 'jszip'
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
@@ -29,6 +39,7 @@ export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      basemap: "osm",
       filenames: [],
       downloadURLs: [],
       lat: 42.696295,
@@ -42,6 +53,7 @@ export class Dashboard extends React.Component {
       filesMetadata: [],
       rows: [],
       geojsonvisible: false,
+      basemap: "osm",
     };
   }
   //Set location when the map is visualized
@@ -100,6 +112,12 @@ export class Dashboard extends React.Component {
   };
 
   componentDidMount() {}
+  onBMChange = (bm) => {
+    // console.log(this);
+    this.setState({
+      basemap: bm,
+    });
+  };
 
   render() {
     const position = [this.state.lat, this.state.lng];
@@ -107,6 +125,13 @@ export class Dashboard extends React.Component {
     if (profile.role === "User" || profile.role === "Admin") {
       console.log("User role", profile.role);
       console.log("URL", this.state.url);
+      const basemapsDict = {
+        osm: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        hot: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+        dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
+        cycle: "https://dev.{s}.tile.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+        sentinel: "",
+      };
       return (
         <div id="map" className="dashboard container">
           <br />
@@ -122,18 +147,6 @@ export class Dashboard extends React.Component {
             onLocationfound={this.handleLocationFound}
           >
             <Search />
-            {/* <div className="geojson-toggle">
-              <label htmlFor="layertoggle">Toggle Geojson </label>
-              <input
-                type="checkbox"
-                name="layertoggle"
-                id="layertoggle"
-                value={this.state.geojsonvisible}
-                onChange={this.onGeojsonToggle}
-              />
-            </div>
-            {this.state.geojsonvisible && <GeojsonLayer url="geojson.json" />} */}
-            {/* /////////////////WORK////////////////// */}
             <div className="geojson-toggle">
               <label>Show Geojson </label>
               <input
@@ -155,7 +168,13 @@ export class Dashboard extends React.Component {
             {/* /////////////////////////////////////// */}
             <TileLayer
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+              url={basemapsDict[this.state.basemap]}
+              // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+            />
+            <Basemap
+              style={{ select: "yes" }}
+              basemap={this.state.basemap}
+              onChange={this.onBMChange}
             />
             <FeatureGroup>
               <EditControl

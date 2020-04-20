@@ -1,0 +1,19 @@
+@import url("~leaflet/dist/leaflet.css");
+
+.basemaps-container {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+  z-index: 1000;
+  height: auto;
+  width: auto;
+  top: 100px;
+  border-radius: 4px;
+  background-color: white;
+}
+.basemaps-container select {
+  top: 100px;
+  width: 200px;
+  height: 30px;
+  display: table;
+}
