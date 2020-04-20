@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import firebase from "../../firebase";
 import Checkbox from "./checkbox";
+import { connect } from "react-redux";
+import { saveOrderData } from "../../store/actions/newOrder";
 
 const OPTIONS = ["FoodType1", "FoodType2", "FoodType3"];
 
@@ -46,13 +47,11 @@ class SelectFoodTypes extends Component {
 
   handleFormSubmit = (formSubmitEvent) => {
     formSubmitEvent.preventDefault();
-    const selectedBoxes = Object.keys(this.state.checkboxes)
-    .filter((checkbox) => this.state.checkboxes[checkbox]);
+    const selectedBoxes = Object.keys(this.state.checkboxes).filter(
+      (checkbox) => this.state.checkboxes[checkbox]
+    );
 
-        const db = firebase.firestore();
-        db.collection("orders").add({
-          selectedFoodTypes: selectedBoxes,
-        });
+    this.props.saveOrderData(selectedBoxes);
 
     console.log("Database updted!");
   };
@@ -102,4 +101,15 @@ class SelectFoodTypes extends Component {
   }
 }
 
-export default SelectFoodTypes;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveOrderData: (selectedBoxes) => dispatch(saveOrderData(selectedBoxes)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectFoodTypes);
