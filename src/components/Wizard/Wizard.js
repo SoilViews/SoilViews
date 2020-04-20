@@ -12,15 +12,9 @@ export class Wizard extends React.Component {
         fileURL: '',                  //populates When file is uploaded
         status: 'submitted',          //initial status
         landNumber: '',               //populates when landNumber is typed
-        coordinatesInput: {           //populates when coordinated are entered manually
-          lat:[],
-          lon:[]
-        },
         cropTypesChosen: [],          //populates when crops are chosen
         notes: '',
         cost:'',
-        
-
       }
   }
 

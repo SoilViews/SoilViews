@@ -1,19 +1,20 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import { useHistory } from "react-router-dom"
-import Select from 'react-select';
-import Dashboard from '../dashboard/Dashboard'
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Stepper from "@material-ui/core/Stepper";
+import Step from "@material-ui/core/Step";
+import StepLabel from "@material-ui/core/StepLabel";
+import StepContent from "@material-ui/core/StepContent";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import { useHistory } from "react-router-dom";
+import Select from "react-select";
+import Dashboard from "../dashboard/Dashboard";
+import SelectFoodTypes from '../Wizard/SelectFoodTypes'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
+    width: "100%",
   },
   button: {
     marginTop: theme.spacing(1),
@@ -29,20 +30,18 @@ const useStyles = makeStyles(theme => ({
 
 //Steps list
 function getSteps() {
-  return ['Select Land Input', 'Choose culture type', 'Review your order'];
+  return ["Choose culture type", "Review your order"];
 }
 
 //Steps Content
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <LandChoser />;
+      return <SelectFoodTypes />;
     case 1:
-      return 'Checkbox items to choose from';
-    case 2:
-      return 'Review';
+      return "Checkbox items to choose from";
     default:
-      return 'Unknown step';
+      return "Unknown step";
   }
 }
 
@@ -53,11 +52,11 @@ export default function VerticalLinearStepper() {
   const history = useHistory();
 
   const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
   // const handleReset = () => {
@@ -65,7 +64,9 @@ export default function VerticalLinearStepper() {
   // };
 
   const handleDone = () => {
-    window.alert('Thank you for your order. You can check your order status on "My orders" page')
+    window.alert(
+      'Thank you for your order. You can check your order status on "My orders" page'
+    );
     // TODO: Add new project button
     // setActiveStep(0);
     history.push("/");
@@ -94,7 +95,7 @@ export default function VerticalLinearStepper() {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Next' : 'Next'}
+                    {activeStep === steps.length - 1 ? "Next" : "Next"}
                   </Button>
                 </div>
               </div>
@@ -103,20 +104,17 @@ export default function VerticalLinearStepper() {
         ))}
       </Stepper>
       {activeStep === steps.length && (
-        <Paper 
-          square elevation={0} 
-          className={classes.resetContainer}
-        >
+        <Paper square elevation={0} className={classes.resetContainer}>
           <Typography>Payment Options</Typography>
           <Button
-              disabled={activeStep === 0}
-              onClick={handleBack}
-              className={classes.button}
+            disabled={activeStep === 0}
+            onClick={handleBack}
+            className={classes.button}
           >
             Back
           </Button>
-          <Button 
-            onClick={handleDone} 
+          <Button
+            onClick={handleDone}
             className={classes.button}
             color="primary"
             variant="contained"
@@ -130,40 +128,39 @@ export default function VerticalLinearStepper() {
 }
 //Landchoser input options
 const options = [
-  { value: 'dashboard', label: 'Map' },
-  { value: 'LandNumberInput', label: 'Enter Land Number' },
-  { value: 'CoordinatesInput', label: 'Enter Land Coordinates' },
-  { value: 'UploadFile', label: 'Upload a file' }
+  { value: "dashboard", label: "Map" },
+  { value: "LandNumberInput", label: "Enter Land Number" },
+  { value: "CoordinatesInput", label: "Enter Land Coordinates" },
+  { value: "UploadFile", label: "Upload a file" },
 ];
 
 class LandChoser extends React.Component {
-  constructor(props){
-    super(props)
-     this.state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       selectedOption: null,
-      landNumber:'',
-      landCoordinates:'',
-      fileURL: ''
-  };
-}
-//This verifies which option is selected from the dropdown
-  handleChange = selectedOption => {
-    this.setState(
-        { selectedOption },
-        () => console.log(`Option selected:`, this.state.selectedOption),
-      );
-      // alert('you selected' , this.state);
+      landNumber: "",
+      landCoordinates: "",
+      fileURL: "",
+    };
+  }
+  //This verifies which option is selected from the dropdown
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption }, () =>
+      console.log(`Option selected:`, this.state.selectedOption)
+    );
+    // alert('you selected' , this.state);
   };
 
-//This listen for changes in the input field on every different input type
+  //This listen for changes in the input field on every different input type
   handleChildChange = (e) => {
     this.setState({
-      [e.target.id]: e.target.value
-    })
-  }
+      [e.target.id]: e.target.value,
+    });
+  };
 
   render() {
-    const {selectedOption} = this.state;
+    const { selectedOption } = this.state;
 
     return (
       <div className="overlay">
@@ -172,50 +169,63 @@ class LandChoser extends React.Component {
           onChange={this.handleChange}
           options={options}
         />
-              {/* Start of the input fields selector */}
-       <div> 
+        {/* Start of the input fields selector */}
+        <div>
           {selectedOption && selectedOption.value === "LandNumberInput" ? (
-             <LandNumberInput 
-              handleChildChange = {this.handleChildChange.bind(this)}
-              />
+            <LandNumberInput
+              handleChildChange={this.handleChildChange.bind(this)}
+            />
           ) : selectedOption && selectedOption.value === "CoordinatesInput" ? (
-            <CoordinatesInput 
-              handleChildChange = {this.handleChildChange.bind(this)}
-              />
+            <CoordinatesInput
+              handleChildChange={this.handleChildChange.bind(this)}
+            />
           ) : selectedOption && selectedOption.value === "UploadFile" ? (
-            <UploadFile 
-              handleChildChange = {this.handleChildChange.bind(this)}
-              />
+            <UploadFile handleChildChange={this.handleChildChange.bind(this)} />
           ) : selectedOption && selectedOption.value === "dashboard" ? (
             <Dashboard />
-          )  : null}
+          ) : null}
         </div>
       </div>
     );
   }
 }
 
-// All stateless input fields 
+// All stateless input fields
 const LandNumberInput = (props) => {
   return (
-      <div className="container">
-        <input type="text" placeholder='Enter land number' id="landNumber" onChange={props.handleChildChange}/>
-      </div>
+    <div className="container">
+      <input
+        type="text"
+        placeholder="Enter land number"
+        id="landNumber"
+        onChange={props.handleChildChange}
+      />
+    </div>
   );
-}
+};
 
 const CoordinatesInput = (props) => {
   return (
-      <div className="container">
-        <input type="text" placeholder='Enter the coordinates of your land' id="landCoordinates" onChange={props.handleChildChange}/>
-      </div>
+    <div className="container">
+      <input
+        type="text"
+        placeholder="Enter the coordinates of your land"
+        id="landCoordinates"
+        onChange={props.handleChildChange}
+      />
+    </div>
   );
-}
+};
 
 const UploadFile = (props) => {
   return (
-      <div className="container">
-        <input type="text" placeholder='Enter the URL of your file' id="fileURL" onChange={props.handleChildChange}/>
-      </div>
+    <div className="container">
+      <input
+        type="text"
+        placeholder="Enter the URL of your file"
+        id="fileURL"
+        onChange={props.handleChildChange}
+      />
+    </div>
   );
-}
+};
