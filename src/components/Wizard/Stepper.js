@@ -8,9 +8,9 @@ import Button from "@material-ui/core/Button";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import { useHistory } from "react-router-dom";
-import Select from "react-select";
-import Dashboard from "../dashboard/Dashboard";
-import SelectFoodTypes from '../Wizard/SelectFoodTypes'
+// import Select from "react-select";
+// import Dashboard from "../dashboard/Dashboard";
+import SelectFoodTypes from "../Wizard/SelectFoodTypes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -127,105 +127,105 @@ export default function VerticalLinearStepper() {
   );
 }
 //Landchoser input options
-const options = [
-  { value: "dashboard", label: "Map" },
-  { value: "LandNumberInput", label: "Enter Land Number" },
-  { value: "CoordinatesInput", label: "Enter Land Coordinates" },
-  { value: "UploadFile", label: "Upload a file" },
-];
+// const options = [
+//   { value: "dashboard", label: "Map" },
+//   { value: "LandNumberInput", label: "Enter Land Number" },
+//   { value: "CoordinatesInput", label: "Enter Land Coordinates" },
+//   { value: "UploadFile", label: "Upload a file" },
+// ];
 
-class LandChoser extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedOption: null,
-      landNumber: "",
-      landCoordinates: "",
-      fileURL: "",
-    };
-  }
-  //This verifies which option is selected from the dropdown
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption }, () =>
-      console.log(`Option selected:`, this.state.selectedOption)
-    );
-    // alert('you selected' , this.state);
-  };
+// class LandChoser extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       selectedOption: null,
+//       landNumber: "",
+//       landCoordinates: "",
+//       fileURL: "",
+//     };
+//   }
+//   //This verifies which option is selected from the dropdown
+//   handleChange = (selectedOption) => {
+//     this.setState({ selectedOption }, () =>
+//       console.log(`Option selected:`, this.state.selectedOption)
+//     );
+//     // alert('you selected' , this.state);
+//   };
 
-  //This listen for changes in the input field on every different input type
-  handleChildChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value,
-    });
-  };
+//   //This listen for changes in the input field on every different input type
+//   handleChildChange = (e) => {
+//     this.setState({
+//       [e.target.id]: e.target.value,
+//     });
+//   };
 
-  render() {
-    const { selectedOption } = this.state;
+//   render() {
+//     const { selectedOption } = this.state;
 
-    return (
-      <div className="overlay">
-        <Select
-          value={selectedOption}
-          onChange={this.handleChange}
-          options={options}
-        />
-        {/* Start of the input fields selector */}
-        <div>
-          {selectedOption && selectedOption.value === "LandNumberInput" ? (
-            <LandNumberInput
-              handleChildChange={this.handleChildChange.bind(this)}
-            />
-          ) : selectedOption && selectedOption.value === "CoordinatesInput" ? (
-            <CoordinatesInput
-              handleChildChange={this.handleChildChange.bind(this)}
-            />
-          ) : selectedOption && selectedOption.value === "UploadFile" ? (
-            <UploadFile handleChildChange={this.handleChildChange.bind(this)} />
-          ) : selectedOption && selectedOption.value === "dashboard" ? (
-            <Dashboard />
-          ) : null}
-        </div>
-      </div>
-    );
-  }
-}
+//     return (
+//       <div className="overlay">
+//         <Select
+//           value={selectedOption}
+//           onChange={this.handleChange}
+//           options={options}
+//         />
+//         {/* Start of the input fields selector */}
+//         <div>
+//           {selectedOption && selectedOption.value === "LandNumberInput" ? (
+//             <LandNumberInput
+//               handleChildChange={this.handleChildChange.bind(this)}
+//             />
+//           ) : selectedOption && selectedOption.value === "CoordinatesInput" ? (
+//             <CoordinatesInput
+//               handleChildChange={this.handleChildChange.bind(this)}
+//             />
+//           ) : selectedOption && selectedOption.value === "UploadFile" ? (
+//             <UploadFile handleChildChange={this.handleChildChange.bind(this)} />
+//           ) : selectedOption && selectedOption.value === "dashboard" ? (
+//             <Dashboard />
+//           ) : null}
+//         </div>
+//       </div>
+//     );
+//   }
+// }
 
-// All stateless input fields
-const LandNumberInput = (props) => {
-  return (
-    <div className="container">
-      <input
-        type="text"
-        placeholder="Enter land number"
-        id="landNumber"
-        onChange={props.handleChildChange}
-      />
-    </div>
-  );
-};
+// // All stateless input fields
+// const LandNumberInput = (props) => {
+//   return (
+//     <div className="container">
+//       <input
+//         type="text"
+//         placeholder="Enter land number"
+//         id="landNumber"
+//         onChange={props.handleChildChange}
+//       />
+//     </div>
+//   );
+// };
 
-const CoordinatesInput = (props) => {
-  return (
-    <div className="container">
-      <input
-        type="text"
-        placeholder="Enter the coordinates of your land"
-        id="landCoordinates"
-        onChange={props.handleChildChange}
-      />
-    </div>
-  );
-};
+// const CoordinatesInput = (props) => {
+//   return (
+//     <div className="container">
+//       <input
+//         type="text"
+//         placeholder="Enter the coordinates of your land"
+//         id="landCoordinates"
+//         onChange={props.handleChildChange}
+//       />
+//     </div>
+//   );
+// };
 
-const UploadFile = (props) => {
-  return (
-    <div className="container">
-      <input
-        type="text"
-        placeholder="Enter the URL of your file"
-        id="fileURL"
-        onChange={props.handleChildChange}
-      />
-    </div>
-  );
-};
+// const UploadFile = (props) => {
+//   return (
+//     <div className="container">
+//       <input
+//         type="text"
+//         placeholder="Enter the URL of your file"
+//         id="fileURL"
+//         onChange={props.handleChildChange}
+//       />
+//     </div>
+//   );
+// };

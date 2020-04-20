@@ -10,6 +10,7 @@ class SelectFoodTypes extends Component {
     super(props);
     this.state = {
       selectedFoodType: "",
+      saveButtonPressed: false,
       checkboxes: OPTIONS.reduce(
         (options, option) => ({
           ...options,
@@ -50,6 +51,9 @@ class SelectFoodTypes extends Component {
     const selectedBoxes = Object.keys(this.state.checkboxes).filter(
       (checkbox) => this.state.checkboxes[checkbox]
     );
+    this.setState({
+      saveButtonPressed: true,
+    });
 
     this.props.saveOrderData(selectedBoxes);
 
@@ -70,6 +74,13 @@ class SelectFoodTypes extends Component {
   render() {
     return (
       <div className="container">
+        <ol>
+          <h3>Choose your preferred crops</h3>
+          <li>
+            You must choose up to two types of crops which display your land
+            type.The analysis will give us more information about your order
+          </li>
+        </ol>
         <div className="row mt-5">
           <div className="col-sm-12">
             <form onSubmit={this.handleFormSubmit}>
@@ -79,6 +90,7 @@ class SelectFoodTypes extends Component {
                   type="button"
                   className="btn btn-outline-primary mr-2"
                   onClick={this.selectAll}
+                  disabled={this.state.saveButtonPressed}
                 >
                   Select All
                 </button>
@@ -86,6 +98,7 @@ class SelectFoodTypes extends Component {
                   type="button"
                   className="btn btn-outline-primary mr-2"
                   onClick={this.deselectAll}
+                  disabled={this.state.saveButtonPressed}
                 >
                   Deselect All
                 </button>
