@@ -1,13 +1,5 @@
 import React, { createRef } from "react";
-import {
-  Map,
-  TileLayer,
-  FeatureGroup,
-  Polygon,
-  GeoJSON,
-  Marker,
-  Popup,
-} from "react-leaflet";
+import { Map, TileLayer, FeatureGroup, Polygon, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from "../Files/london_postcodes.json";
@@ -53,7 +45,6 @@ export class Dashboard extends React.Component {
       filesMetadata: [],
       rows: [],
       geojsonvisible: false,
-      basemap: "osm",
     };
   }
   //Set location when the map is visualized
