@@ -155,6 +155,9 @@ export default function HorizontalLinearStepper() {
             </Typography>
             <div>
               <Button
+                style = {{
+                  ...activeStep === 0 ? {display: "none"} : {}
+                }}
                 disabled={activeStep === 0}
                 onClick={handleBack}
                 className={classes.button}
@@ -174,12 +177,15 @@ export default function HorizontalLinearStepper() {
               )}
 
               <Button
+
                 variant="contained"
                 color="primary"
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
+                {activeStep === steps.length - 1 ? "Finish" : 
+                  activeStep === 0 ? "Start" : "Next"}
+                
               </Button>
             </div>
           </div>
