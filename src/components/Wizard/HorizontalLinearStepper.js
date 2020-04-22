@@ -116,7 +116,12 @@ export default function HorizontalLinearStepper() {
   const handleReset = () => {
     setActiveStep(0);
   };
-
+  const mapEvent = (e) => {
+    var e = document.createEvent("Event");
+    e.initEvent("click", true, true);
+    var cb = document.getElementsByClassName("leaflet-draw-draw-polygon");
+    return !cb[0].dispatchEvent(e);
+  };
   return (
     <div className={classes.root}>
       <Stepper activeStep={activeStep}>
@@ -155,8 +160,8 @@ export default function HorizontalLinearStepper() {
             </Typography>
             <div>
               <Button
-                style = {{
-                  ...activeStep === 0 ? {display: "none"} : {}
+                style={{
+                  ...(activeStep === 0 ? { display: "none" } : {}),
                 }}
                 disabled={activeStep === 0}
                 onClick={handleBack}
@@ -169,7 +174,9 @@ export default function HorizontalLinearStepper() {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={handleSkip}
+                  onClick={(e) => {
+                    mapEvent(e);
+                  }}
                   className={classes.button}
                 >
                   Draw a polygon
@@ -177,15 +184,16 @@ export default function HorizontalLinearStepper() {
               )}
 
               <Button
-
                 variant="contained"
                 color="primary"
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1 ? "Finish" : 
-                  activeStep === 0 ? "Start" : "Next"}
-                
+                {activeStep === steps.length - 1
+                  ? "Finish"
+                  : activeStep === 0
+                  ? "Start"
+                  : "Next"}
               </Button>
             </div>
           </div>
