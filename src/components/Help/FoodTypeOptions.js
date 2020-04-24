@@ -14,38 +14,38 @@ class FoodTypeOptions extends React.Component {
             <p>
               <label>
                 <input type="checkbox" />
-                <span style={{ color: "black" }}>Овошки:</span>
-                <span> Ябълки, Круши, Сливи, Праскови, Череши </span>
+                <span style={{ color: "black" }}>Fruits:</span>
+                <span> Apples, Pears, Plums, Peaches, Cherries </span>
               </label>
             </p>
             <p>
               <label>
                 <input type="checkbox" />
-                <span>Vegetables</span>
+                <span style={{ color: "black" }}>Vegetables: </span><span> Tomatoes, Peppers, Cabbage </span>
               </label>
             </p>
             <p>
               <label>
                 <input type="checkbox" />
-                <span>Protein</span>
+                <span style={{ color: "black" }}>Protein</span><span> Soy, Quinoa, Peanuts</span>
               </label>
             </p>
             <p>
               <label>
                 <input type="checkbox" />
-                <span>Grains</span>
+                <span style={{ color: "black" }}>Grains</span><span> Wheat, Corn, Sunflower </span>
               </label>
             </p>
             <p>
               <label>
                 <input type="checkbox" />
-                <span>Vines</span>
+                <span style={{ color: "black" }}>Vines</span><span> Desert</span>
               </label>
             </p>
             <p>
               <label>
                 <input type="checkbox" />
-                <span>Beries</span>
+                <span style={{ color: "black" }}>Beries</span><span> Raspberries, Blackberries, Blueberries, Strawberries, Chokeberries </span>
               </label>
             </p>
           </form>
