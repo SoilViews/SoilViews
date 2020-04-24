@@ -8,9 +8,9 @@ class FoodTypeOptions extends React.Component {
 
   render() {
     return (
-      <div className="row">
-        <div className="">
-          <form action="#">
+      <form action="#">
+        <div className="row">
+          <div className="col s6">
             <p>
               <label>
                 <input type="checkbox" />
@@ -21,36 +21,43 @@ class FoodTypeOptions extends React.Component {
             <p>
               <label>
                 <input type="checkbox" />
-                <span style={{ color: "black" }}>Vegetables: </span><span> Tomatoes, Peppers, Cabbage </span>
+                <span style={{ color: "black" }}>Vegetables: </span>
+                <span> Tomatoes, Peppers, Cabbage </span>
               </label>
             </p>
             <p>
               <label>
                 <input type="checkbox" />
-                <span style={{ color: "black" }}>Protein</span><span> Soy, Quinoa, Peanuts</span>
+                <span style={{ color: "black" }}>Protein</span>
+                <span> Soy, Quinoa, Peanuts</span>
+              </label>
+            </p>
+          </div>
+          <div className="col s6">
+            <p>
+              <label>
+                <input type="checkbox" />
+                <span style={{ color: "black" }}>Grains</span>
+                <span> Wheat, Corn, Sunflower </span>
               </label>
             </p>
             <p>
               <label>
                 <input type="checkbox" />
-                <span style={{ color: "black" }}>Grains</span><span> Wheat, Corn, Sunflower </span>
+                <span style={{ color: "black" }}>Vines</span>
+                <span> Desert</span>
               </label>
             </p>
             <p>
               <label>
                 <input type="checkbox" />
-                <span style={{ color: "black" }}>Vines</span><span> Desert</span>
+                <span style={{ color: "black" }}>Beries</span>
+                <span> Raspberries, Blackberries, Blueberries, Strawberries </span>
               </label>
             </p>
-            <p>
-              <label>
-                <input type="checkbox" />
-                <span style={{ color: "black" }}>Beries</span><span> Raspberries, Blackberries, Blueberries, Strawberries, Chokeberries </span>
-              </label>
-            </p>
-          </form>
+          </div>
         </div>
-      </div>
+      </form>
     );
   }
 }

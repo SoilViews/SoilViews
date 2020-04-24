@@ -5,7 +5,8 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import SelectFoodTypes from "../Wizard/SelectFoodTypes";
+// import SelectFoodTypes from "../Wizard/SelectFoodTypes";
+import FoodTypeOptions from "./FoodTypeOptions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,7 +62,7 @@ function getStepContent(step) {
         </ol>
       );
     case 2:
-      return <SelectFoodTypes />;
+      return <FoodTypeOptions />;
     case 3:
       return "Your land cordinates will be saved!";
     default:
