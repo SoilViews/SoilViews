@@ -5,11 +5,67 @@
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [23.343134, 42.687187]
+        "coordinates": [26.41389781, 41.9425557]
       },
       "properties": {
         "Name": "Парцел 1",
         "Crops": "Ябълки"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [26.41472289, 41.95044877]
+      },
+      "properties": {
+        "Name": "Парцел 2",
+        "Crops": "Ябълки"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [26.42325025, 41.9469008]
+      },
+      "properties": {
+        "Name": "Парцел 3",
+        "Crops": "Ябълки"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [26.43590896, 41.95044264]
+      },
+      "properties": {
+        "Name": "Парцел 4",
+        "Crops": "Ябълки"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [26.44198576, 41.95805495]
+      },
+      "properties": {
+        "Name": "Парцел 5",
+        "Crops": "Ябълки"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [26.45022974, 41.96445632]
+      },
+      "properties": {
+        "Name": "Парцел ",
+        "Crops": "Ябълки",
+        "coordinates": [41.96445632, 26.45022974]
       }
     }
   ]

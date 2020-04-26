@@ -43,18 +43,9 @@ export class Dashboard extends React.Component {
     super(props);
     this.state = {
       basemap: "osm",
-      filenames: [],
       downloadURLs: [],
-      lat: 42.696295,
-      lng: 23.303643,
+      cordinatesCenter: [42.696295, 23.303643],
       zoom: 10,
-      image: null,
-      url: "",
-      progress: 0,
-      files: [],
-      uploadValue: 0,
-      filesMetadata: [],
-      rows: [],
       geojsonvisible: false,
     };
   }
@@ -113,6 +104,12 @@ export class Dashboard extends React.Component {
     });
   };
 
+  onGeojsonToggleButton = (e) => {
+    this.setState({
+      geojsonvisible: e.currentTarget.click,
+    });
+  };
+
   componentDidMount() {}
   onBMChange = (bm) => {
     // console.log(this);
@@ -120,27 +117,18 @@ export class Dashboard extends React.Component {
       basemap: bm,
     });
   };
+
+  //same for polygon
   onEachFeaturePoint(feature, layer) {
     console.log("feature: ", feature);
     console.log("layer: ", layer);
     var popupContent =
       feature.properties.Name + "  " + feature.properties.Crops;
-    if (feature.properties && feature.properties.popupContent) {
-      popupContent += feature.properties.Ordem;
-      console.log(feature.properties.Ordem);
-    }
-    layer.bindPopup(popupContent);
-    layer.on({
-      click: function (e) {
-        console.log("e: ", e);
-        console.log("click");
-      },
+    console.log(feature.properties.coordinates);
+    this.setState({
+      cordinatesCenter: feature.properties.coordinates,
     });
-  }
-
-  onEachFeaturePolygon(feature, layer) {
-    console.log("feature: ", feature);
-    console.log("layer: ", layer);
+    layer.bindPopup(popupContent);
     layer.on({
       click: function (e) {
         console.log("e: ", e);
@@ -155,11 +143,10 @@ export class Dashboard extends React.Component {
   }
 
   render() {
-    const position = [this.state.lat, this.state.lng];
+    const position = this.state.cordinatesCenter;
     const { profile } = this.props;
     if (profile.role === "User" || profile.role === "Admin") {
       console.log("User role", profile.role);
-      console.log("URL", this.state.url);
       const basemapsDict = {
         osm: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         hot: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
@@ -211,11 +198,13 @@ export class Dashboard extends React.Component {
             <Marker position={position}>
               <Popup>Тест</Popup>
             </Marker>
-            <GeoJSON
-              data={points}
-              onEachFeature={this.onEachFeaturePoint.bind(this)}
-              // pointToLayer={this.pointToLayer.bind(this)}
-            />
+            {this.state.geojsonvisible && (
+              <GeoJSON
+                data={points}
+                onEachFeature={this.onEachFeaturePoint.bind(this)}
+                // pointToLayer={this.pointToLayer.bind(this)}
+              />
+            )}
             <Basemap
               style={{ select: "yes" }}
               basemap={this.state.basemap}
@@ -246,6 +235,12 @@ export class Dashboard extends React.Component {
           </Map>
           <br />
           <br />
+          <button
+            className="waves-effect waves-light btn"
+            onClick={this.onGeojsonToggleButton}
+          >
+            Парцел 1
+          </button>
           <br />
           <button
             className="waves-effect waves-light btn"
