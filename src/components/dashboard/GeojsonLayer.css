@@ -9,3 +9,15 @@
   padding: 4px;
   border-radius: 3px;
 }
+
+.geojson-toggle1 {
+  position: absolute;
+  top: 120px;
+  right: 11px;
+  z-index: 1000;
+  margin-top: 20px;
+  background: white;
+  font-size: 14px;
+  padding: 4px;
+  border-radius: 3px;
+}

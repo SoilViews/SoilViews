@@ -46,7 +46,8 @@ export class Dashboard extends React.Component {
       downloadURLs: [],
       cordinatesCenter: [42.696295, 23.303643],
       zoom: 10,
-      geojsonvisible: false,
+      showMarkers: false,
+      showPolygons: false,
     };
   }
   //Set location when the map is visualized
@@ -98,9 +99,15 @@ export class Dashboard extends React.Component {
     );
   }
 
-  onGeojsonToggle = (e) => {
+  onGeojsonPolygons = (e) => {
     this.setState({
-      geojsonvisible: e.currentTarget.checked,
+      showPolygons: e.currentTarget.checked,
+    });
+  };
+
+  onGeojsonMarkers = (e) => {
+    this.setState({
+      showMarkers: e.currentTarget.checked,
     });
   };
 
@@ -170,22 +177,42 @@ export class Dashboard extends React.Component {
             onLocationfound={this.handleLocationFound}
           >
             <Search />
+
             <div className="geojson-toggle">
-              <label>Show Geojson </label>
+              <label>Show Polygons </label>
               <input
                 style={{ opacity: 1, pointerEvents: "auto" }}
                 type="checkbox"
                 name="layertoggle"
                 id="layertoggle"
-                value={this.state.geojsonvisible}
-                onChange={this.onGeojsonToggle}
+                value={this.state.showPolygons}
+                onChange={this.onGeojsonPolygons}
               />
             </div>
-            {this.state.geojsonvisible && (
+            {this.state.showPolygons && (
               <GeoJSON
                 data={geojson}
                 style={this.geoJSONStyle}
-                value={this.state.geojsonvisible}
+                value={this.state.showPolygons}
+              />
+            )}
+
+            <div className="geojson-toggle1">
+              <label>Show Markers </label>
+              <input
+                style={{ opacity: 1, pointerEvents: "auto" }}
+                type="checkbox"
+                name="layertoggle"
+                id="layertoggle"
+                value={this.state.showMarkers}
+                onChange={this.onGeojsonMarkers}
+              />
+            </div>
+            {this.state.showMarkers && (
+              <GeoJSON
+                data={points}
+                style={this.geoJSONStyle}
+                value={this.state.showMarkers}
               />
             )}
             {/* /////////////////////////////////////// */}
