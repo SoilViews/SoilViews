@@ -123,9 +123,11 @@ export class Dashboard extends React.Component {
   onEachFeaturePoint(feature, layer) {
     console.log("feature: ", feature);
     console.log("layer: ", layer);
-    var popupContent = "<p>DaTerra Web</p>";
+    var popupContent =
+      feature.properties.Name + "  " + feature.properties.Crops;
     if (feature.properties && feature.properties.popupContent) {
-      popupContent += feature.properties.popupContent;
+      popupContent += feature.properties.Ordem;
+      console.log(feature.properties.Ordem);
     }
     layer.bindPopup(popupContent);
     layer.on({
@@ -213,9 +215,7 @@ export class Dashboard extends React.Component {
               data={points}
               onEachFeature={this.onEachFeaturePoint.bind(this)}
               // pointToLayer={this.pointToLayer.bind(this)}
-            >
-              <Popup>Парцел 1</Popup>
-            </GeoJSON>
+            />
             <Basemap
               style={{ select: "yes" }}
               basemap={this.state.basemap}
