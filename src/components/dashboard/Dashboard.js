@@ -123,6 +123,11 @@ export class Dashboard extends React.Component {
   onEachFeaturePoint(feature, layer) {
     console.log("feature: ", feature);
     console.log("layer: ", layer);
+    var popupContent = "<p>DaTerra Web</p>";
+    if (feature.properties && feature.properties.popupContent) {
+      popupContent += feature.properties.popupContent;
+    }
+    layer.bindPopup(popupContent);
     layer.on({
       click: function (e) {
         console.log("e: ", e);
@@ -202,13 +207,15 @@ export class Dashboard extends React.Component {
               // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
             />
             <Marker position={position}>
-              <Popup>Какой то крутой текст!!!</Popup>
+              <Popup>Тест</Popup>
             </Marker>
             <GeoJSON
               data={points}
               onEachFeature={this.onEachFeaturePoint.bind(this)}
-              pointToLayer={this.pointToLayer.bind(this)}
-            />
+              // pointToLayer={this.pointToLayer.bind(this)}
+            >
+              <Popup>Парцел 1</Popup>
+            </GeoJSON>
             <Basemap
               style={{ select: "yes" }}
               basemap={this.state.basemap}
