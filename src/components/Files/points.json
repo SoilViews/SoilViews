@@ -1,0 +1,20 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [23.343134, 42.687187]
+      },
+      "properties": {
+        "Ordem": "193",
+        "Eixo": "Leste",
+        "Meta": "1L",
+        "Municipio": "Petrolândia",
+        "Estado": "PE",
+        "Nome da Comunidade": "Agrovila 4"
+      }
+    }
+  ]
+}

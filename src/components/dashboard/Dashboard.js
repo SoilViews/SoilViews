@@ -1,9 +1,18 @@
 import React, { createRef } from "react";
-import { Map, TileLayer, FeatureGroup, Polygon, GeoJSON } from "react-leaflet";
+import {
+  Map,
+  TileLayer,
+  FeatureGroup,
+  Polygon,
+  GeoJSON,
+  Marker,
+  Popup,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from "../Files/london_postcodes.json";
 import geojson from "../Files/geojson.json";
+import points from "../Files/points.json";
 import "../../leaflet.filelayer";
 import { connect } from "react-redux";
 import { saveData } from "../../store/actions/authActions";
@@ -13,11 +22,13 @@ import "../dashboard/GeojsonLayer.css";
 import Search from "react-leaflet-search";
 import Basemap from "./Basemap";
 import "./Map.css";
+import L from "leaflet";
+
+L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
 // import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
-// import L from "leaflet";
 
 //Hardcoded cordinates of polygons
 const polygon = [
@@ -70,7 +81,7 @@ export class Dashboard extends React.Component {
     console.log("shape1", drawedCord);
 
     var data = layer.toGeoJSON();
-    var convertedData = "text/json;charset=utf-8," + JSON.stringify(data);
+    var convertedData = JSON.stringify(data);
     console.log(convertedData);
     var FileSaver = require("file-saver");
     var blob = new Blob([convertedData], { type: "text/plain;charset=utf-8" });
@@ -109,6 +120,32 @@ export class Dashboard extends React.Component {
       basemap: bm,
     });
   };
+  onEachFeaturePoint(feature, layer) {
+    console.log("feature: ", feature);
+    console.log("layer: ", layer);
+    layer.on({
+      click: function (e) {
+        console.log("e: ", e);
+        console.log("click");
+      },
+    });
+  }
+
+  onEachFeaturePolygon(feature, layer) {
+    console.log("feature: ", feature);
+    console.log("layer: ", layer);
+    layer.on({
+      click: function (e) {
+        console.log("e: ", e);
+        console.log("click");
+      },
+    });
+  }
+
+  pointToLayer(feature, latlng) {
+    return L.circleMarker(latlng, null); // Change marker to circle
+    // return L.marker(latlng, { icon: {}}); // Change the icon to a custom icon
+  }
 
   render() {
     const position = [this.state.lat, this.state.lng];
@@ -163,6 +200,14 @@ export class Dashboard extends React.Component {
               url={basemapsDict[this.state.basemap]}
               layers="NDVI"
               // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+            />
+            <Marker position={position}>
+              <Popup>Какой то крутой текст!!!</Popup>
+            </Marker>
+            <GeoJSON
+              data={points}
+              onEachFeature={this.onEachFeaturePoint.bind(this)}
+              pointToLayer={this.pointToLayer.bind(this)}
             />
             <Basemap
               style={{ select: "yes" }}
