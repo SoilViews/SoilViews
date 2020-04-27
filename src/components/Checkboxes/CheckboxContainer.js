@@ -15,31 +15,26 @@ class CheckboxContainer extends React.Component {
     const item = e.target.name;
     const isChecked = e.target.checked;
     this.setState((prevState) => ({
-      checkedItems: prevState.checkedItems.set(item, isChecked)
+      checkedItems: prevState.checkedItems.set(item, isChecked),
     }));
   }
-
-
 
   render() {
     return (
       <React.Fragment>
         {checkboxes.map((item) => (
           <p>
-            <label key={item.key}>       
+            <label key={item.key}>
               <Checkbox
                 name={item.name}
                 checked={this.state.checkedItems.get(item.name)}
                 onChange={this.handleChange}
-                
               />
               <span>{item.name}</span>
             </label>
-
           </p>
         ))}
-        
-        <SelectedFood items={this.state}/>
+        <SelectedFood {...this.state}/>
       </React.Fragment>
     );
   }

@@ -3,8 +3,8 @@ import React from 'react'
 const SelectedFood = (props) => {
     return ( 
         <div>
-        <p>
-            {props.items}
+        <p>Selected:
+            <p>{props.checkedItems}</p>
         </p>
     </div>
      );

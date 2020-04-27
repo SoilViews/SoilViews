@@ -3,9 +3,17 @@ import React from "react";
 class FoodTypeOptions extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      checked: false,
+    };
+    this.handleChange = this.handleChange.bind(this);
   }
 
+  handleChange () {
+    this.setState = {
+      checked: !this.state.checked
+    };
+  };
   render() {
     return (
       <form action="#">
@@ -13,7 +21,7 @@ class FoodTypeOptions extends React.Component {
           <div className="col s6">
             <p>
               <label>
-                <input type="checkbox" />
+                <input name="fruits" type="checkbox" checked={this.state.checked} onChange={this.handleChange} />
                 <span style={{ color: "black" }}>Fruits:</span>
                 <span> Apples, Pears, Plums, Peaches, Cherries </span>
               </label>
