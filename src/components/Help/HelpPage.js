@@ -1,6 +1,7 @@
 import React from "react";
 import { compose } from "redux";
 import CheckboxContainer from "../Checkboxes/CheckboxContainer";
+import SelectedFoodOptions from "../Checkboxes2/SelectedFoodOptions"
 
 export class HelpPage extends React.Component {
   render() {
@@ -12,6 +13,7 @@ export class HelpPage extends React.Component {
             {/* <h5 class="header col s12 light">Learn how to submit a project</h5>
             <h5 class="header col s12 light">How to work with mapping regions</h5> */}
             <CheckboxContainer/>
+            <SelectedFoodOptions />
           </div>
         </div>
       </div>
