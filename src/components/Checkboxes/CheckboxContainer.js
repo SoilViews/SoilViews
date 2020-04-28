@@ -1,6 +1,5 @@
 import React from "react";
 import Checkbox from "./Checkbox";
-import SelectedFood from "../Checkboxes/SelectedFood";
 
 var checkboxes = [
   {
