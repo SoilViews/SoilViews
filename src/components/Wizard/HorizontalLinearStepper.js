@@ -5,8 +5,52 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-// import SelectFoodTypes from "../Wizard/SelectFoodTypes";
-import FoodTypeOptions from "./FoodTypeOptions";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+// import CheckBoxIcon from '@material-ui/icons/CheckBox';
+
+export function FoodCheckbox() {
+  const [state, setState] = React.useState({
+    checkedA: false,
+    checkedB: false,
+  });
+
+  const handleChange = (event) => {
+    setState({ ...state, [event.target.name]: event.target.checked });
+    // console.log("You Selected: ", { ...state });
+  };
+  SelectedFood({state})
+  return (
+    <FormGroup row>
+      <FormControlLabel
+        control={
+          <Checkbox checked={state.checkedA} onChange={handleChange} name="checkedA" />
+        }
+        label="Secondary"
+      />
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={state.checkedB}
+            onChange={handleChange}
+            name="checkedB"
+            color="primary"
+          />
+        }
+        label="Primary"
+      />
+    </FormGroup>
+  );
+}
+
+export function SelectedFood(checked) {
+  console.log(checked)
+  const result = JSON.stringify(checked)
+  return (
+    <div>You selected: {result}</div>
+  );
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,13 +81,11 @@ function getStepContent(step) {
         <div>
           <h3>Map your crop from satellite</h3>
           <p>
-            Use satellite imagery to visualise the crop variation within your
-            fields. Furthermore, you can easily create variation maps and
-            prescription files to control the application rate of your
-            fertilizer spreader or sprayer. Zoom into your field by using the
-            search box to find your location! The background map is there to
-            help you find your field and has nothing to do with current
-            satellite imagery.
+            Use satellite imagery to visualise the crop variation within your fields. Furthermore,
+            you can easily create variation maps and prescription files to control the application
+            rate of your fertilizer spreader or sprayer. Zoom into your field by using the search
+            box to find your location! The background map is there to help you find your field and
+            has nothing to do with current satellite imagery.
           </p>
         </div>
       );
@@ -52,19 +94,18 @@ function getStepContent(step) {
         <ol>
           <h3>Find your block and chose satellite image</h3>
           <li>
-            Find the parcel you would like to have a closer look at. Enter the
-            location in the search field at the top left. You can also zoom in
-            and out by using the + and - buttons and navigate by dragging the
-            map to where you want to go.
+            Find the parcel you would like to have a closer look at. Enter the location in the
+            search field at the top left. You can also zoom in and out by using the + and - buttons
+            and navigate by dragging the map to where you want to go.
           </li>
           <li>Draw one or more parcels in the background map</li>
           <li>When you have selected parcels, click on Save</li>
         </ol>
       );
     case 2:
-      return <FoodTypeOptions />;
+      return <FoodCheckbox />;
     case 3:
-      return "Your land cordinates will be saved!";
+      return <SelectedFood />;
     default:
       return "Unknown step";
   }
@@ -130,9 +171,7 @@ export default function HorizontalLinearStepper() {
           const stepProps = {};
           const labelProps = {};
           if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography variant="caption">Optional</Typography>
-            );
+            labelProps.optional = <Typography variant="caption">Optional</Typography>;
           }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
@@ -156,9 +195,7 @@ export default function HorizontalLinearStepper() {
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
+            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
             <div>
               <Button
                 style={{
@@ -190,11 +227,7 @@ export default function HorizontalLinearStepper() {
                 onClick={handleNext}
                 className={classes.button}
               >
-                {activeStep === steps.length - 1
-                  ? "Finish"
-                  : activeStep === 0
-                  ? "Start"
-                  : "Next"}
+                {activeStep === steps.length - 1 ? "Finish" : activeStep === 0 ? "Start" : "Next"}
               </Button>
             </div>
           </div>
