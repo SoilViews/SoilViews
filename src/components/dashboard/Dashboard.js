@@ -48,6 +48,7 @@ export class Dashboard extends React.Component {
       zoom: 10,
       showMarkers: false,
       showPolygons: false,
+      geojsonvisible: false,
     };
   }
   //Set location when the map is visualized
@@ -149,6 +150,15 @@ export class Dashboard extends React.Component {
     // return L.marker(latlng, { icon: {}}); // Change the icon to a custom icon
   }
 
+  onButtonClick = (coords) => {
+    // const map = this.mapRef.current;
+    // var group = new L.featureGroup([L.marker(coords)]);
+    // if (map) map.leafletElement.fitBounds(group.getBounds());
+    this.setState({
+      cordinatesCenter: coords,
+    });
+  };
+
   render() {
     const position = this.state.cordinatesCenter;
     const { profile } = this.props;
@@ -213,6 +223,7 @@ export class Dashboard extends React.Component {
                 data={points}
                 style={this.geoJSONStyle}
                 value={this.state.showMarkers}
+                onEachFeature={this.onEachFeaturePoint.bind(this)}
               />
             )}
             {/* /////////////////////////////////////// */}
@@ -266,7 +277,14 @@ export class Dashboard extends React.Component {
             className="waves-effect waves-light btn"
             onClick={this.onGeojsonToggleButton}
           >
-            Парцел 1
+            Парцел 1 --> показва всички маркери от json файл
+          </button>
+          <br />
+          <button
+            className="waves-effect waves-light btn"
+            onClick={() => this.onButtonClick([41.9425557, 26.41389781])}
+          >
+            Парцел 2--> сочи към конкретен маркер
           </button>
           <br />
           <button
