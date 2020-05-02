@@ -113,6 +113,10 @@ export default function HorizontalLinearStepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
+  const Save = () => {
+    console.log("Save");
+  };
+
   const handleReset = () => {
     setActiveStep(0);
   };
@@ -225,6 +229,19 @@ export default function HorizontalLinearStepper() {
                   Draw a polygon
                 </Button>
               )}
+              <Button
+                style={{
+                  ...(activeStep === 0 ? { display: "none" } : {}),
+                  ...(activeStep === 1 ? { display: "none" } : {}),
+                  ...(activeStep === 2 ? { display: "none" } : {}),
+                  ...(activeStep === 4 ? { display: "none" } : {}),
+                }}
+                disabled={activeStep === 0}
+                onClick={Save}
+                className={classes.button}
+              >
+                Save
+              </Button>
 
               <Button
                 variant="contained"
