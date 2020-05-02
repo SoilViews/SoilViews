@@ -117,9 +117,9 @@ export default function HorizontalLinearStepper() {
     console.log("Save");
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
+  // const handleReset = () => {
+  //   setActiveStep(0);
+  // };
   function getStepContent(step) {
     switch (step) {
       case 0:
@@ -196,9 +196,9 @@ export default function HorizontalLinearStepper() {
             <Typography component="span" className={classes.instructions}>
               All steps completed - you&apos;re finished
             </Typography>
-            <Button onClick={handleReset} className={classes.button}>
+            {/* <Button onClick={handleReset} className={classes.button}>
               Reset
-            </Button>
+            </Button> */}
           </div>
         ) : (
           <div>
