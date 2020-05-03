@@ -48,13 +48,20 @@ function HorizontalLinearStepper() {
 
 const GetSelectedCrops = () => {
     const crops = state;
-    console.log(crops)
-    return (
-      <div>
-          {
-          JSON.stringify(crops)
-          }
-      </div>
+    var selectedCrops = [];
+    var selectedCropsSplit = selectedCrops.toString().split(', ')
+    var allCrops = JSON.stringify(crops)
+    for (var key in crops){
+      if(crops.hasOwnProperty(key) && crops[key] === true) {
+        selectedCrops.push(key);
+      }
+    }
+  return (<div>You selected: {selectedCropsSplit}<br />All Crops in JSON: {allCrops}</div>
+      // <div>
+      //     {
+      //     JSON.stringify(crops)
+      //     }
+      // </div>
     );
   }
 
@@ -107,7 +114,8 @@ const GetSelectedCrops = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 //SAVE TO FIREBASE
-  const Save = () => {
+  const Save = (e) => {
+    e.preventDefault();
     console.log("Save");
     saveOrderData(GetSelectedCrops);
     
@@ -145,12 +153,7 @@ const GetSelectedCrops = () => {
           </ol>
         );
       case 2:
-        return (
-          <div>
-            
-            <FoodCheckbox />
-          </div>
-        );
+        return <FoodCheckbox />;
       case 3:
         return <GetSelectedCrops />;
       case 4:
