@@ -60,6 +60,13 @@ function HorizontalLinearStepper(props) {
       key={option}
     />
   );
+  const createCheckbox1 = (option) => (
+    <Checkbox
+      label={option}
+      isSelected={state.checkboxes[option]}
+      key={option}
+    />
+  );
 
   const handleCheckboxChange = (changeEvent) => {
     const { name } = changeEvent.target;
@@ -73,6 +80,7 @@ function HorizontalLinearStepper(props) {
   };
 
   const createCheckboxes = () => OPTIONS.map(createCheckbox);
+  const createCheckboxes1 = () => OPTIONS.map(createCheckbox1);
   // const GetSelectedCrops = () => {
   //   const crops = state;
   //   console.log(crops);
@@ -84,7 +92,7 @@ function HorizontalLinearStepper(props) {
     const selectedBoxes = Object.keys(state.checkboxes).filter(
       (checkbox) => state.checkboxes[checkbox]
     );
-
+    console.log(state.checkbox);
     props.saveOrderData(selectedBoxes);
 
     console.log("Database updted!");
@@ -195,12 +203,7 @@ function HorizontalLinearStepper(props) {
           </div>
         );
       case 3:
-        return (
-          <form onSubmit={handleFormSubmit}>
-            {createCheckboxes()}
-            <div className="form-group mt-2"></div>
-          </form>
-        );
+        return <form onSubmit={handleFormSubmit}>{createCheckboxes1()}</form>;
       case 4:
         return <div>test</div>;
       default:
