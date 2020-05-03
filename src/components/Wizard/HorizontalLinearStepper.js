@@ -9,6 +9,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 // import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import { connect } from "react-redux";
+import { saveOrderData } from "../../store/actions/newOrder";
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,28 +36,31 @@ function getSteps() {
   ];
 }
 
-export default function HorizontalLinearStepper() {
+function HorizontalLinearStepper() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
   const [state, setState] = React.useState({
-    checkedA: false,
-    checkedB: false,
+      checkedA: false,
+      checkedB: false,
   });
 
-  function GetSelectedCrops() {
+const GetSelectedCrops = () => {
     const crops = state;
+    console.log(crops)
     return (
       <div>
-          {JSON.stringify(crops)}
+          {
+          JSON.stringify(crops)
+          }
       </div>
     );
   }
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
-    console.log(GetSelectedCrops())
+    // GetSelectedCrops()
   };
   //CHECKBOXES
   function FoodCheckbox() {
@@ -100,8 +106,11 @@ export default function HorizontalLinearStepper() {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+//SAVE TO FIREBASE
   const Save = () => {
     console.log("Save");
+    saveOrderData(GetSelectedCrops);
+    
   };
   // const handleReset = () => {
   //   setActiveStep(0);
@@ -248,3 +257,16 @@ export default function HorizontalLinearStepper() {
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    auth: state.firebase.auth,
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveOrderData: (GetSelectedCrops) => dispatch(saveOrderData(GetSelectedCrops)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HorizontalLinearStepper);
+
