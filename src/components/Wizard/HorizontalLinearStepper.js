@@ -12,7 +12,6 @@ import { connect } from "react-redux";
 import { saveOrderData } from "../../store/actions/newOrder";
 import Checkbox from "./checkbox";
 
-const OPTIONS = ["FoodType1", "FoodType2", "FoodType3"];
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -41,6 +40,14 @@ function HorizontalLinearStepper(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
+  const OPTIONS = [
+    "Fruits: Apples, Pears, Plums, Peaches, Cherries",
+     "Vegetables: Tomatoes, Peppers, Cabbage", 
+     "Protein: Soy, Quinoa, Peanuts",
+     "Grains: Wheat, Corn, Sunflower",
+     "Vines: Desert",
+     "Beries: Raspberries, Blackberries, Blueberries, Strawberries"
+    ];
   const [state, setState] = React.useState({
     checkedA: false,
     checkedB: false,
@@ -52,12 +59,18 @@ function HorizontalLinearStepper(props) {
       {}
     ),
   });
+
+  //Checkboxes
+  const newColorConfirm = {
+    color: "black"
+  }
   const createCheckbox = (option) => (
     <Checkbox
       label={option}
       isSelected={state.checkboxes[option]}
       onCheckboxChange={handleCheckboxChange}
       key={option}
+      newColor={newColorConfirm}
     />
   );
   const createCheckbox1 = (option) => (
@@ -79,6 +92,14 @@ function HorizontalLinearStepper(props) {
     }));
   };
 
+  // function newColor(){
+  //   console.log("Color changed")
+  //   const newColorConfirm = {
+  //     color: "red"
+  //   }
+  //   return newColorConfirm;
+  // }
+
   const createCheckboxes = () => OPTIONS.map(createCheckbox);
   const createCheckboxes1 = () => OPTIONS.map(createCheckbox1);
   // const GetSelectedCrops = () => {
@@ -95,7 +116,7 @@ function HorizontalLinearStepper(props) {
     console.log(state.checkbox);
     props.saveOrderData(selectedBoxes);
 
-    console.log("Database updted!");
+    console.log("Database updated!");
   };
   // const handleChange = (event) => {
   //   setState({ ...state, [event.target.name]: event.target.checked });
@@ -156,10 +177,9 @@ function HorizontalLinearStepper(props) {
     const selectedBoxes = Object.keys(state.checkboxes).filter(
       (checkbox) => state.checkboxes[checkbox]
     );
-
     props.saveOrderData(selectedBoxes);
 
-    console.log("Database updted!");
+    console.log("Database updated!");
   };
   // const handleReset = () => {
   //   setActiveStep(0);
