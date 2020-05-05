@@ -49,8 +49,6 @@ function HorizontalLinearStepper(props) {
     "Beries: Raspberries, Blackberries, Blueberries, Strawberries",
   ];
   const [state, setState] = React.useState({
-    checkedA: false,
-    checkedB: false,
     checkboxes: OPTIONS.reduce(
       (options, option) => ({
         ...options,
@@ -106,7 +104,6 @@ function HorizontalLinearStepper(props) {
     const selectedBoxes = Object.keys(state.checkboxes).filter(
       (checkbox) => state.checkboxes[checkbox]
     );
-    console.log(state.checkbox);
     //SEND TO FIREBASE
     props.saveOrderData(selectedBoxes);
 
