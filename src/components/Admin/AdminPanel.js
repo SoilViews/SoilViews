@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { Redirect } from "react-router-dom";
 import UsersList from "./UsersList";
+import OrdersList from "./OrdersList";
 import Notifications from "./Notifications";
 import { getFirestore } from "redux-firestore";
 import { storageRef } from "../../firebase/index";
@@ -64,7 +65,7 @@ export class AdminPanel extends React.Component {
   }
 
   render() {
-    const { users, notifications, auth } = this.props;
+    const { users, notifications, auth, orders } = this.props;
 
     if (!auth.uid) return <Redirect to="/signIn" />;
 
@@ -107,6 +108,11 @@ export class AdminPanel extends React.Component {
           <hr />
           <UsersList id={this.props.uid} users={users}></UsersList>
         </div>
+        <div className="col s12 m3 offset-m1">
+          <h2>Orders:</h2>
+          <hr />
+          <OrdersList orders={orders}></OrdersList>
+        </div>
       </div>
     );
   }
@@ -119,6 +125,7 @@ const mapStateToProps = (state) => {
     notifications: state.firestore.ordered.notifications,
     users: state.firestore.ordered.users,
     auth: state.firebase.auth,
+    orders: state.firestore.ordered.orders,
   };
 };
 
@@ -126,6 +133,7 @@ export default compose(
   connect(mapStateToProps),
   firestoreConnect([
     { collection: "users" },
+    { collection: "orders" },
     { collection: "notifications", limit: 5, orderBy: ["time", "desc"] },
   ])
 )(AdminPanel);
