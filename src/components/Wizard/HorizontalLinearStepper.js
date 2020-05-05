@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import { saveOrderData } from "../../store/actions/newOrder";
 import Checkbox from "./checkbox";
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,13 +32,12 @@ function getSteps() {
     "Choose rate and draw",
     "Choose your preferred crops",
     "Confirm your selected crops",
-    "Download prescription file",
   ];
 }
 
 function HorizontalLinearStepper(props) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = React.useState(3); //original value 0. Set to 2 for testing purposes
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
   const OPTIONS = [
@@ -93,14 +93,6 @@ function HorizontalLinearStepper(props) {
     }));
   };
 
-  // function newColor(){
-  //   console.log("Color changed")
-  //   const newColorConfirm = {
-  //     color: "red"
-  //   }
-  //   return newColorConfirm;
-  // }
-
   const createCheckboxes = () => OPTIONS.map(createCheckbox);
   const createCheckboxes1 = () => OPTIONS.map(createCheckbox1);
   // const GetSelectedCrops = () => {
@@ -115,11 +107,11 @@ function HorizontalLinearStepper(props) {
       (checkbox) => state.checkboxes[checkbox]
     );
     console.log(state.checkbox);
-    props.saveOrderData(selectedBoxes);
+    //SEND TO FIREBASE
+    // props.saveOrderData(selectedBoxes); Stopped for testing
 
     console.log("Database updated!");
   };
-  // const handleChange = (event) => {
   //   setState({ ...state, [event.target.name]: event.target.checked });
   //   // GetSelectedCrops()
   // };
@@ -179,12 +171,13 @@ function HorizontalLinearStepper(props) {
       (checkbox) => state.checkboxes[checkbox]
     );
     props.saveOrderData(selectedBoxes);
-
-    console.log("Database updated!");
+    console.log("Database updated, Moving to next step");
+    handleNext();
   };
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
+    const handleReset = () => {
+    setActiveStep(0);
+  };
+
   //STEPPER FUNCTIONALITY***************
   function getStepContent(step) {
     switch (step) {
@@ -219,14 +212,14 @@ function HorizontalLinearStepper(props) {
         );
       case 2:
         return (
+          // TODO: Make the checkboxes in 2 columns aka div "row" div "col s6" currently not working
           <div>
             <form onSubmit={handleFormSubmit}>{createCheckboxes()}</form>
           </div>
         );
+        //TODO Validation if all boxes are false. At least one needs to be selecected
       case 3:
         return <form onSubmit={handleFormSubmit}>{createCheckboxes1()}</form>;
-      case 4:
-        return <div>test</div>;
       default:
         return "Unknown step";
     }
@@ -265,11 +258,28 @@ function HorizontalLinearStepper(props) {
         {activeStep === steps.length ? (
           <div>
             <Typography component="span" className={classes.instructions}>
-              All steps completed - you&apos;re finished
+            Your order was completed. <br/> 
+            You may track its process on "My orders" page.
             </Typography>
-            {/* <Button onClick={handleReset} className={classes.button}>
-              Reset
-            </Button> */}
+            <br/><br/>
+            <Button 
+            onClick={handleReset} 
+            className={classes.button}
+            variant="contained"
+            >
+              New Order
+            </Button>
+            <Button
+            // onClick={} 
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            >
+              {/* TODO Link TO MY ORDERS PAGE */}
+              <Link style={{color: "white"}}  to="/" >
+             My Orders
+             </Link>
+            </Button>
           </div>
         ) : (
           <div>
@@ -310,8 +320,10 @@ function HorizontalLinearStepper(props) {
                 disabled={activeStep === 0}
                 onClick={Save}
                 className={classes.button}
+                variant="contained"
+                color="primary"
               >
-                Save
+                Review and Submit
               </Button>
 
               <Button
@@ -319,10 +331,15 @@ function HorizontalLinearStepper(props) {
                 color="primary"
                 onClick={handleNext}
                 className={classes.button}
+                style={{
+                  ...(activeStep === 3 ? { display: "none" } : {})
+                }}
               >
-                {activeStep === steps.length - 1
-                  ? "Finish"
-                  : activeStep === 0
+                {activeStep 
+                === steps.length - 1
+                  // ? "Finish"
+                  // : activeStep 
+                  // === 0
                   ? "Start"
                   : "Next"}
               </Button>
