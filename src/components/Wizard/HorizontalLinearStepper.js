@@ -12,6 +12,7 @@ import { connect } from "react-redux";
 import { saveOrderData } from "../../store/actions/newOrder";
 import Checkbox from "./checkbox";
 import { Link } from "react-router-dom";
+import Alert from "./Alert";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,6 +38,7 @@ function getSteps() {
 
 function HorizontalLinearStepper(props) {
   const classes = useStyles();
+  const [errorStatus, setErrorStatus] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
@@ -154,17 +156,18 @@ function HorizontalLinearStepper(props) {
     const selectedBoxes = Object.keys(state.checkboxes).filter(
       (checkbox) => state.checkboxes[checkbox]
     );
-    console.log("Count of boxes: ",selectedBoxes.length)
-    if (activeStep === 2 && selectedBoxes.length < 1){
-      console.log("You must select at least one Crop type")
-    }else{
+    console.log("Count of boxes: ", selectedBoxes.length);
+    if (activeStep === 2 && selectedBoxes.length < 1) {
+      console.log("You must select at least one Crop type");
+      setErrorStatus({ msg: "Must Select one crop", type: "Warning" });
+    } else {
       let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
+      if (isStepSkipped(activeStep)) {
+        newSkipped = new Set(newSkipped.values());
+        newSkipped.delete(activeStep);
+      }
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setSkipped(newSkipped);
     }
   };
   const handleBack = () => {
@@ -231,6 +234,7 @@ function HorizontalLinearStepper(props) {
         return (
           // TODO: Make the checkboxes in 2 columns aka div "row" div "col s6" currently not working
           <div>
+            <Alert errorStatus={errorStatus} />
             <form onSubmit={handleFormSubmit}>{createCheckboxes()}</form>
           </div>
         );

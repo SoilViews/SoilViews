@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { compose } from "redux";
 // import CheckboxContainer from "../Checkboxes/CheckboxContainer";
+import SimpleAlert from "../Wizard/Alert"
 
 export const GrandParent = () => {
   const [name, setName] = useState("i'm Grand Parent");
@@ -15,7 +16,7 @@ export const GrandParent = () => {
 const Parent = params => {
   return (
     <>
-      <button onClick={() => params.setName("i'm from Parent")}>
+      <button onClick={() => SimpleAlert()}>
         from Parent
       </button>
       <Child setName={params.setName} />
@@ -42,7 +43,6 @@ export class HelpPage extends React.Component {
           <div class="row">
             {/* <h5 class="header col s12 light">Learn how to submit a project</h5>
             <h5 class="header col s12 light">How to work with mapping regions</h5> */}
-            
             <GrandParent />
             {/* <CheckboxContainer/> */}
           </div>
