@@ -11,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import { saveOrderData } from "../../store/actions/newOrder";
 import Checkbox from "./checkbox";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -174,7 +174,7 @@ function HorizontalLinearStepper(props) {
     console.log("Database updated, Moving to next step");
     handleNext();
   };
-    const handleReset = () => {
+  const handleReset = () => {
     setActiveStep(0);
   };
 
@@ -186,13 +186,11 @@ function HorizontalLinearStepper(props) {
           <div>
             <h3>Map your crop from satellite</h3>
             <p>
-              Use satellite imagery to visualise the crop variation within your
-              fields. Furthermore, you can easily create variation maps and
-              prescription files to control the application rate of your
-              fertilizer spreader or sprayer. Zoom into your field by using the
-              search box to find your location! The background map is there to
-              help you find your field and has nothing to do with current
-              satellite imagery.
+              Use satellite imagery to visualise the crop variation within your fields. Furthermore,
+              you can easily create variation maps and prescription files to control the application
+              rate of your fertilizer spreader or sprayer. Zoom into your field by using the search
+              box to find your location! The background map is there to help you find your field and
+              has nothing to do with current satellite imagery.
             </p>
           </div>
         );
@@ -201,10 +199,9 @@ function HorizontalLinearStepper(props) {
           <ol>
             <h3>Find your block and chose satellite image</h3>
             <li>
-              Find the parcel you would like to have a closer look at. Enter the
-              location in the search field at the top left. You can also zoom in
-              and out by using the + and - buttons and navigate by dragging the
-              map to where you want to go.
+              Find the parcel you would like to have a closer look at. Enter the location in the
+              search field at the top left. You can also zoom in and out by using the + and -
+              buttons and navigate by dragging the map to where you want to go.
             </li>
             <li>Draw one or more parcels in the background map</li>
             <li>When you have selected parcels, click on Save</li>
@@ -217,7 +214,7 @@ function HorizontalLinearStepper(props) {
             <form onSubmit={handleFormSubmit}>{createCheckboxes()}</form>
           </div>
         );
-        //TODO Validation if all boxes are false. At least one needs to be selecected
+      //TODO Validation if all boxes are false. At least one needs to be selecected
       case 3:
         return <form onSubmit={handleFormSubmit}>{createCheckboxes1()}</form>;
       default:
@@ -258,27 +255,24 @@ function HorizontalLinearStepper(props) {
         {activeStep === steps.length ? (
           <div>
             <Typography component="span" className={classes.instructions}>
-            Your order was completed. <br/> 
-            You may track its process on "My orders" page.
+              Your order was completed. <br />
+              You may track its process on "My orders" page.
             </Typography>
-            <br/><br/>
-            <Button 
-            onClick={handleReset} 
-            className={classes.button}
-            variant="contained"
-            >
+            <br />
+            <br />
+            <Button onClick={handleReset} className={classes.button} variant="contained">
               New Order
             </Button>
             <Button
-            // onClick={} 
-            className={classes.button}
-            variant="contained"
-            color="primary"
+              // onClick={}
+              className={classes.button}
+              variant="contained"
+              color="primary"
             >
               {/* TODO Link TO MY ORDERS PAGE */}
-              <Link style={{color: "white"}}  to="/" >
-             My Orders
-             </Link>
+              <Link style={{ color: "white" }} to="/">
+                My Orders
+              </Link>
             </Button>
           </div>
         ) : (
@@ -332,15 +326,14 @@ function HorizontalLinearStepper(props) {
                 onClick={handleNext}
                 className={classes.button}
                 style={{
-                  ...(activeStep === 3 ? { display: "none" } : {})
+                  ...(activeStep === 3 ? { display: "none" } : {}),
                 }}
               >
-                {activeStep 
-                === steps.length - 1
-                  // ? "Finish"
-                  // : activeStep 
-                  // === 0
-                  ? "Start"
+                {activeStep === steps.length - 1
+                  ? // ? "Finish"
+                    // : activeStep
+                    // === 0
+                    "Start"
                   : "Next"}
               </Button>
             </div>
@@ -361,7 +354,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HorizontalLinearStepper);
+export default connect(mapStateToProps, mapDispatchToProps)(HorizontalLinearStepper);
