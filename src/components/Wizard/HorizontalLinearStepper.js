@@ -37,7 +37,7 @@ function getSteps() {
 
 function HorizontalLinearStepper(props) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0); 
+  const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
   const OPTIONS = [
@@ -169,7 +169,19 @@ function HorizontalLinearStepper(props) {
     );
     props.saveOrderData(selectedBoxes);
     console.log("Database updated, Moving to next step");
+    handleReset1();
     handleNext();
+  };
+  const handleReset1 = () => {
+    setState({
+      checkboxes: OPTIONS.reduce(
+        (options, option) => ({
+          ...options,
+          [option]: false,
+        }),
+        {}
+      ),
+    });
   };
   const handleReset = () => {
     setActiveStep(0);
@@ -183,11 +195,13 @@ function HorizontalLinearStepper(props) {
           <div>
             <h3>Map your crop from satellite</h3>
             <p>
-              Use satellite imagery to visualise the crop variation within your fields. Furthermore,
-              you can easily create variation maps and prescription files to control the application
-              rate of your fertilizer spreader or sprayer. Zoom into your field by using the search
-              box to find your location! The background map is there to help you find your field and
-              has nothing to do with current satellite imagery.
+              Use satellite imagery to visualise the crop variation within your
+              fields. Furthermore, you can easily create variation maps and
+              prescription files to control the application rate of your
+              fertilizer spreader or sprayer. Zoom into your field by using the
+              search box to find your location! The background map is there to
+              help you find your field and has nothing to do with current
+              satellite imagery.
             </p>
           </div>
         );
@@ -196,9 +210,10 @@ function HorizontalLinearStepper(props) {
           <ol>
             <h3>Find your block and chose satellite image</h3>
             <li>
-              Find the parcel you would like to have a closer look at. Enter the location in the
-              search field at the top left. You can also zoom in and out by using the + and -
-              buttons and navigate by dragging the map to where you want to go.
+              Find the parcel you would like to have a closer look at. Enter the
+              location in the search field at the top left. You can also zoom in
+              and out by using the + and - buttons and navigate by dragging the
+              map to where you want to go.
             </li>
             <li>Draw one or more parcels in the background map</li>
             <li>When you have selected parcels, click on Save</li>
@@ -257,7 +272,11 @@ function HorizontalLinearStepper(props) {
             </Typography>
             <br />
             <br />
-            <Button onClick={handleReset} className={classes.button} variant="contained">
+            <Button
+              onClick={handleReset}
+              className={classes.button}
+              variant="contained"
+            >
               New Order
             </Button>
             <Button
@@ -351,4 +370,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HorizontalLinearStepper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(HorizontalLinearStepper);

@@ -23,6 +23,7 @@ import Search from "react-leaflet-search";
 import Basemap from "./Basemap";
 import "./Map.css";
 import L from "leaflet";
+import { storage } from "../../firebase/index";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
@@ -79,7 +80,43 @@ export class Dashboard extends React.Component {
     var FileSaver = require("file-saver");
     var blob = new Blob([convertedData], { type: "text/plain;charset=utf-8" });
     FileSaver.saveAs(blob, "cordinates.json");
+    storage.ref(`files/${"cordinates.json"}`).put(blob);
   };
+
+  // handleUpload = () => {
+  //   const { image } = this.state;
+  //   const filename = this.state.firstName + "_" + image.name;
+  //   const uploadTask = storage.ref(`UploadedFiles/${filename}`).put(image);
+
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       // progress function ...
+  //       const progress = Math.round(
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+  //       );
+  //       this.setState({ progress });
+  //     },
+  //     (error) => {
+  //       // Error function ...
+  //       console.log(error);
+  //     },
+  //     () => {
+  //       // complete function ...
+  //       storage
+  //         .ref("UploadedFiles")
+  //         .child(filename)
+  //         .getDownloadURL()
+  //         .then((imageurl) => {
+  //           this.setState({
+  //             key: "",
+  //             imageurl: imageurl,
+  //           });
+  //           console.log(imageurl);
+  //         });
+  //     }
+  //   );
+  // };
 
   saveToFile() {
     var FileSaver = require("file-saver");
