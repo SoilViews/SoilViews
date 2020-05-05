@@ -42,12 +42,12 @@ function HorizontalLinearStepper(props) {
   const steps = getSteps();
   const OPTIONS = [
     "Fruits: Apples, Pears, Plums, Peaches, Cherries",
-     "Vegetables: Tomatoes, Peppers, Cabbage", 
-     "Protein: Soy, Quinoa, Peanuts",
-     "Grains: Wheat, Corn, Sunflower",
-     "Vines: Desert",
-     "Beries: Raspberries, Blackberries, Blueberries, Strawberries"
-    ];
+    "Vegetables: Tomatoes, Peppers, Cabbage",
+    "Protein: Soy, Quinoa, Peanuts",
+    "Grains: Wheat, Corn, Sunflower",
+    "Vines: Desert",
+    "Beries: Raspberries, Blackberries, Blueberries, Strawberries",
+  ];
   const [state, setState] = React.useState({
     checkedA: false,
     checkedB: false,
@@ -62,8 +62,8 @@ function HorizontalLinearStepper(props) {
 
   //Checkboxes
   const newColorConfirm = {
-    color: "black"
-  }
+    color: "black",
+  };
   const createCheckbox = (option) => (
     <Checkbox
       label={option}
@@ -77,6 +77,7 @@ function HorizontalLinearStepper(props) {
     <Checkbox
       label={option}
       isSelected={state.checkboxes[option]}
+      onCheckboxChange={() => {}}
       key={option}
     />
   );
