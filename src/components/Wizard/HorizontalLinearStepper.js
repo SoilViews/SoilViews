@@ -37,7 +37,7 @@ function getSteps() {
 
 function HorizontalLinearStepper(props) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(3); //original value 0. Set to 2 for testing purposes
+  const [activeStep, setActiveStep] = React.useState(0); 
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
   const OPTIONS = [
@@ -108,7 +108,7 @@ function HorizontalLinearStepper(props) {
     );
     console.log(state.checkbox);
     //SEND TO FIREBASE
-    // props.saveOrderData(selectedBoxes); Stopped for testing
+    props.saveOrderData(selectedBoxes);
 
     console.log("Database updated!");
   };
