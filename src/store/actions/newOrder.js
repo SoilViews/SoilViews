@@ -1,5 +1,5 @@
 //Save Orders Data to the firestore
-export const saveOrderData = (orders) => {
+export const saveOrderData = (selectedBoxes) => {
   return (dispatch, getState, { getFirebase, getFirestore }) => {
     const firestore = getFirestore();
     const profile = getState().firebase.profile;
@@ -11,10 +11,10 @@ export const saveOrderData = (orders) => {
         authorLastName: profile.lastName,
         userId: authorId,
         createdAt: new Date(),
-        ...orders,
+        order: selectedBoxes,
       })
       .then(() => {
-        dispatch({ type: "save_orders", orders });
+        dispatch({ type: "save_orders", selectedBoxes });
       })
       .catch((err) => {
         dispatch({ type: "save_orders_ERROR", err });
