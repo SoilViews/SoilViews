@@ -150,14 +150,22 @@ function HorizontalLinearStepper(props) {
     return skipped.has(step);
   };
   const handleNext = () => {
-    let newSkipped = skipped;
+    //get boxes
+    const selectedBoxes = Object.keys(state.checkboxes).filter(
+      (checkbox) => state.checkboxes[checkbox]
+    );
+    console.log("Count of boxes: ",selectedBoxes.length)
+    if (activeStep === 2 && selectedBoxes.length < 1){
+      console.log("You must select at least one Crop type")
+    }else{
+      let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
       newSkipped = new Set(newSkipped.values());
       newSkipped.delete(activeStep);
     }
-
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
     setSkipped(newSkipped);
+    }
   };
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);

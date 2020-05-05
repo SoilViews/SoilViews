@@ -12,6 +12,7 @@ export const saveOrderData = (selectedBoxes) => {
         userId: authorId,
         createdAt: new Date(),
         order: selectedBoxes,
+        status: "Submitted",
       })
       .then(() => {
         dispatch({ type: "save_orders", selectedBoxes });
