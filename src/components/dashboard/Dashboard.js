@@ -89,7 +89,7 @@ export class Dashboard extends React.Component {
     console.log(formattedDate);
     const filename = formattedDate + "_" + this.props.profile.firstName;
     console.log(filename);
-    storage.ref(`UploadedFiles/${filename}.json`).put(blob);
+    storage.ref(`files/${filename}.json`).put(blob);
   };
 
   saveToFile() {
