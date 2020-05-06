@@ -126,6 +126,7 @@ const mapStateToProps = (state) => {
     users: state.firestore.ordered.users,
     auth: state.firebase.auth,
     orders: state.firestore.ordered.orders,
+    profile: state.firebase.profile,
     // orders: state.firestore.ordered.orders.filter(
     //   (orders) => userid === props.auth.uid
     // ),
@@ -140,4 +141,24 @@ export default compose(
     { collection: "notifications", limit: 5, orderBy: ["time", "desc"] },
     { collection: "users" },
   ])
+
+  // export default compose(
+  //   connect(mapStateToProps),
+  //   firestoreConnect((props) => {
+  //     if (!props.profile.role === "Admin") return [{ collection: "orders" }];
+  //     return [
+  //       {
+  //         collection: "orders",
+  //         where: ["authorFirstName", "==", "Alexander"],
+  //       },
+  //       {
+  //         collection: "users",
+  //       },
+  //       {
+  //         collection: "notifications",
+  //         limit: 5,
+  //         orderBy: ["time", "desc"],
+  //       },
+  //     ];
+  //   })
 )(AdminPanel);
