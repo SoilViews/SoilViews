@@ -126,6 +126,9 @@ const mapStateToProps = (state) => {
     users: state.firestore.ordered.users,
     auth: state.firebase.auth,
     orders: state.firestore.ordered.orders,
+    // orders: state.firestore.ordered.orders.filter(
+    //   (orders) => userid === props.auth.uid
+    // ),
   };
 };
 
@@ -133,7 +136,7 @@ export default compose(
   connect(mapStateToProps),
   firestoreConnect([
     { collection: "users" },
-    { collection: "orders" },
+    { collection: "orders", orderBy: ["createdAt", "desc"] },
     { collection: "notifications", limit: 5, orderBy: ["time", "desc"] },
   ])
 )(AdminPanel);
