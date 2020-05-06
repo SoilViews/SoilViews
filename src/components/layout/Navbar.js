@@ -13,7 +13,7 @@ export class Navbar extends React.Component {
       <SignedOutLinks />
     );
     return (
-      <nav>
+      <nav className="z-depth-0">
         <div className="nav-wrapper">
           <div className="container">
             <Link to="/" className="brand-logo">

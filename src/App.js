@@ -15,6 +15,7 @@ import Documentation from "./components/Help/HelpPage";
 import AdminPanel from "./components/Admin/AdminPanel";
 import EditUser from "./components/Admin/EditUser";
 import Wizard from "./components/Wizard/Wizard";
+import PersistentDrawerLeft from "./components/DrawerLeft/PersistentDrawerLeft";
 
 function App() {
   const [checked] = useState(true);
@@ -24,7 +25,14 @@ function App() {
       <div className={checked ? "isActive" : "isInactive"}>
         <div className="App">
           <header>
-            <Nabvar></Nabvar>
+            {/* Sidenav */}
+            <div className="hide-on-large-only">
+              <PersistentDrawerLeft />
+            </div>
+            {/* Sidenav */}            
+            <div className="hide-on-med-and-down">
+              <Nabvar />
+            </div>
             <Switch>
               <Route path="/indexPage" component={indexPage} />
               <Route path="/edit/:id" component={EditUser} />
