@@ -134,9 +134,10 @@ const mapStateToProps = (state) => {
 
 export default compose(
   connect(mapStateToProps),
-  firestoreConnect([
-    { collection: "users" },
-    { collection: "orders", orderBy: ["createdAt", "desc"] },
+
+  firestoreConnect((props) => [
+    { collection: "orders", where: [["userId", "==", props.uid]] },
     { collection: "notifications", limit: 5, orderBy: ["time", "desc"] },
+    { collection: "users" },
   ])
 )(AdminPanel);
