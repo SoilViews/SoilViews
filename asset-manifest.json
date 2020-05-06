@@ -1,25 +1,26 @@
 {
   "files": {
-    "main.css": "/SoilViews/static/css/main.146d9b25.chunk.css",
-    "main.js": "/SoilViews/static/js/main.258afee6.chunk.js",
-    "main.js.map": "/SoilViews/static/js/main.258afee6.chunk.js.map",
-    "runtime-main.js": "/SoilViews/static/js/runtime-main.18cd56ee.js",
-    "runtime-main.js.map": "/SoilViews/static/js/runtime-main.18cd56ee.js.map",
-    "static/css/2.dcd3bb5a.chunk.css": "/SoilViews/static/css/2.dcd3bb5a.chunk.css",
-    "static/js/2.fe033cb5.chunk.js": "/SoilViews/static/js/2.fe033cb5.chunk.js",
-    "static/js/2.fe033cb5.chunk.js.map": "/SoilViews/static/js/2.fe033cb5.chunk.js.map",
+    "main.css": "/SoilViews/static/css/main.7e3a85b3.chunk.css",
+    "main.js": "/SoilViews/static/js/main.652ebb83.chunk.js",
+    "main.js.map": "/SoilViews/static/js/main.652ebb83.chunk.js.map",
+    "runtime-main.js": "/SoilViews/static/js/runtime-main.07434464.js",
+    "runtime-main.js.map": "/SoilViews/static/js/runtime-main.07434464.js.map",
+    "static/css/2.f550480a.chunk.css": "/SoilViews/static/css/2.f550480a.chunk.css",
+    "static/js/2.30536116.chunk.js": "/SoilViews/static/js/2.30536116.chunk.js",
+    "static/js/2.30536116.chunk.js.map": "/SoilViews/static/js/2.30536116.chunk.js.map",
     "index.html": "/SoilViews/index.html",
-    "precache-manifest.e7aec9b687e6e10017a910ad3008b135.js": "/SoilViews/precache-manifest.e7aec9b687e6e10017a910ad3008b135.js",
+    "precache-manifest.bb789f534734d76c4fe64b74c9b23737.js": "/SoilViews/precache-manifest.bb789f534734d76c4fe64b74c9b23737.js",
     "service-worker.js": "/SoilViews/service-worker.js",
-    "static/css/2.dcd3bb5a.chunk.css.map": "/SoilViews/static/css/2.dcd3bb5a.chunk.css.map",
-    "static/css/main.146d9b25.chunk.css.map": "/SoilViews/static/css/main.146d9b25.chunk.css.map",
+    "static/css/2.f550480a.chunk.css.map": "/SoilViews/static/css/2.f550480a.chunk.css.map",
+    "static/css/main.7e3a85b3.chunk.css.map": "/SoilViews/static/css/main.7e3a85b3.chunk.css.map",
+    "static/js/2.30536116.chunk.js.LICENSE.txt": "/SoilViews/static/js/2.30536116.chunk.js.LICENSE.txt",
     "static/media/logo.png": "/SoilViews/static/media/logo.721ab35c.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.18cd56ee.js",
-    "static/css/2.dcd3bb5a.chunk.css",
-    "static/js/2.fe033cb5.chunk.js",
-    "static/css/main.146d9b25.chunk.css",
-    "static/js/main.258afee6.chunk.js"
+    "static/js/runtime-main.07434464.js",
+    "static/css/2.f550480a.chunk.css",
+    "static/js/2.30536116.chunk.js",
+    "static/css/main.7e3a85b3.chunk.css",
+    "static/js/main.652ebb83.chunk.js"
   ]
 }
