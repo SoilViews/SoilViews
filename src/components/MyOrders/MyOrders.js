@@ -2,21 +2,28 @@ import React from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
-import OrdersTable from "./OrdersTable"
+import OrdersTable from "./OrdersTable";
 
-const MyOrders = () => {
-  return (
+export class MyOrders extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+  render() {
+    const { orders } = this.props;
+    return (
       <div className="container">
         <div className="row">
-          <h5>My Orders Page</h5>
+          <h1 class="header center orange-text">My Orders</h1>
         </div>
-        <div className="row">
-            <OrdersTable />
+        <div row>
+          <OrdersTable orders={orders} />
         </div>
       </div>
-  );
-};
-
+    );
+  }
+}
 const mapStateToProps = (state) => {
   return {
     uid: state.firebase.auth.uid,
@@ -50,27 +57,11 @@ export default compose(
         {
           collection: "orders",
         },
-        {
-          collection: "users",
-        },
-        {
-          collection: "notifications",
-          limit: 5,
-          orderBy: ["time", "desc"],
-        },
       ];
     return [
       {
         collection: "orders",
         where: ["userId", "==", props.uid],
-      },
-      {
-        collection: "users",
-      },
-      {
-        collection: "notifications",
-        limit: 5,
-        orderBy: ["time", "desc"],
       },
     ];
   })
