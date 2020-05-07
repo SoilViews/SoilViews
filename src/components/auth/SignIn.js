@@ -60,7 +60,8 @@ class SignIn extends Component {
                                              {authError ? <p>{authError}</p>: null }
                                     </div>
                                 </div>
-                                <li><NavLink to='/ResetPassword'>Forgot password?</NavLink></li>
+                                <span><NavLink to='/signup'>Register</NavLink></span>
+                                <span  style={{float: "right"}}><NavLink to='/ResetPassword'>Forgot password?</NavLink></span>
                             </form>
                         </div>
                     </div>
