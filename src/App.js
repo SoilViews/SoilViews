@@ -26,7 +26,10 @@ function App() {
         <div className="App">
           <header>
             {/* Sidenav */}
-            <div className="hide-on-large-only">
+            <div 
+            className="hide-on-large-only"
+            style={{paddingTop: "50px"}}
+            >
               <PersistentDrawerLeft />
             </div>
             {/* Sidenav */}            
