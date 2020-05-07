@@ -5,7 +5,7 @@ import { firestoreConnect } from "react-redux-firebase";
 
 const OrdersTable = () => {
   return (
-        <div row>
+        <div className="row">
           <p>Hi, I'm Table!</p>
       </div>
   );

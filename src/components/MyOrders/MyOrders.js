@@ -6,11 +6,11 @@ import OrdersTable from "./OrdersTable"
 
 const MyOrders = () => {
   return (
-      <div class="container">
-        <div class="row">
+      <div className="container">
+        <div className="row">
           <h5>My Orders Page</h5>
         </div>
-        <div row>
+        <div className="row">
             <OrdersTable />
         </div>
       </div>

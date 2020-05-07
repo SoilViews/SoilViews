@@ -10,6 +10,7 @@ const SignedInLinks = (props,profile) => {
         console.log('User role',profile.role)
     return (
         <React.Fragment>
+            <li><NavLink to='/MyOrders'>MyOrders</NavLink></li>
             <li><NavLink to='/AdminPanel'>AdminPanel</NavLink></li>
             <li><a onClick={props.signOut}>Log Out</a></li>
             <li><NavLink to='/Profile' className='btn btn-floating grey pulse'>{props.profile.initials}</NavLink></li>
