@@ -15,9 +15,9 @@ export class MyOrders extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <h1 class="header center orange-text">My Orders</h1>
+          <h1 className="header center orange-text">My Orders</h1>
         </div>
-        <div row>
+        <div>
           <OrdersTable orders={orders} />
         </div>
       </div>
@@ -33,22 +33,9 @@ const mapStateToProps = (state) => {
     auth: state.firebase.auth,
     orders: state.firestore.ordered.orders,
     profile: state.firebase.profile,
-    // orders: state.firestore.ordered.orders.filter(
-    //   (orders) => userid === props.auth.uid
-    // ),
   };
 };
 
-// export default compose(
-//   connect(mapStateToProps),
-
-//   firestoreConnect((props) => [
-//     { collection: "orders", where: [["userId", "==", props.uid]] },
-//     { collection: "notifications", limit: 5, orderBy: ["time", "desc"] },
-//     { collection: "users" },
-//   ])
-
-//IF ADMIN SEEL ALL ORDERS, ELSE SEE ONLY YOURS
 export default compose(
   connect(mapStateToProps),
   firestoreConnect((props) => {
