@@ -54,11 +54,11 @@ class UsersSummary extends React.Component {
                     {order.createdAt.toDate().toDateString()}
                   </StyledTableCell>
                   <StyledTableCell>{order.order}</StyledTableCell>
-                  <StyledTableCell>{order.status}</StyledTableCell>
+                  <StyledTableCell>{order.status.value}</StyledTableCell>
                   <StyledTableCell>
                     <Link
                       className="btn waves-effect waves-light"
-                      to={"edit/" + order.id}
+                      to={"editOrder/" + order.id}
                       title="More Info"
                     >
                       Edit

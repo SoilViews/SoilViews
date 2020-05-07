@@ -14,9 +14,10 @@ import ContactForm from "../src/components/ContactForm/ContactForm";
 import Documentation from "./components/Help/HelpPage";
 import AdminPanel from "./components/Admin/AdminPanel";
 import EditUser from "./components/Admin/EditUser";
+import EditOrder from "./components/MyOrders/EditOrder";
 import Wizard from "./components/Wizard/Wizard";
 import PersistentDrawerLeft from "./components/DrawerLeft/PersistentDrawerLeft";
-import MyOrders from "./components/MyOrders/MyOrders"
+import MyOrders from "./components/MyOrders/MyOrders";
 
 function App() {
   const [checked] = useState(true);
@@ -27,19 +28,17 @@ function App() {
         <div className="App">
           <header>
             {/* Sidenav */}
-            <div 
-            className="hide-on-large-only"
-            style={{paddingTop: "50px"}}
-            >
+            <div className="hide-on-large-only" style={{ paddingTop: "50px" }}>
               <PersistentDrawerLeft />
             </div>
-            {/* Sidenav */}            
+            {/* Sidenav */}
             <div className="hide-on-med-and-down">
               <Nabvar />
             </div>
             <Switch>
               <Route path="/indexPage" component={indexPage} />
               <Route path="/edit/:id" component={EditUser} />
+              <Route path="/editOrder/:id" component={EditOrder} />
               <Route path="/SignIn" component={SignIn} />
               <Route path="/SignUp" component={SignUp} />
               <Route path="/CreateProject" component={CreateProject} />

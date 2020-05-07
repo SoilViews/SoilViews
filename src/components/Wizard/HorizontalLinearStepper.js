@@ -298,7 +298,7 @@ function HorizontalLinearStepper(props) {
               color="primary"
             >
               {/* TODO Link TO MY ORDERS PAGE */}
-              <Link style={{ color: "white" }} to="/">
+              <Link style={{ color: "white" }} to="/MyOrders">
                 My Orders
               </Link>
             </Button>
