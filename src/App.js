@@ -16,6 +16,7 @@ import AdminPanel from "./components/Admin/AdminPanel";
 import EditUser from "./components/Admin/EditUser";
 import Wizard from "./components/Wizard/Wizard";
 import PersistentDrawerLeft from "./components/DrawerLeft/PersistentDrawerLeft";
+import MyOrders from "./components/MyOrders/MyOrders"
 
 function App() {
   const [checked] = useState(true);
@@ -49,6 +50,7 @@ function App() {
               <Route path="/HelpPage" component={Documentation} />
               <Route path="/AdminPanel" component={AdminPanel} />
               <Route path="/NewOrder" component={Wizard} />
+              <Route path="/MyOrders" component={MyOrders} />
               <Route path="/" component={indexPage} />
             </Switch>
           </header>
