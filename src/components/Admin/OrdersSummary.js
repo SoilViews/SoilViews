@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteProject } from "../../store/actions/projectActions";
+import { deleteOrder } from "../../store/actions/newOrder";
 import { withRouter } from "react-router-dom";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -70,7 +70,7 @@ class UsersSummary extends React.Component {
                       className="btn waves-effect waves-light"
                       type="submit"
                       name="action"
-                      onClick={(e) => deleteProject(e, order.id)}
+                      onClick={(e) => deleteOrder(e, order.id)}
                     >
                       Delete
                       <i className="large material-icons">delete_forever</i>
@@ -88,9 +88,9 @@ class UsersSummary extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteProject: (e, id) => {
+    deleteOrder: (e, id) => {
       e.preventDefault();
-      dispatch(deleteProject(id));
+      dispatch(deleteOrder(id));
     },
   };
 };
