@@ -6,7 +6,7 @@ export class Profile extends React.Component {
     return (
       <div>
         <div className="card-action">
-          <h1 class="header center orange-text">My Profile</h1>
+          <h1 className="header center orange-text">My Profile</h1>
           <hr />
           <img
             src={

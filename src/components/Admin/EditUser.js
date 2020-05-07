@@ -15,6 +15,7 @@ class EditUser extends Component {
       lastName: "",
       telephone: "",
       imageurl: "",
+      errors: [],
     };
   }
 
@@ -28,7 +29,12 @@ class EditUser extends Component {
       telephone,
       imageurl,
     } = this.state;
+    const errors = this.validate(firstName, lastName, email, city, telephone);
 
+    if (errors.length > 0) {
+      this.setState({ errors });
+      return;
+    }
     const updateRef = firebase
       .firestore()
       .collection("users")
@@ -66,10 +72,46 @@ class EditUser extends Component {
       this.setState(() => ({ image }));
     }
   };
+  errorClass = () => {
+    return this.state.errors.length === 0 ? "" : "c-error c-validation";
+  };
 
+  validate = (firstName, lastName, email, city, telephone) => {
+    const errors = [];
+    if (firstName.length === 0) {
+      errors.push("First Name can't be empty");
+    }
+    if (city.length === 0) {
+      errors.push("City can't be empty");
+    }
+    if (telephone.length === 0) {
+      errors.push("Telephone number can't be empty");
+    }
+
+    if (telephone.length < 10) {
+      errors.push("Telephone number should be at least 10 charcters long");
+    }
+
+    if (lastName.length === 0) {
+      errors.push("Last Name can't be empty");
+    }
+
+    if (email.length < 5) {
+      errors.push("Email should be at least 5 charcters long");
+    }
+    if (email.split("").filter((x) => x === "@").length !== 1) {
+      errors.push("Email should contain a @");
+    }
+    if (email.indexOf(".") === -1) {
+      errors.push("Email should contain at least one dot");
+    }
+
+    return errors;
+  };
   handleUpload = () => {
-    const { image } = this.state;
-    const filename = this.state.firstName + "_" + image.name;
+    const { image, filename } = this.state;
+    this.filename = this.state.firstName + "_" + image.name;
+
     const uploadTask = storage.ref(`UploadedFiles/${filename}`).put(image);
 
     uploadTask.on(
@@ -134,6 +176,7 @@ class EditUser extends Component {
   };
 
   render() {
+    const { errors } = this.state;
     return (
       <div class="container">
         <div class="panel panel-default">
@@ -201,6 +244,9 @@ class EditUser extends Component {
                   onChange={this.onChange}
                   placeholder="Title"
                 />
+                <span style={{ color: "red" }}>
+                  {this.state.errors["telephone"]}
+                </span>
               </div>
               <div class="form-group">
                 <label for="title">Initials:</label> <br />
@@ -246,6 +292,11 @@ class EditUser extends Component {
               width="400"
             />
           </div>
+        </div>
+        <div className={`${this.errorClass()} error`}>
+          {errors.map((error) => (
+            <p key={error}>Error: {error}</p>
+          ))}
         </div>
       </div>
     );
