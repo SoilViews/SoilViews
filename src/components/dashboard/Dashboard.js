@@ -76,11 +76,21 @@ export class Dashboard extends React.Component {
     console.log("shape1", drawedCord);
 
     var data = layer.toGeoJSON();
+    var tokml = require("tokml");
+    var kml = tokml(data);
+    console.log("KMLLLLLLLL", kml);
+    var kmlNameDescription = tokml(data, {
+      name: "name",
+      description: "description",
+    });
+    console.log("1111111111111111111111", kmlNameDescription);
     var convertedData = JSON.stringify(data);
     console.log(convertedData);
     var FileSaver = require("file-saver");
-    var blob = new Blob([convertedData], { type: "text/plain;charset=utf-8" });
-    FileSaver.saveAs(blob, "cordinates.json");
+    var blob = new Blob([kmlNameDescription], {
+      type: "text/plain;charset=utf-8",
+    });
+    FileSaver.saveAs(blob, "cordinates.kml");
 
     var date = new Date();
 
@@ -89,7 +99,7 @@ export class Dashboard extends React.Component {
     console.log(formattedDate);
     const filename = formattedDate + "_" + this.props.profile.firstName;
     console.log(filename);
-    storage.ref(`files/${filename}.json`).put(blob);
+    storage.ref(`files/${filename}.kml`).put(blob);
   };
 
   saveToFile() {

@@ -46,7 +46,8 @@
     "redux": "^4.0.4",
     "redux-firestore": "^0.10.0",
     "redux-promise": "^0.6.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "tokml": "^0.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
