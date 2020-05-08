@@ -3,12 +3,20 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 import { Redirect } from "react-router-dom";
-import UsersList from "./UsersList";
-import OrdersList from "./OrdersList";
+// import UsersList from "./UsersList";
+// import OrdersList from "./OrdersList";
 import Notifications from "./Notifications";
 import { getFirestore } from "redux-firestore";
 import { storageRef } from "../../firebase/index";
 import { Button } from "@material-ui/core";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+// import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import { Link } from "react-router-dom";
+import { withStyles } from "@material-ui/core/styles";
 const urls = [];
 export class AdminPanel extends React.Component {
   constructor(props) {
@@ -67,6 +75,24 @@ export class AdminPanel extends React.Component {
   render() {
     const { users, notifications, auth, orders } = this.props;
 
+    const StyledTableCell = withStyles((theme) => ({
+      head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+      },
+      body: {
+        fontSize: 14,
+      },
+    }))(TableCell);
+
+    const StyledTableRow = withStyles((theme) => ({
+      root: {
+        "&:nth-of-type(odd)": {
+          backgroundColor: theme.palette.background.default,
+        },
+      },
+    }))(TableRow);
+
     if (!auth.uid) return <Redirect to="/signIn" />;
 
     return (
@@ -82,6 +108,7 @@ export class AdminPanel extends React.Component {
         </div>
         <div className="col s12 m3 offset-m1">
           <h2>File storage urls:</h2>
+          <hr />
         </div>
         <div className="col s12 m3 offset-m1">
           <table>
@@ -106,12 +133,102 @@ export class AdminPanel extends React.Component {
         <div className="col s12 m3 offset-m1">
           <h2>Users:</h2>
           <hr />
-          <UsersList id={this.props.uid} users={users}></UsersList>
+          <Table aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>City</StyledTableCell>
+                <StyledTableCell>Email</StyledTableCell>
+                <StyledTableCell>FirstName</StyledTableCell>
+                <StyledTableCell>Initials</StyledTableCell>
+                <StyledTableCell>LastName</StyledTableCell>
+                <StyledTableCell>Actions</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users &&
+                users.map((user) => {
+                  return (
+                    <StyledTableRow key={Math.random()}>
+                      <StyledTableCell>{user.city}</StyledTableCell>
+                      <StyledTableCell>{user.email}</StyledTableCell>
+                      <StyledTableCell>{user.firstName}</StyledTableCell>
+                      <StyledTableCell>{user.initials}</StyledTableCell>
+                      <StyledTableCell>{user.lastName}</StyledTableCell>
+                      <StyledTableCell>
+                        <Link
+                          className="btn waves-effect waves-light"
+                          to={"edit/" + user.id}
+                          title="More Info"
+                        >
+                          Edit
+                        </Link>
+                        <br />
+                        <hr />
+                        <br />
+                        <button
+                          className="btn waves-effect waves-light"
+                          type="submit"
+                          name="action"
+                        >
+                          Delete
+                          <i className="large material-icons">delete_forever</i>
+                        </button>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
         </div>
         <div className="col s12 m3 offset-m1">
           <h2>Orders:</h2>
           <hr />
-          <OrdersList orders={orders}></OrdersList>
+          <Table aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Client name</StyledTableCell>
+                <StyledTableCell>Date ordered</StyledTableCell>
+                <StyledTableCell>List of cultures selected</StyledTableCell>
+                <StyledTableCell>Order Status</StyledTableCell>
+                <StyledTableCell>Actions</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {orders &&
+                orders.map((order) => {
+                  return (
+                    <StyledTableRow key={Math.random()}>
+                      <StyledTableCell>{order.authorFirstName}</StyledTableCell>
+                      <StyledTableCell>
+                        {order.createdAt.toDate().toDateString()}
+                      </StyledTableCell>
+                      <StyledTableCell>{order.order}</StyledTableCell>
+                      <StyledTableCell>{order.status.value}</StyledTableCell>
+                      <StyledTableCell>
+                        <Link
+                          className="btn waves-effect waves-light"
+                          to={"editOrder/" + order.id}
+                          title="More Info"
+                        >
+                          Edit
+                        </Link>
+                        <br />
+                        <hr />
+                        <br />
+                        <button
+                          className="btn waves-effect waves-light"
+                          type="submit"
+                          name="action"
+                        >
+                          Delete
+                          <i className="large material-icons">delete_forever</i>
+                        </button>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
         </div>
       </div>
     );
