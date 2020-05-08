@@ -120,9 +120,9 @@ class EditUser extends Component {
   handleUpload = () => {
     const { image } = this.state;
     if (image == null) {
-      console.log("asdasd");
+      console.log("There is no image for upload");
     } else {
-      console.log("YYYYYYYYYYYY");
+      console.log("Upload");
       const filename = this.state.firstName + "_" + image.name;
 
       const uploadTask = storage.ref(`UploadedFiles/${filename}`).put(image);
@@ -288,6 +288,7 @@ class EditUser extends Component {
               <div className="file-path-wrapper">
                 <input
                   className="file-path validate"
+                  onChange={() => {}}
                   type="text"
                   value={this.state.imageName}
                 />
