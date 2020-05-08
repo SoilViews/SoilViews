@@ -20,8 +20,7 @@ import AddBox from "@material-ui/icons/AddBox";
 import EcoIcon from "@material-ui/icons/Eco";
 import InfoIcon from "@material-ui/icons/Info";
 import { Link } from "react-router-dom";
-import DrawerHead from "./DrawerHead"
-
+import DrawerHead from "./DrawerHead";
 
 const drawerWidth = 240;
 
@@ -143,41 +142,45 @@ export default function PersistentDrawerLeft() {
         </div>
         <Divider />
         <List>
-        <Link to="/" onClick={handleDrawerClose}>
-          <ListItem button>
-            <ListItemIcon>
-              <EcoIcon className={classes.iconColor} />
-            </ListItemIcon>
-            <ListItemText primary="My Orders" />
-          </ListItem>
+          <Link to="/MyOrders" onClick={handleDrawerClose}>
+            <ListItem button>
+              <ListItemIcon>
+                <EcoIcon className={classes.iconColor} />
+              </ListItemIcon>
+              <ListItemText primary="My Orders" />
+            </ListItem>
           </Link>
           <Divider />
           <Link to="/Dashboard" onClick={handleDrawerClose}>
-          <ListItem button>
-            <ListItemIcon>
-              <AddBox className={classes.iconColor} />
-            </ListItemIcon>
-            <ListItemText primary="New Order" />
-          </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <AddBox className={classes.iconColor} />
+              </ListItemIcon>
+              <ListItemText primary="New Order" />
+            </ListItem>
           </Link>
           <Link to="/ContactForm" onClick={handleDrawerClose}>
-          <ListItem button>
-            <ListItemIcon>
-              <MailIcon className={classes.iconColor} />
-            </ListItemIcon>
-            <ListItemText primary="Contact Us" />
-          </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <MailIcon className={classes.iconColor} />
+              </ListItemIcon>
+              <ListItemText primary="Contact Us" />
+            </ListItem>
           </Link>
         </List>
         <Divider />
         <List>
-        <a href="http://soilviews.com" target="blank" onClick={handleDrawerClose}>
-          <ListItem button>
-            <ListItemIcon>
-              <InfoIcon className={classes.iconColor} />
-            </ListItemIcon>
-            <ListItemText primary="About SoilViews" />
-          </ListItem>
+          <a
+            href="http://soilviews.com"
+            target="blank"
+            onClick={handleDrawerClose}
+          >
+            <ListItem button>
+              <ListItemIcon>
+                <InfoIcon className={classes.iconColor} />
+              </ListItemIcon>
+              <ListItemText primary="About SoilViews" />
+            </ListItem>
           </a>
         </List>
       </Drawer>

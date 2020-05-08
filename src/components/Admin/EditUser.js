@@ -69,6 +69,11 @@ class EditUser extends Component {
   handleChange = (e) => {
     if (e.target.files[0]) {
       const image = e.target.files[0];
+      if (e.target.files.type < 1) {
+        console.log("asdasd");
+      } else {
+        console.log("YYYYYYYYYYYY");
+      }
       this.setState(() => ({ image }));
     }
   };
@@ -76,7 +81,7 @@ class EditUser extends Component {
     return this.state.errors.length === 0 ? "" : "c-error c-validation";
   };
 
-  validate = (firstName, lastName, email, city, telephone) => {
+  validate = (firstName, lastName, email, city, telephone, image) => {
     const errors = [];
     if (firstName.length === 0) {
       errors.push("First Name can't be empty");
@@ -105,43 +110,51 @@ class EditUser extends Component {
     if (email.indexOf(".") === -1) {
       errors.push("Email should contain at least one dot");
     }
+    if (image == null) {
+      errors.push("asdasdasdasd");
+    }
 
     return errors;
   };
   handleUpload = () => {
     const { image, filename } = this.state;
-    this.filename = this.state.firstName + "_" + image.name;
+    if (image == null) {
+      console.log("asdasd");
+    } else {
+      console.log("YYYYYYYYYYYY");
+      this.filename = this.state.firstName + "_" + image.name;
 
-    const uploadTask = storage.ref(`UploadedFiles/${filename}`).put(image);
+      const uploadTask = storage.ref(`UploadedFiles/${filename}`).put(image);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        // progress function ...
-        const progress = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        this.setState({ progress });
-      },
-      (error) => {
-        // Error function ...
-        console.log(error);
-      },
-      () => {
-        // complete function ...
-        storage
-          .ref("UploadedFiles")
-          .child(filename)
-          .getDownloadURL()
-          .then((imageurl) => {
-            this.setState({
-              key: "",
-              imageurl: imageurl,
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // progress function ...
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          this.setState({ progress });
+        },
+        (error) => {
+          // Error function ...
+          console.log(error);
+        },
+        () => {
+          // complete function ...
+          storage
+            .ref("UploadedFiles")
+            .child(filename)
+            .getDownloadURL()
+            .then((imageurl) => {
+              this.setState({
+                key: "",
+                imageurl: imageurl,
+              });
+              console.log(imageurl);
             });
-            console.log(imageurl);
-          });
-      }
-    );
+        }
+      );
+    }
   };
 
   componentDidMount() {
