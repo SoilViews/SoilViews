@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import { compose } from "redux";
 // import CheckboxContainer from "../Checkboxes/CheckboxContainer";
 import SimpleAlert from "../Wizard/Alert"
-import SimpleTable from "./TableTest"
+// import SimpleTable from "./TableTest"
 import MaterialTableDemo from "./MaterialTable"
 
 export const GrandParent = () => {

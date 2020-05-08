@@ -15,7 +15,6 @@ import Documentation from "./components/Help/HelpPage";
 import AdminPanel from "./components/Admin/AdminPanel";
 import EditUser from "./components/Admin/EditUser";
 import EditOrder from "./components/MyOrders/EditOrder";
-import Wizard from "./components/Wizard/Wizard";
 import PersistentDrawerLeft from "./components/DrawerLeft/PersistentDrawerLeft";
 import MyOrders from "./components/MyOrders/MyOrders";
 
@@ -48,7 +47,6 @@ function App() {
               <Route path="/ContactForm" component={ContactForm} />
               <Route path="/HelpPage" component={Documentation} />
               <Route path="/AdminPanel" component={AdminPanel} />
-              <Route path="/NewOrder" component={Wizard} />
               <Route path="/MyOrders" component={MyOrders} />
               <Route path="/" component={indexPage} />
             </Switch>
