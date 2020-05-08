@@ -110,9 +110,9 @@ class EditUser extends Component {
     if (email.indexOf(".") === -1) {
       errors.push("Email should contain at least one dot");
     }
-    if (image == null) {
-      errors.push("asdasdasdasd");
-    }
+    // if (image == null) {
+    //   errors.push("Please upload a file");
+    // }
 
     return errors;
   };
@@ -191,67 +191,67 @@ class EditUser extends Component {
   render() {
     const { errors } = this.state;
     return (
-      <div class="container">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h1 class="header center orange-text">Edit User</h1>
+      <div className="container">
+        <div className="panel panel-default">
+          <div className="panel-heading">
+            <h1 className="header center orange-text">Edit User</h1>
           </div>
-          <div class="panel-body">
+          <div className="panel-body">
             <h4>
               <Link to={`/AdminPanel`} className="btn btn-default search">
                 Back to admin panel
               </Link>
             </h4>
             <form onSubmit={this.onSubmit}>
-              <div class="form-group">
-                <label for="title">City:</label> <br />
+              <div className="form-group">
+                <label htmlFor="title">City:</label> <br />
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   name="city"
                   value={this.state.city}
                   onChange={this.onChange}
                   placeholder="Title"
                 />
               </div>
-              <div class="form-group">
-                <label for="title">Email:</label> <br />
+              <div className="form-group">
+                <label htmlFor="title">Email:</label> <br />
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   name="email"
                   value={this.state.email}
                   onChange={this.onChange}
                   placeholder="Title"
                 />
               </div>
-              <div class="form-group">
-                <label for="title">First name:</label> <br />
+              <div className="form-group">
+                <label htmlFor="title">First name:</label> <br />
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   name="firstName"
                   value={this.state.firstName}
                   onChange={this.onChange}
                   placeholder="Title"
                 />
               </div>
-              <div class="form-group">
-                <label for="title">Last name:</label> <br />
+              <div className="form-group">
+                <label htmlFor="title">Last name:</label> <br />
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   name="lastName"
                   value={this.state.lastName}
                   onChange={this.onChange}
                   placeholder="Title"
                 />
               </div>
-              <div class="form-group">
-                <label for="title">Telephone:</label> <br />
+              <div className="form-group">
+                <label htmlFor="title">Telephone:</label> <br />
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   name="telephone"
                   value={this.state.telephone}
                   onChange={this.onChange}
@@ -261,15 +261,15 @@ class EditUser extends Component {
                   {this.state.errors["telephone"]}
                 </span>
               </div>
-              <div class="form-group">
-                <label for="title">Initials:</label> <br />
+              <div className="form-group">
+                <label htmlFor="title">Initials:</label> <br />
                 <p>{this.state.initials}</p>
               </div>
-              <div class="form-group">
-                <label for="title">Initials:</label> <br />
+              <div className="form-group">
+                <label htmlFor="title">Initials:</label> <br />
                 <p>{this.state.imageurl}</p>
               </div>
-              <button type="submit" class="btn btn-success">
+              <button type="submit" className="btn btn-success">
                 Submit
               </button>
             </form>
