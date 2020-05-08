@@ -19,11 +19,10 @@ const SignedInLinks = (props, profile) => {
           <a onClick={props.signOut}>Log Out</a>
         </li>
         <li>
-          <NavLink to="/Profile" className="btn btn-floating grey pulse">
+          <NavLink to="/Profile" className="btn btn-floating grey">
             {props.profile.initials}
           </NavLink>
         </li>
-        <i className="large material-icons">account_circle</i>
       </React.Fragment>
     );
   } else {
@@ -36,11 +35,10 @@ const SignedInLinks = (props, profile) => {
           <a onClick={props.signOut}>Log Out</a>
         </li>
         <li>
-          <NavLink to="/Profile" className="btn btn-floating grey pulse">
+          <NavLink to="/Profile" className="btn btn-floating grey">
             {props.profile.initials}
           </NavLink>
         </li>
-        <i className="large material-icons">account_circle</i>
       </React.Fragment>
     );
   }
