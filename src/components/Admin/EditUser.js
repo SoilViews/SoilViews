@@ -15,6 +15,7 @@ class EditUser extends Component {
       lastName: "",
       telephone: "",
       imageurl: "",
+      imageName: "",
       errors: [],
     };
   }
@@ -74,7 +75,7 @@ class EditUser extends Component {
       } else {
         console.log("YYYYYYYYYYYY");
       }
-      this.setState(() => ({ image }));
+      this.setState(() => ({ image, imageName: image.name }));
     }
   };
   errorClass = () => {
@@ -117,12 +118,12 @@ class EditUser extends Component {
     return errors;
   };
   handleUpload = () => {
-    const { image, filename } = this.state;
+    const { image } = this.state;
     if (image == null) {
       console.log("asdasd");
     } else {
       console.log("YYYYYYYYYYYY");
-      this.filename = this.state.firstName + "_" + image.name;
+      const filename = this.state.firstName + "_" + image.name;
 
       const uploadTask = storage.ref(`UploadedFiles/${filename}`).put(image);
 
@@ -266,7 +267,7 @@ class EditUser extends Component {
                 <p>{this.state.initials}</p>
               </div>
               <div className="form-group">
-                <label htmlFor="title">Initials:</label> <br />
+                <label htmlFor="title">ImageUrl:</label> <br />
                 <p>{this.state.imageurl}</p>
               </div>
               <button type="submit" className="btn btn-success">
@@ -285,7 +286,11 @@ class EditUser extends Component {
                 <input type="file" onChange={this.handleChange} />
               </div>
               <div className="file-path-wrapper">
-                <input className="file-path validate" type="text" />
+                <input
+                  className="file-path validate"
+                  type="text"
+                  value={this.state.imageName}
+                />
               </div>
             </div>
             <button
