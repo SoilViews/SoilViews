@@ -91,7 +91,7 @@ class EditOrder extends Component {
           <div className="overlay"></div>
           <div class="panel-body">
             <h4>
-              <Link to={`/MyOrder`} className="btn btn-default search">
+              <Link to={`/MyOrders`} className="btn btn-default search">
                 Back to MyOrder
               </Link>
             </h4>
