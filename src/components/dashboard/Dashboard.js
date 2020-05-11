@@ -100,6 +100,10 @@ export class Dashboard extends React.Component {
     const filename = formattedDate + "_" + this.props.profile.firstName;
     console.log(filename);
     storage.ref(`files/${filename}.kml`).put(blob);
+
+    var Area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
+    var formatedArea = L.GeometryUtil.formattedNumber(Area * 0.001) + "  m²";
+    console.log(formatedArea);
   };
 
   saveToFile() {
