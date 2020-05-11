@@ -1,0 +1,10 @@
+.label{
+    /* float: both; */
+    color: black;
+    margin-right: 5px !Important;
+    display: flex;
+}
+
+.subCrop{
+    color: grey;
+}

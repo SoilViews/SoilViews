@@ -5,14 +5,12 @@ import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-// import FormGroup from "@material-ui/core/FormGroup";
-// import FormControlLabel from "@material-ui/core/FormControlLabel";
-// import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import { connect } from "react-redux";
 import { saveOrderData } from "../../store/actions/newOrder";
-import Checkbox from "./checkbox";
 import { Link } from "react-router-dom";
 import Alert from "./Alert";
+import { NewCheckboxes } from "./NewCheckBoxes";
+import { SelectedCropsCards } from "./SelectedCropsCards";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,107 +40,23 @@ function HorizontalLinearStepper(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
-  const OPTIONS = [
-    "Fruits: Apples, Pears, Plums, Peaches, Cherries",
-    "Vegetables: Tomatoes, Peppers, Cabbage",
-    "Protein: Soy, Quinoa, Peanuts",
-    "Grains: Wheat, Corn, Sunflower",
-    "Vines: Desert",
-    "Beries: Raspberries, Blackberries, Blueberries, Strawberries",
-  ];
-  const [state, setState] = React.useState({
-    checkboxes: OPTIONS.reduce(
-      (options, option) => ({
-        ...options,
-        [option]: false,
-      }),
-      {}
-    ),
-  });
-
-  //Checkboxes
-  const newColorConfirm = {
-    color: "black",
+  const initialCrops = {
+    Fruits: false,
+    Vegetables: false,
+    Protein: false,
+    Grains: false,
+    Vines: false,
+    Berries: false,
   };
-  const createCheckbox = (option) => (
-    <Checkbox
-      label={option}
-      isSelected={state.checkboxes[option]}
-      onCheckboxChange={handleCheckboxChange}
-      key={option}
-      newColor={newColorConfirm}
-    />
-  );
-  const createCheckbox1 = (option) => (
-    <Checkbox
-      label={option}
-      isSelected={state.checkboxes[option]}
-      onCheckboxChange={() => {}}
-      key={option}
-    />
-  );
+  const [crops, setCrops] = React.useState( initialCrops );
 
-  const handleCheckboxChange = (changeEvent) => {
-    const { name } = changeEvent.target;
-
-    setState((prevState) => ({
-      checkboxes: {
-        ...prevState.checkboxes,
-        [name]: !prevState.checkboxes[name],
-      },
-    }));
+  const handleCropChange = (event) => {
+    setCrops({ ...crops, [event.target.name]: event.target.checked });
   };
 
-  const createCheckboxes = () => OPTIONS.map(createCheckbox);
-  const createCheckboxes1 = () => OPTIONS.map(createCheckbox1);
-  // const GetSelectedCrops = () => {
-  //   const crops = state;
-  //   console.log(crops);
-  //   return <div>{JSON.stringify(crops)}</div>;
-  // };
-
-  const handleFormSubmit = (formSubmitEvent) => {
-    formSubmitEvent.preventDefault();
-    const selectedBoxes = Object.keys(state.checkboxes).filter(
-      (checkbox) => state.checkboxes[checkbox]
-    );
-    //SEND TO FIREBASE
-    props.saveOrderData(selectedBoxes);
-
-    console.log("Database updated!");
+  const handleResetCrops = () => {
+    setCrops(initialCrops);
   };
-  //   setState({ ...state, [event.target.name]: event.target.checked });
-  //   // GetSelectedCrops()
-  // };
-  //CHECKBOXES
-  // function FoodCheckbox() {
-  //   return (
-  //     <FormGroup row>
-  //       <FormControlLabel
-  //         control={
-  //           <Checkbox
-  //             checked={state.checkedA}
-  //             onChange={handleChange}
-  //             name="checkedA"
-  //           />
-  //         }
-  //         label="Secondary"
-  //       />
-  //       <FormControlLabel
-  //         control={
-  //           <Checkbox
-  //             checked={state.checkedB}
-  //             onChange={handleChange}
-  //             name="checkedB"
-  //             color="primary"
-  //           />
-  //         }
-  //         label="Primary"
-  //       />
-  //     </FormGroup>
-  //   );
-  // }
-  //CHECKBOXES
 
   //STEPPER FUNCTIONALITY***************
   const isStepOptional = (step) => {
@@ -153,12 +67,8 @@ function HorizontalLinearStepper(props) {
   };
   const handleNext = () => {
     //get boxes
-    const selectedBoxes = Object.keys(state.checkboxes).filter(
-      (checkbox) => state.checkboxes[checkbox]
-    );
-    console.log("Count of boxes: ", selectedBoxes.length);
-    if (activeStep === 2 && selectedBoxes.length < 1) {
-      console.log("You must select at least one Crop type");
+    const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
+    if (activeStep === 2 && selectedCrops.length < 1) {
       setErrorStatus({ msg: "Must Select one crop", type: "Warning" });
     } else {
       let newSkipped = skipped;
@@ -174,32 +84,22 @@ function HorizontalLinearStepper(props) {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
   //SAVE TO FIREBASE
+  //CHANGE HERE
   const Save = () => {
-    const selectedBoxes = Object.keys(state.checkboxes).filter(
-      (checkbox) => state.checkboxes[checkbox]
-    );
-    props.saveOrderData(selectedBoxes);
+    const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
+    props.saveOrderData(selectedCrops);
     console.log("Database updated, Moving to next step");
-    handleReset1();
+    handleResetCrops();
     handleNext();
   };
-  const handleReset1 = () => {
-    setState({
-      checkboxes: OPTIONS.reduce(
-        (options, option) => ({
-          ...options,
-          [option]: false,
-        }),
-        {}
-      ),
-    });
-  };
+
   const handleReset = () => {
     setActiveStep(0);
   };
 
   //STEPPER FUNCTIONALITY***************
   function getStepContent(step) {
+    const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
     switch (step) {
       case 0:
         return (
@@ -232,15 +132,13 @@ function HorizontalLinearStepper(props) {
         );
       case 2:
         return (
-          // TODO: Make the checkboxes in 2 columns aka div "row" div "col s6" currently not working
           <div>
             <Alert errorStatus={errorStatus} />
-            <form onSubmit={handleFormSubmit}>{createCheckboxes()}</form>
+            <NewCheckboxes handleCropChange={handleCropChange} crops={crops} />
           </div>
         );
-      //TODO Validation if all boxes are false. At least one needs to be selecected
       case 3:
-        return <form onSubmit={handleFormSubmit}>{createCheckboxes1()}</form>;
+        return <SelectedCropsCards selectedCrops={selectedCrops} />;
       default:
         return "Unknown step";
     }
@@ -333,12 +231,7 @@ function HorizontalLinearStepper(props) {
                 </Button>
               )}
               <Button
-                style={{
-                  ...(activeStep === 0 ? { display: "none" } : {}),
-                  ...(activeStep === 1 ? { display: "none" } : {}),
-                  ...(activeStep === 2 ? { display: "none" } : {}),
-                  ...(activeStep === 4 ? { display: "none" } : {}),
-                }}
+                style={{ ...(activeStep !== 3 ? { display: "none" } : {}) }}
                 disabled={activeStep === 0}
                 onClick={Save}
                 className={classes.button}
