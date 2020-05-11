@@ -1,10 +1,12 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Stepper from "@material-ui/core/Stepper";
-import Step from "@material-ui/core/Step";
-import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
+import {
+  makeStyles,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Typography,
+} from "@material-ui/core/";
 import { connect } from "react-redux";
 import { saveOrderData } from "../../store/actions/newOrder";
 import { Link } from "react-router-dom";
@@ -12,6 +14,7 @@ import Alert from "./Alert";
 import { NewCheckboxes } from "./NewCheckBoxes";
 import { SelectedCropsCards } from "./SelectedCropsCards";
 
+//Stepper Styles
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -24,16 +27,15 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
 }));
-//step names
+//Step names
 function getSteps() {
   return [
-    "View block and satelite image",
-    "Choose rate and draw",
-    "Choose your preferred crops",
-    "Confirm your selected crops",
+    "Start",
+    "Map your Land",
+    "Choose preferred crops",
+    "Confirm your order",
   ];
 }
-
 function HorizontalLinearStepper(props) {
   const classes = useStyles();
   const [errorStatus, setErrorStatus] = React.useState(null);
@@ -48,7 +50,7 @@ function HorizontalLinearStepper(props) {
     Vines: false,
     Berries: false,
   };
-  const [crops, setCrops] = React.useState( initialCrops );
+  const [crops, setCrops] = React.useState(initialCrops);
 
   const handleCropChange = (event) => {
     setCrops({ ...crops, [event.target.name]: event.target.checked });
@@ -88,7 +90,6 @@ function HorizontalLinearStepper(props) {
   const Save = () => {
     const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
     props.saveOrderData(selectedCrops);
-    console.log("Database updated, Moving to next step");
     handleResetCrops();
     handleNext();
   };
@@ -97,52 +98,53 @@ function HorizontalLinearStepper(props) {
     setActiveStep(0);
   };
 
-  //STEPPER FUNCTIONALITY***************
+  //STEPPER CONTENT***************
   function getStepContent(step) {
     const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
     switch (step) {
       case 0:
         return (
-          <div>
-            <h3>Map your crop from satellite</h3>
-            <p>
-              Use satellite imagery to visualise the crop variation within your
-              fields. Furthermore, you can easily create variation maps and
-              prescription files to control the application rate of your
-              fertilizer spreader or sprayer. Zoom into your field by using the
-              search box to find your location! The background map is there to
-              help you find your field and has nothing to do with current
-              satellite imagery.
-            </p>
+          <div style={{ padding: "2% 0" }}>
+            <Typography variant="h4">Submit your order in few steps</Typography>
+            <Typography variant="h6">Find your land on the map</Typography>
+            <Typography variant="h6">
+              Mark it using the tools or upload a file
+            </Typography>
+            <Typography variant="h6">Select preferred crops</Typography>
+            <Typography variant="h6">Get your results</Typography>
           </div>
         );
       case 1:
         return (
-          <ol>
-            <h3>Find your block and chose satellite image</h3>
-            <li>
-              Find the parcel you would like to have a closer look at. Enter the
-              location in the search field at the top left. You can also zoom in
-              and out by using the + and - buttons and navigate by dragging the
-              map to where you want to go.
-            </li>
-            <li>Draw one or more parcels in the background map</li>
-            <li>When you have selected parcels, click on Save</li>
-          </ol>
+          <div style={{ padding: "2% 0" }}>
+            <Typography variant="h4">Find your land on the map</Typography>
+            <ul>
+              <li>
+                Find your land on the map and mark it using the map tools.
+              </li>
+              <li>Or upload a digital file of your land</li>
+            </ul>
+          </div>
         );
       case 2:
         return (
-          <div>
+          <div style={{ padding: "2% 0" }}>
+            <Typography variant="h4">Choose preferred crops</Typography>
             <Alert errorStatus={errorStatus} />
             <NewCheckboxes handleCropChange={handleCropChange} crops={crops} />
           </div>
         );
       case 3:
-        return <SelectedCropsCards selectedCrops={selectedCrops} />;
+        return (
+          <div style={{ padding: "2% 0" }}>
+            <SelectedCropsCards selectedCrops={selectedCrops}/>
+          </div>
+        );
       default:
         return "Unknown step";
     }
   }
+  //LEAFLET Polygon draw
   const mapEvent = (e) => {
     var ee = document.createEvent("Event");
     ee.initEvent("click", true, true);
@@ -156,13 +158,6 @@ function HorizontalLinearStepper(props) {
         {steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
-          if (isStepOptional(index)) {
-            labelProps.optional = (
-              <Typography component="span" variant="caption">
-                Optional
-              </Typography>
-            );
-          }
           if (isStepSkipped(index)) {
             stepProps.completed = false;
           }
@@ -176,12 +171,12 @@ function HorizontalLinearStepper(props) {
       <div>
         {activeStep === steps.length ? (
           <div>
-            <Typography component="span" className={classes.instructions}>
-              Your order was completed. <br />
-              You may track its process on "My orders" page.
-            </Typography>
-            <br />
-            <br />
+            <div style={{ padding: "2% 0" }}>
+              <Typography varian="h6">Your order was completed.</Typography>
+              <Typography varian="h6">
+                You may track its process on "My orders" page.
+              </Typography>
+            </div>
             <Button
               onClick={handleReset}
               className={classes.button}
@@ -250,12 +245,12 @@ function HorizontalLinearStepper(props) {
                   ...(activeStep === 3 ? { display: "none" } : {}),
                 }}
               >
-                {activeStep === steps.length - 1
-                  ? // ? "Finish"
-                    // : activeStep
-                    // === 0
-                    "Start"
+                {activeStep === 0
+                  ? "Start"
+                  : activeStep === steps.length - 1
+                  ? "Start"
                   : "Next"}
+                {/* {activeStep === steps.length - 1 ?  "Start" : "Next"} */}
               </Button>
             </div>
           </div>
@@ -264,6 +259,7 @@ function HorizontalLinearStepper(props) {
     </div>
   );
 }
+//REDUX
 const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
@@ -274,7 +270,6 @@ const mapDispatchToProps = (dispatch) => {
     saveOrderData: (selectedBoxes) => dispatch(saveOrderData(selectedBoxes)),
   };
 };
-
 export default connect(
   mapStateToProps,
   mapDispatchToProps
