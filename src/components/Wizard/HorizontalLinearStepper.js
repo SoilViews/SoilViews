@@ -105,6 +105,7 @@ const HorizontalLinearStepper = (props) => {
       order: selectedCrops,
       area: getArea,
       createdAt: new Date(),
+      status: [{ value: "Submitted", label: "Submitted" }],
       ...getLandCoordinates[0],
     });
     handleResetCrops();
