@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import Alert from "./Alert";
 import { NewCheckboxes } from "./NewCheckBoxes";
 import { SelectedCropsCards } from "./SelectedCropsCards";
-
+import firebase from "../../firebase";
 //Stepper Styles
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -94,10 +94,18 @@ const HorizontalLinearStepper = (props) => {
   //SAVE TO FIREBASE
   //CHANGE HERE
   const Save = () => {
-    const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
-    props.saveOrderData(selectedCrops);
+    // const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
     console.log(getLandCoordinates);
     console.log(getArea);
+    const db = firebase.firestore();
+    db.collection("orders").add({
+      authorFirstName: props.profile.firstName,
+      authorLastName: props.profile.lastName,
+      userId: props.auth,
+      area: getArea,
+      createdAt: new Date(),
+      ...getLandCoordinates[0],
+    });
     handleResetCrops();
     handleNext();
   };
@@ -278,7 +286,8 @@ const HorizontalLinearStepper = (props) => {
 //REDUX
 const mapStateToProps = (state) => {
   return {
-    auth: state.firebase.auth,
+    auth: state.firebase.auth.uid,
+    profile: state.firebase.profile,
   };
 };
 const mapDispatchToProps = (dispatch) => {

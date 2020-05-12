@@ -25,7 +25,7 @@ import "./Map.css";
 import L from "leaflet";
 import { storage } from "../../firebase/index";
 import { format } from "date-fns";
-import firebase from "../../firebase";
+
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
 // import {  getFirestore } from 'redux-firestore'
@@ -114,16 +114,6 @@ export class Dashboard extends React.Component {
 
     for (const result of drawedCord) this.state.coordinates.push(result);
     // console.log(this.state.coordinates[0]);
-    // console.log(Object.values(this.state.coordinates));
-    const db = firebase.firestore();
-    db.collection("coordinates").add({
-      authorFirstName: this.props.profile.firstName,
-      authorLastName: this.props.profile.lastName,
-      userId: this.props.auth,
-      area: this.state.area,
-      createdAt: new Date(),
-      ...this.state.coordinates[0],
-    });
   };
 
   saveToFile() {
