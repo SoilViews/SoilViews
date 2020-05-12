@@ -96,6 +96,8 @@ const HorizontalLinearStepper = (props) => {
   const Save = () => {
     const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
     props.saveOrderData(selectedCrops);
+    console.log(getLandCoordinates);
+    console.log(getArea);
     handleResetCrops();
     handleNext();
   };
@@ -133,6 +135,10 @@ const HorizontalLinearStepper = (props) => {
             <p>
               Your area is:
               {getArea}
+            </p>
+            <p key={getLandCoordinates}>
+              Your Coordinates are:
+              {getLandCoordinates}
             </p>
           </div>
         );

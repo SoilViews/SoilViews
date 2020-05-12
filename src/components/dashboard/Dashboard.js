@@ -33,10 +33,6 @@ L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 
 //Hardcoded coordinates of polygons
 
-
-
-
-
 const polygon = [
   [42.696295, 23.303643],
   [42.699295, 23.303643],
@@ -52,17 +48,7 @@ export class Dashboard extends React.Component {
       downloadURLs: [],
       area: "",
       coordinates: [],
-
-
-
-
-      
       coordinatesCenter: [42.696295, 23.303643],
-
-
-
-
-      
       zoom: 10,
       showMarkers: false,
       showPolygons: false,
@@ -85,23 +71,11 @@ export class Dashboard extends React.Component {
     var layer = e.layer;
     console.log("Polygon Coordinates", layer.getLatLngs());
 
-
-
-
-    
     console.log("Log_Create_Shape: ", e);
     //get coordinates to geojson format
 
-
-
-
-    
     var drawedCord = layer.toGeoJSON().geometry.coordinates;
 
-
-
-
-    
     console.log("shape1", drawedCord);
     //Create kml file
     var data = layer.toGeoJSON();
@@ -121,11 +95,6 @@ export class Dashboard extends React.Component {
     });
     FileSaver.saveAs(blob, "coordinates.kml");
 
-
-
-
-    
-
     //Save kml file with formated filename
     var date = new Date();
     var formattedDate = format(date, "DD-MM-YYYY_H:mma");
@@ -136,10 +105,6 @@ export class Dashboard extends React.Component {
 
     //Save arean and coordinates
 
-
-
-
-    
     var Area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
     var area1 = L.GeometryUtil.formattedNumber(Area * 0.001) + "  m²";
     console.log(area1);
@@ -148,41 +113,16 @@ export class Dashboard extends React.Component {
     });
 
     for (const result of drawedCord) this.state.coordinates.push(result);
-
-
-
-
-    
     // console.log(this.state.coordinates[0]);
-
-
-
-
-    
     // console.log(Object.values(this.state.coordinates));
-
-
-
-
-    
     const db = firebase.firestore();
     db.collection("coordinates").add({
-
-
-
-
-      
       authorFirstName: this.props.profile.firstName,
       authorLastName: this.props.profile.lastName,
       userId: this.props.auth,
       area: this.state.area,
       createdAt: new Date(),
       ...this.state.coordinates[0],
-
-
-
-
-      
     });
   };
 
@@ -239,22 +179,8 @@ export class Dashboard extends React.Component {
       feature.properties.Name + "  " + feature.properties.Crops;
     console.log(feature.properties.coordinates);
 
-
-
-
-    
     this.setState({
       coordinatesCenter: feature.properties.coordinates,
-
-
-
-
-      
-
-
-
-
-      
     });
     layer.bindPopup(popupContent);
     layer.on({
@@ -276,11 +202,6 @@ export class Dashboard extends React.Component {
     // if (map) map.leafletElement.fitBounds(group.getBounds());
     this.setState({
       coordinatesCenter: coords,
-
-
-
-
-      
     });
   };
 
@@ -288,22 +209,9 @@ export class Dashboard extends React.Component {
     //Here we shorten the area and the coordinated definition
     const { area, coordinates, coordinates2 } = this.state;
 
-
-
-
-    
-
-
-
-
-    
     //
     const position = this.state.coordinatesCenter;
 
-
-
-
-    
     const { profile } = this.props;
     if (profile.role === "User" || profile.role === "Admin") {
       console.log("User role", profile.role);
@@ -318,30 +226,10 @@ export class Dashboard extends React.Component {
       return (
         <div id="map" className="dashboard container">
           <br />
-          <HorizontalLinearStepper 
+          <HorizontalLinearStepper
             area={area}
             coordinates={coordinates}
-
-
-
-
-            
-
-
-
-
-            
             coordinates2={coordinates2}
-
-
-
-
-            
-
-
-
-
-            
           />
           <br />
           <hr />
@@ -485,16 +373,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     saveData: (coordinates) => dispatch(saveData(coordinates)),
-
-
-
-
-    
-
-
-
-
-    
   };
 };
 
