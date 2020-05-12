@@ -50,15 +50,6 @@ const HorizontalLinearStepper = (props) => {
     Vines: false,
     Berries: false,
   };
-//GETS THE LAND AREA
-  const getArea = props.area;
-
-//GETS THE LAND COORDINATES
-const getLandCoordinates = props.coordinates;
-console.log(getLandCoordinates)
-const listLandCoordinates = getLandCoordinates.map((getLandCoordinates) => 
-<li key={getLandCoordinates}>{getLandCoordinates[getLandCoordinates]}</li>
-);
 
   const [crops, setCrops] = React.useState(initialCrops);
 
@@ -69,6 +60,11 @@ const listLandCoordinates = getLandCoordinates.map((getLandCoordinates) =>
   const handleResetCrops = () => {
     setCrops(initialCrops);
   };
+
+  //GETS THE LAND AREA
+  const getArea = props.area;
+  //GETS THE LAND COORDINATES
+  const getLandCoordinates = props.coordinates;
 
   //STEPPER FUNCTIONALITY***************
   const isStepOptional = (step) => {
@@ -134,16 +130,9 @@ const listLandCoordinates = getLandCoordinates.map((getLandCoordinates) =>
               </li>
               <li>Or upload a digital file of your land</li>
             </ul>
-            <p>Your area is: 
+            <p>
+              Your area is:
               {getArea}
-            </p>
-            <p>
-              Coordinates: 
-              {getLandCoordinates}
-            </p>
-            <p>
-              Coordinates with map: 
-              {listLandCoordinates}
             </p>
           </div>
         );
@@ -158,7 +147,7 @@ const listLandCoordinates = getLandCoordinates.map((getLandCoordinates) =>
       case 3:
         return (
           <div style={{ padding: "2% 0" }}>
-            <SelectedCropsCards selectedCrops={selectedCrops}/>
+            <SelectedCropsCards selectedCrops={selectedCrops} />
           </div>
         );
       default:
@@ -279,7 +268,7 @@ const listLandCoordinates = getLandCoordinates.map((getLandCoordinates) =>
       </div>
     </div>
   );
-}
+};
 //REDUX
 const mapStateToProps = (state) => {
   return {
