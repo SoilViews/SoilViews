@@ -25,10 +25,9 @@ import "./Map.css";
 import L from "leaflet";
 import { storage } from "../../firebase/index";
 import { format } from "date-fns";
-
+import firebase from "../../firebase";
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
-// import firebase from '../../firebase';
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
 
@@ -46,6 +45,8 @@ export class Dashboard extends React.Component {
     this.state = {
       basemap: "osm",
       downloadURLs: [],
+      area: "",
+      cordinates: [],
       cordinatesCenter: [42.696295, 23.303643],
       zoom: 10,
       showMarkers: false,
@@ -69,12 +70,10 @@ export class Dashboard extends React.Component {
     var layer = e.layer;
     console.log("Polygon Cordinates", layer.getLatLngs());
     console.log("Log_Create_Shape: ", e);
-
+    //get cordinates to geojson format
     var drawedCord = layer.toGeoJSON().geometry.coordinates;
-    for (const result of drawedCord) this.props.saveData(result);
-
     console.log("shape1", drawedCord);
-
+    //Create kml file
     var data = layer.toGeoJSON();
     var tokml = require("tokml");
     var kml = tokml(data);
@@ -83,7 +82,7 @@ export class Dashboard extends React.Component {
       name: "name",
       description: "description",
     });
-    console.log("1111111111111111111111", kmlNameDescription);
+    console.log("kmlNameDescription", kmlNameDescription);
     var convertedData = JSON.stringify(data);
     console.log(convertedData);
     var FileSaver = require("file-saver");
@@ -92,18 +91,34 @@ export class Dashboard extends React.Component {
     });
     FileSaver.saveAs(blob, "cordinates.kml");
 
+    //Save kml file with formated filename
     var date = new Date();
-
     var formattedDate = format(date, "DD-MM-YYYY_H:mma");
-
     console.log(formattedDate);
     const filename = formattedDate + "_" + this.props.profile.firstName;
     console.log(filename);
     storage.ref(`files/${filename}.kml`).put(blob);
 
+    //Save arean and cordinates
     var Area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
-    var formatedArea = L.GeometryUtil.formattedNumber(Area * 0.001) + "  m²";
-    console.log(formatedArea);
+    var area1 = L.GeometryUtil.formattedNumber(Area * 0.001) + "  m²";
+    console.log(area1);
+    this.setState({
+      area: area1,
+    });
+
+    for (const result of drawedCord) this.state.cordinates.push(result);
+    console.log(this.state.cordinates[0]);
+    console.log(Object.values(this.state.cordinates));
+    const db = firebase.firestore();
+    db.collection("cordinates").add({
+      authorFirstName: this.props.profile.firstName,
+      authorLastName: this.props.profile.lastName,
+      userId: this.props.auth,
+      area: this.state.area,
+      createdAt: new Date(),
+      ...this.state.cordinates[0],
+    });
   };
 
   saveToFile() {
@@ -334,10 +349,12 @@ export class Dashboard extends React.Component {
 }
 const mapStateToProps = (state) => {
   return {
-    auth: state.firebase.auth,
+    auth: state.firebase.auth.uid,
     profile: state.firebase.profile,
   };
 };
+
+//at the moment this function is not used
 const mapDispatchToProps = (dispatch) => {
   return {
     saveData: (cordinates) => dispatch(saveData(cordinates)),
