@@ -51,6 +51,8 @@ export class MyOrders extends React.Component {
                 <StyledTableCell>Client name</StyledTableCell>
                 <StyledTableCell>Date ordered</StyledTableCell>
                 <StyledTableCell>List of cultures selected</StyledTableCell>
+                <StyledTableCell>Area of parcel</StyledTableCell>
+                {/* <StyledTableCell>Cordinates of parcel</StyledTableCell> */}
                 <StyledTableCell>Order Status</StyledTableCell>
                 <StyledTableCell>Actions</StyledTableCell>
               </TableRow>
@@ -65,6 +67,7 @@ export class MyOrders extends React.Component {
                         {order.createdAt.toDate().toDateString()}
                       </StyledTableCell>
                       <StyledTableCell>{order.order}</StyledTableCell>
+                      <StyledTableCell>{order.area}</StyledTableCell>
                       <StyledTableCell>{order.status.value}</StyledTableCell>
                       <StyledTableCell>
                         <Link

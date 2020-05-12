@@ -94,7 +94,7 @@ const HorizontalLinearStepper = (props) => {
   //SAVE TO FIREBASE
   //CHANGE HERE
   const Save = () => {
-    // const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
+    const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
     console.log(getLandCoordinates);
     console.log(getArea);
     const db = firebase.firestore();
@@ -102,6 +102,7 @@ const HorizontalLinearStepper = (props) => {
       authorFirstName: props.profile.firstName,
       authorLastName: props.profile.lastName,
       userId: props.auth,
+      order: selectedCrops,
       area: getArea,
       createdAt: new Date(),
       ...getLandCoordinates[0],
