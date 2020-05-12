@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { compose } from "redux";
-import SimpleAlert from "../Wizard/Alert"
+import SimpleAlert from "../Wizard/Alert";
+import MaterialTable from "./MaterialTable"
 
 export const GrandParent = () => {
   const [name, setName] = useState("i'm Grand Parent");
@@ -12,18 +13,16 @@ export const GrandParent = () => {
   );
 };
 
-const Parent = params => {
+const Parent = (params) => {
   return (
     <>
-      <button onClick={() => SimpleAlert()}>
-        from Parent
-      </button>
+      <button onClick={() => SimpleAlert()}>from Parent</button>
       <Child setName={params.setName} />
     </>
   );
 };
 
-const Child = params => {
+const Child = (params) => {
   return (
     <>
       <button onClick={() => params.setName("i'm from Child")}>
@@ -36,10 +35,11 @@ const Child = params => {
 class HelpPage extends React.Component {
   render() {
     return (
-        <div className="container">
-          <div className="row">
-          </div>
+      <div className="container">
+        <div className="row">
+          <MaterialTable />
         </div>
+      </div>
     );
   }
 }

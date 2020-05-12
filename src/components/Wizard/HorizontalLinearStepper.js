@@ -36,7 +36,7 @@ function getSteps() {
     "Confirm your order",
   ];
 }
-function HorizontalLinearStepper(props) {
+const HorizontalLinearStepper = (props) => {
   const classes = useStyles();
   const [errorStatus, setErrorStatus] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
@@ -50,6 +50,16 @@ function HorizontalLinearStepper(props) {
     Vines: false,
     Berries: false,
   };
+//GETS THE LAND AREA
+  const getArea = props.area;
+
+//GETS THE LAND COORDINATES
+const getLandCoordinates = props.coordinates;
+console.log(getLandCoordinates)
+const listLandCoordinates = getLandCoordinates.map((getLandCoordinates) => 
+<li key={getLandCoordinates}>{getLandCoordinates[getLandCoordinates]}</li>
+);
+
   const [crops, setCrops] = React.useState(initialCrops);
 
   const handleCropChange = (event) => {
@@ -124,6 +134,17 @@ function HorizontalLinearStepper(props) {
               </li>
               <li>Or upload a digital file of your land</li>
             </ul>
+            <p>Your area is: 
+              {getArea}
+            </p>
+            <p>
+              Coordinates: 
+              {getLandCoordinates}
+            </p>
+            <p>
+              Coordinates with map: 
+              {listLandCoordinates}
+            </p>
           </div>
         );
       case 2:

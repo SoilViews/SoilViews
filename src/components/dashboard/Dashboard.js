@@ -31,7 +31,12 @@ L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
 
-//Hardcoded cordinates of polygons
+//Hardcoded coordinates of polygons
+
+
+
+
+
 const polygon = [
   [42.696295, 23.303643],
   [42.699295, 23.303643],
@@ -46,8 +51,18 @@ export class Dashboard extends React.Component {
       basemap: "osm",
       downloadURLs: [],
       area: "",
-      cordinates: [],
-      cordinatesCenter: [42.696295, 23.303643],
+      coordinates: [],
+
+
+
+
+      
+      coordinatesCenter: [42.696295, 23.303643],
+
+
+
+
+      
       zoom: 10,
       showMarkers: false,
       showPolygons: false,
@@ -68,10 +83,25 @@ export class Dashboard extends React.Component {
 
   onCreate = (e) => {
     var layer = e.layer;
-    console.log("Polygon Cordinates", layer.getLatLngs());
+    console.log("Polygon Coordinates", layer.getLatLngs());
+
+
+
+
+    
     console.log("Log_Create_Shape: ", e);
-    //get cordinates to geojson format
+    //get coordinates to geojson format
+
+
+
+
+    
     var drawedCord = layer.toGeoJSON().geometry.coordinates;
+
+
+
+
+    
     console.log("shape1", drawedCord);
     //Create kml file
     var data = layer.toGeoJSON();
@@ -89,7 +119,12 @@ export class Dashboard extends React.Component {
     var blob = new Blob([kmlNameDescription], {
       type: "text/plain;charset=utf-8",
     });
-    FileSaver.saveAs(blob, "cordinates.kml");
+    FileSaver.saveAs(blob, "coordinates.kml");
+
+
+
+
+    
 
     //Save kml file with formated filename
     var date = new Date();
@@ -99,7 +134,12 @@ export class Dashboard extends React.Component {
     console.log(filename);
     storage.ref(`files/${filename}.kml`).put(blob);
 
-    //Save arean and cordinates
+    //Save arean and coordinates
+
+
+
+
+    
     var Area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
     var area1 = L.GeometryUtil.formattedNumber(Area * 0.001) + "  m²";
     console.log(area1);
@@ -107,17 +147,42 @@ export class Dashboard extends React.Component {
       area: area1,
     });
 
-    for (const result of drawedCord) this.state.cordinates.push(result);
-    console.log(this.state.cordinates[0]);
-    console.log(Object.values(this.state.cordinates));
+    for (const result of drawedCord) this.state.coordinates.push(result);
+
+
+
+
+    
+    // console.log(this.state.coordinates[0]);
+
+
+
+
+    
+    // console.log(Object.values(this.state.coordinates));
+
+
+
+
+    
     const db = firebase.firestore();
-    db.collection("cordinates").add({
+    db.collection("coordinates").add({
+
+
+
+
+      
       authorFirstName: this.props.profile.firstName,
       authorLastName: this.props.profile.lastName,
       userId: this.props.auth,
       area: this.state.area,
       createdAt: new Date(),
-      ...this.state.cordinates[0],
+      ...this.state.coordinates[0],
+
+
+
+
+      
     });
   };
 
@@ -173,8 +238,23 @@ export class Dashboard extends React.Component {
     var popupContent =
       feature.properties.Name + "  " + feature.properties.Crops;
     console.log(feature.properties.coordinates);
+
+
+
+
+    
     this.setState({
-      cordinatesCenter: feature.properties.coordinates,
+      coordinatesCenter: feature.properties.coordinates,
+
+
+
+
+      
+
+
+
+
+      
     });
     layer.bindPopup(popupContent);
     layer.on({
@@ -195,12 +275,35 @@ export class Dashboard extends React.Component {
     // var group = new L.featureGroup([L.marker(coords)]);
     // if (map) map.leafletElement.fitBounds(group.getBounds());
     this.setState({
-      cordinatesCenter: coords,
+      coordinatesCenter: coords,
+
+
+
+
+      
     });
   };
 
   render() {
-    const position = this.state.cordinatesCenter;
+    //Here we shorten the area and the coordinated definition
+    const { area, coordinates, coordinates2 } = this.state;
+
+
+
+
+    
+
+
+
+
+    
+    //
+    const position = this.state.coordinatesCenter;
+
+
+
+
+    
     const { profile } = this.props;
     if (profile.role === "User" || profile.role === "Admin") {
       console.log("User role", profile.role);
@@ -215,7 +318,31 @@ export class Dashboard extends React.Component {
       return (
         <div id="map" className="dashboard container">
           <br />
-          <HorizontalLinearStepper />
+          <HorizontalLinearStepper 
+            area={area}
+            coordinates={coordinates}
+
+
+
+
+            
+
+
+
+
+            
+            coordinates2={coordinates2}
+
+
+
+
+            
+
+
+
+
+            
+          />
           <br />
           <hr />
           <Map
@@ -357,7 +484,17 @@ const mapStateToProps = (state) => {
 //at the moment this function is not used
 const mapDispatchToProps = (dispatch) => {
   return {
-    saveData: (cordinates) => dispatch(saveData(cordinates)),
+    saveData: (coordinates) => dispatch(saveData(coordinates)),
+
+
+
+
+    
+
+
+
+
+    
   };
 };
 
