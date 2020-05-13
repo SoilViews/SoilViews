@@ -12,22 +12,22 @@ const SignedInLinks = (props) => {
   return (
     <div>
       <Grid container>
-          {isAdmin ? (
-            <Grid item >
-              <NavLink to="/AdminPanel">AdminPanel</NavLink>
-            </Grid>
-          )
-            : (<li></li>)}
-          <Grid item>
-            <NavLink to="/MyOrders">MyOrders</NavLink>
-          </Grid>
+        {isAdmin ? (
           <Grid item >
-            <a onClick={props.signOut}>Log Out</a>
+            <NavLink to="/AdminPanel">AdminPanel</NavLink>
           </Grid>
+        )
+          : (<li></li>)}
+        <Grid item>
+          <NavLink to="/MyOrders">MyOrders</NavLink>
+        </Grid>
         <Grid item >
-            <NavLink to="/Profile" className="btn btn-floating grey">
-              {props.profile.initials}
-            </NavLink>
+          <a onClick={props.signOut}>Log Out</a>
+        </Grid>
+        <Grid item >
+          <NavLink to="/Profile" className="btn btn-floating grey">
+            {props.profile.initials}
+          </NavLink>
         </Grid>
       </Grid>
     </div>
