@@ -131,7 +131,7 @@ export default function PersistentDrawerLeft() {
       >
         <div className={classes.drawerHeader}>
           {/* Profile link and login */}
-          <DrawerHead></DrawerHead>
+          <DrawerHead handleDrawerClose={handleDrawerClose}/>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
