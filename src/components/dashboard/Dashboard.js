@@ -53,6 +53,7 @@ export class Dashboard extends React.Component {
       showMarkers: false,
       showPolygons: false,
       geojsonvisible: false,
+      keyMAP: Math.random(),
     };
   }
   //Set location when the map is visualized
@@ -207,6 +208,10 @@ export class Dashboard extends React.Component {
       console.log("User role", profile.role);
       const basemapsDict = {
         osm: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        BGMountains: "https://bgmtile.kade.si/{z}/{x}/{y}.png",
+        GoogleHybrid: "https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+        Sentinel2:
+          "https://kade.si/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image%2Fpng&TRANSPARENT=true&LAYERS=Landsat-8&TILED=true&format=image%2Fvnd.jpeg-png&WIDTH=320&HEIGHT=320&CRS=EPSG%3A3857&STYLES=&MAP_RESOLUTION=112.5&BBOX={z}%{x}%{y}.png",
         hot: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
         dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
         cycle: "https://dev.{s}.tile.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
@@ -224,6 +229,7 @@ export class Dashboard extends React.Component {
           <br />
           <hr />
           <Map
+            key={this.state.keyMAP}
             style={{ height: "50vh" }}
             center={position}
             zoom={13}
