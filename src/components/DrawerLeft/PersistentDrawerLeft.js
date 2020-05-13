@@ -1,21 +1,12 @@
 import React from "react";
 import clsx from "clsx";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import { ListItemIcon, ListItemText, ListItem, Divider, List, Toolbar, AppBar, CssBaseline, Drawer } from "@material-ui/core/";
 import MailIcon from "@material-ui/icons/Mail";
 import Navbar from "../layout/Navbar";
-import AddBox from "@material-ui/icons/AddBox";
 import InfoIcon from "@material-ui/icons/Info";
 import { Link } from "react-router-dom";
 import DrawerHead from "./DrawerHead";
@@ -146,14 +137,6 @@ export const PersistentDrawerLeft = (props) => {
         </div>
         <Divider />
         <List>
-          <Link to="/Dashboard" onClick={handleDrawerClose}>
-            <ListItem button>
-              <ListItemIcon>
-                <AddBox className={classes.iconColor} />
-              </ListItemIcon>
-              <ListItemText primary="New Order" />
-            </ListItem>
-          </Link>
           <Link to="/ContactForm" onClick={handleDrawerClose}>
             <ListItem button>
               <ListItemIcon>

@@ -5,14 +5,16 @@ import { List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core/";
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EcoIcon from "@material-ui/icons/Eco";
+import AddBox from "@material-ui/icons/AddBox";
 
 import styles from "./DrawerHead.module.css";
 
 const DrawerHead = (props) => {
+  const handleDrawerClose = props.handleDrawerClose;
   const profileState = props.auth.uid ? (
     <div>
       <List className={styles.loggedInItems}>
-        <Link to="/Profile" onClick={props.handleDrawerClose}>
+        <Link to="/Profile" onClick={handleDrawerClose}>
           <ListItem button>
             <ListItemIcon>
               <AccountCircleIcon className={styles.iconColor}/>
@@ -20,7 +22,7 @@ const DrawerHead = (props) => {
             <ListItemText primary="My Profile" />
           </ListItem>
         </Link>
-        <Link to="/MyOrders" onClick={props.handleDrawerClose}>
+        <Link to="/MyOrders" onClick={handleDrawerClose}>
             <ListItem button>
               <ListItemIcon>
                 <EcoIcon className={styles.iconColor} />
@@ -28,12 +30,20 @@ const DrawerHead = (props) => {
               <ListItemText primary="My Orders" />
             </ListItem>
           </Link>
+          <Link to="/Dashboard" onClick={handleDrawerClose}>
+            <ListItem button>
+              <ListItemIcon>
+                <AddBox className={styles.iconColor} />
+              </ListItemIcon>
+              <ListItemText primary="New Order" />
+            </ListItem>
+          </Link>
       </List>
     </div>
   ) : (
       <div>
         <List>
-          <Link to="/signin" onClick={props.handleDrawerClose}>
+          <Link to="/signin" onClick={handleDrawerClose}>
             <ListItem button>
               <ListItemIcon>
                 <VpnKeyIcon className={styles.iconColor} />
