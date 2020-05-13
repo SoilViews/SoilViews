@@ -1,7 +1,6 @@
 {
   "name": "react-redux",
   "version": "0.1.0",
-  "homepage": "https://soilviews.github.io/SoilViews/",
   "private": true,
   "dependencies": {
     "@date-io/date-fns": "^2.6.1",
@@ -77,5 +76,8 @@
   },
   "devDependencies": {
     "gh-pages": "^2.2.0"
+  },
+  "engines": {
+    "node": "8"
   }
 }

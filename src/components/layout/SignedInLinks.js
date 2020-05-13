@@ -5,16 +5,20 @@ import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
 
 const SignedInLinks = (props, profile) => {
-  if (props.profile.role === "Admin") {
-    console.log("User role", profile.role);
+
+  const isAdmin = (props.profile.role === "Admin");
+
     return (
-      <React.Fragment>
+      <div>
         <li>
           <NavLink to="/MyOrders">MyOrders</NavLink>
         </li>
-        <li>
-          <NavLink to="/AdminPanel">AdminPanel</NavLink>
-        </li>
+        {isAdmin ? (
+          <li>
+            <NavLink to="/AdminPanel">AdminPanel</NavLink>
+          </li>
+        )
+      : (<li></li>)}
         <li>
           <a onClick={props.signOut}>Log Out</a>
         </li>
@@ -23,25 +27,9 @@ const SignedInLinks = (props, profile) => {
             {props.profile.initials}
           </NavLink>
         </li>
-      </React.Fragment>
+      </div>
     );
-  } else {
-    return (
-      <React.Fragment>
-        <li>
-          <NavLink to="/MyOrders">MyOrders</NavLink>
-        </li>
-        <li>
-          <a onClick={props.signOut}>Log Out</a>
-        </li>
-        <li>
-          <NavLink to="/Profile" className="btn btn-floating grey">
-            {props.profile.initials}
-          </NavLink>
-        </li>
-      </React.Fragment>
-    );
-  }
+
 };
 
 const mapDispatchToProps = (dispatch) => {
