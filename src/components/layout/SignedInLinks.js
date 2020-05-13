@@ -3,33 +3,35 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
+import { Grid } from "@material-ui/core/";
 
-const SignedInLinks = (props, profile) => {
+const SignedInLinks = (props) => {
 
   const isAdmin = (props.profile.role === "Admin");
 
-    return (
-      <div>
-        <li>
-          <NavLink to="/MyOrders">MyOrders</NavLink>
-        </li>
-        {isAdmin ? (
-          <li>
-            <NavLink to="/AdminPanel">AdminPanel</NavLink>
-          </li>
-        )
-      : (<li></li>)}
-        <li>
-          <a onClick={props.signOut}>Log Out</a>
-        </li>
-        <li>
-          <NavLink to="/Profile" className="btn btn-floating grey">
-            {props.profile.initials}
-          </NavLink>
-        </li>
-      </div>
-    );
-
+  return (
+    <div>
+      <Grid container>
+          {isAdmin ? (
+            <Grid item >
+              <NavLink to="/AdminPanel">AdminPanel</NavLink>
+            </Grid>
+          )
+            : (<li></li>)}
+          <Grid item>
+            <NavLink to="/MyOrders">MyOrders</NavLink>
+          </Grid>
+          <Grid item >
+            <a onClick={props.signOut}>Log Out</a>
+          </Grid>
+        <Grid item >
+            <NavLink to="/Profile" className="btn btn-floating grey">
+              {props.profile.initials}
+            </NavLink>
+        </Grid>
+      </Grid>
+    </div>
+  );
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -37,7 +39,7 @@ const mapDispatchToProps = (dispatch) => {
     signOut: () => dispatch(signOut()),
   };
 };
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     auth: state.firebase.auth,
     profile: state.firebase.profile,

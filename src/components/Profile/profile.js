@@ -7,7 +7,6 @@ export class Profile extends React.Component {
       <div>
         <div className="card-action">
           <h1 className="header center orange-text">My Profile</h1>
-          <hr />
           <img
             src={
               this.props.profile.imageurl ||
