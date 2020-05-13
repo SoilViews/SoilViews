@@ -21,6 +21,7 @@
     "leaflet-draw": "^1.0.4",
     "leaflet-filelayer": "^1.2.0",
     "leaflet-toolbar": "^0.4.0-alpha.2",
+    "leaflet.wms": "^0.2.0",
     "material-table": "^1.57.2",
     "materialize-css": "^1.0.0-rc.2",
     "moment": "^2.24.0",
