@@ -8,6 +8,7 @@ import {
   Marker,
   Popup,
   WMSTileLayer,
+  LayersControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
@@ -26,22 +27,21 @@ import "./Map.css";
 import L from "leaflet";
 import { storage } from "../../firebase/index";
 import { format } from "date-fns";
-import CustomWMSLayer from "./CustomWMSLayer";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
+// import CustomWMSLayer from "./CustomWMSLayer";
 
 //Hardcoded coordinates of polygons
-
 const polygon = [
   [42.696295, 23.303643],
   [42.699295, 23.303643],
   [42.699295, 23.313643],
   [42.679295, 23.313643],
 ];
-const enablePopups = document.getElementById("enablePopups");
+
 export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -240,54 +240,82 @@ export class Dashboard extends React.Component {
             onCreate={this.onCreate}
             onLocationfound={this.handleLocationFound}
           >
-            <Search />
+            <LayersControl position="bottomright">
+              <LayersControl.BaseLayer name="OpenStreetMap.BlackAndWhite">
+                <TileLayer
+                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                  url="https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"
+                />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="Sentinel-2">
+                <WMSTileLayer
+                  layers={["Sentinel-2"]}
+                  url="https://kade.si/cgi-bin/mapserv?"
+                  format="image/vnd.jpeg-png"
+                  transparent="true"
+                  tiled="true"
+                />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="Landsat-8">
+                <WMSTileLayer
+                  layers={["Landsat-8"]}
+                  url="https://kade.si/cgi-bin/mapserv?"
+                  format="image/vnd.jpeg-png"
+                  transparent="true"
+                  tiled="true"
+                />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="OpenTopoMap">
+                <WMSTileLayer url="https:/opentopomap.org/{z}/{x}/{y}.png" />
+              </LayersControl.BaseLayer>
+              <Search />
 
-            <div className="geojson-toggle">
-              <label>Show Polygons </label>
-              <input
-                style={{ opacity: 1, pointerEvents: "auto" }}
-                type="checkbox"
-                name="layertoggle"
-                id="layertoggle"
-                value={this.state.showPolygons}
-                onChange={this.onGeojsonPolygons}
-              />
-            </div>
-            {this.state.showPolygons && (
-              <GeoJSON
-                data={geojson}
-                style={this.geoJSONStyle}
-                value={this.state.showPolygons}
-              />
-            )}
+              <div className="geojson-toggle">
+                <label>Show Polygons </label>
+                <input
+                  style={{ opacity: 1, pointerEvents: "auto" }}
+                  type="checkbox"
+                  name="layertoggle"
+                  id="layertoggle"
+                  value={this.state.showPolygons}
+                  onChange={this.onGeojsonPolygons}
+                />
+              </div>
+              {this.state.showPolygons && (
+                <GeoJSON
+                  data={geojson}
+                  style={this.geoJSONStyle}
+                  value={this.state.showPolygons}
+                />
+              )}
 
-            <div className="geojson-toggle1">
-              <label>Show Markers </label>
-              <input
-                style={{ opacity: 1, pointerEvents: "auto" }}
-                type="checkbox"
-                name="layertoggle"
-                id="layertoggle"
-                value={this.state.showMarkers}
-                onChange={this.onGeojsonMarkers}
+              <div className="geojson-toggle1">
+                <label>Show Markers </label>
+                <input
+                  style={{ opacity: 1, pointerEvents: "auto" }}
+                  type="checkbox"
+                  name="layertoggle"
+                  id="layertoggle"
+                  value={this.state.showMarkers}
+                  onChange={this.onGeojsonMarkers}
+                />
+              </div>
+              {this.state.showMarkers && (
+                <GeoJSON
+                  data={points}
+                  style={this.geoJSONStyle}
+                  value={this.state.showMarkers}
+                  onEachFeature={this.onEachFeaturePoint.bind(this)}
+                />
+              )}
+              {/* /////////////////////////////////////// */}
+              <TileLayer
+                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                url={basemapsDict[this.state.basemap]}
+                layers="NDVI"
+                // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
               />
-            </div>
-            {this.state.showMarkers && (
-              <GeoJSON
-                data={points}
-                style={this.geoJSONStyle}
-                value={this.state.showMarkers}
-                onEachFeature={this.onEachFeaturePoint.bind(this)}
-              />
-            )}
-            {/* /////////////////////////////////////// */}
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url={basemapsDict[this.state.basemap]}
-              layers="NDVI"
-              // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
-            />
-            {/* <CustomWMSLayer
+              {/* <CustomWMSLayer
               layers={["Sentinel-2"]}
               options={{
                 format: "image/vnd.jpeg-png",
@@ -297,13 +325,14 @@ export class Dashboard extends React.Component {
               }}
               url="https://kade.si/cgi-bin/mapserv?"
             /> */}
-            <WMSTileLayer
-              layers={["Sentinel-2"]}
-              url="https://kade.si/cgi-bin/mapserv?"
-              format="image/vnd.jpeg-png"
-              transparent="true"
-              tiled="true"
-            />
+              {/* <WMSTileLayer
+                layers={["Sentinel-2"]}
+                url="https://kade.si/cgi-bin/mapserv?"
+                format="image/vnd.jpeg-png"
+                transparent="true"
+                tiled="true"
+              /> */}
+            </LayersControl>
             <Marker position={position}>
               <Popup>Тест</Popup>
             </Marker>
