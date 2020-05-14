@@ -3,11 +3,14 @@ import { Card, CardContent, Typography, Grid } from '@material-ui/core'
 
 import styles from './SelectedCropsCards.module.css'
 
-export const SelectedCropsCards = ({ selectedCrops }) => {
+export const SelectedCropsCards = ({ selectedCrops, getArea, getLandCoordinates }) => {
     return (
         <div>
             <Typography variant="h5" >
-            You selected:
+            Please review and submit your order:
+            </Typography>
+            <Typography variant="body" >
+            You selected the following crops:
             </Typography>
             <Grid container spacing={3} className={styles.selected}>
                 {selectedCrops.map((crop) =>
@@ -20,11 +23,13 @@ export const SelectedCropsCards = ({ selectedCrops }) => {
                     </Grid>
                     )}
             </Grid>
-            <Typography variant="h5" >
-            Your land locationa:
+            <Typography variant="body" >
+            Total land area: 
+            {getArea}
             </Typography>
-            <Typography variant="h5" >
-            Area:
+            <Typography variant="body" >
+            Loaction:  
+            {getLandCoordinates}
             </Typography>
         </div>
     );
