@@ -28,6 +28,7 @@ import L from "leaflet";
 import { storage } from "../../firebase/index";
 import { format } from "date-fns";
 import LocateControl from "./LocateControl";
+import NmScale from "@marfle/react-leaflet-nmscale";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
@@ -248,7 +249,7 @@ export class Dashboard extends React.Component {
             onLocationfound={this.handleLocationFound}
           >
             {/* startDirectly */}
-            <LocateControl options={locateOptions}> 
+            <LocateControl options={locateOptions}>
               <span className="fa fa-map-marker"></span>
             </LocateControl>
             <LayersControl position="bottomright">
@@ -341,6 +342,7 @@ export class Dashboard extends React.Component {
                 layers="NDVI"
                 // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
               />
+              <NmScale />
               {/* <CustomWMSLayer
               layers={["Sentinel-2"]}
               options={{
