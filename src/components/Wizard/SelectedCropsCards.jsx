@@ -17,8 +17,15 @@ export const SelectedCropsCards = ({ selectedCrops }) => {
                                 {crop}
                             </Typography>
                         </CardContent>
-                    </Grid>)}
+                    </Grid>
+                    )}
             </Grid>
+            <Typography variant="h5" >
+            Your land locationa:
+            </Typography>
+            <Typography variant="h5" >
+            Area:
+            </Typography>
         </div>
     );
 }

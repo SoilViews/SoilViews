@@ -247,7 +247,8 @@ export class Dashboard extends React.Component {
             onCreate={this.onCreate}
             onLocationfound={this.handleLocationFound}
           >
-            <LocateControl options={locateOptions} startDirectly>
+            {/* startDirectly */}
+            <LocateControl options={locateOptions}> 
               <span className="fa fa-map-marker"></span>
             </LocateControl>
             <LayersControl position="bottomright">
