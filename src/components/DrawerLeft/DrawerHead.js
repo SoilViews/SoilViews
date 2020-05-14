@@ -6,11 +6,14 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import EcoIcon from "@material-ui/icons/Eco";
 import AddBox from "@material-ui/icons/AddBox";
+import AssessmentIcon from '@material-ui/icons/Assessment';
 
 import styles from "./DrawerHead.module.css";
 
 const DrawerHead = (props) => {
+  const isAdmin = (props.profile.role === "Admin");
   const handleDrawerClose = props.handleDrawerClose;
+
   const profileState = props.auth.uid ? (
     <div>
       <List className={styles.loggedInItems}>
@@ -22,7 +25,18 @@ const DrawerHead = (props) => {
             <ListItemText primary="My Profile" />
           </ListItem>
         </Link>
-        <Link to="/MyOrders" onClick={handleDrawerClose}>
+        {isAdmin ? (
+          <Link to="/MyOrders" onClick={handleDrawerClose}>
+          <ListItem button>
+            <ListItemIcon>
+              <AssessmentIcon className={styles.iconColor} />
+            </ListItemIcon>
+            <ListItemText primary="Admin Panel" />
+          </ListItem>
+        </Link>
+        )
+          : (
+            <Link to="/MyOrders" onClick={handleDrawerClose}>
             <ListItem button>
               <ListItemIcon>
                 <EcoIcon className={styles.iconColor} />
@@ -30,6 +44,7 @@ const DrawerHead = (props) => {
               <ListItemText primary="My Orders" />
             </ListItem>
           </Link>
+          )}
           <Link to="/Dashboard" onClick={handleDrawerClose}>
             <ListItem button>
               <ListItemIcon>
