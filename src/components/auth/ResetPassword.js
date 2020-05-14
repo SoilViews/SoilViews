@@ -53,7 +53,7 @@ class ResetPassword extends Component {
     const { errors } = this.state;
     if (auth.uid) return <Redirect to='/profile' /> 
     return (
-      <div className="container">
+      <div className="container" style={{ paddingTop: "50px" }}>
         <span>Please enter your email address below and we will send you information to recover your account</span>
         <form onSubmit={this.handleSubmit} className="white">   
             <h5 className="grey-text text-darken-3">Password Reset</h5>

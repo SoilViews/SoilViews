@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const PersistentDrawerLeft = (props) => {
   const classes = useStyles();
-  const theme = useTheme();
+  // const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
   const handleDrawerOpen = () => {
@@ -86,14 +86,14 @@ export const PersistentDrawerLeft = (props) => {
   };
 
   const profileState = props.auth.uid ? (
-    <a onClick={props.signOut}>
+    <Link to="/" onClick={props.signOut}>
       <ListItem button onClick={handleDrawerClose}>
         <ListItemIcon>
           <ExitToAppIcon />
         </ListItemIcon>
         <ListItemText primary="Log Out" />
       </ListItem>
-    </a>
+    </Link>
   ) : (<hidden></hidden>);
 
   return (
@@ -129,7 +129,7 @@ export const PersistentDrawerLeft = (props) => {
       >
         <div>
           {/* Profile link and login */}
-          <IconButton onClick={handleDrawerClose}h>
+          <IconButton onClick={handleDrawerClose} h>
             <ChevronLeftIcon />
             <ListItemText primary="Close Menu" />
           </IconButton>
