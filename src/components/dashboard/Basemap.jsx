@@ -14,7 +14,6 @@ class Basemap extends React.Component {
       <div className="basemaps-container">
         <select value={this.props.basemap} onChange={this.onChange}>
           <option value="osm">OSM</option>
-          <option value="Sentinel2">Sentinel2</option>
           <option value="BGMountains">BGMountains</option>
           <option value="GoogleHybrid">Google Hybrid</option>
           <option value="OpenTopoMap">OpenTopoMap</option>

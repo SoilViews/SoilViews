@@ -27,6 +27,7 @@ import "./Map.css";
 import L from "leaflet";
 import { storage } from "../../firebase/index";
 import { format } from "date-fns";
+import LocateControl from "./LocateControl";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
@@ -203,6 +204,13 @@ export class Dashboard extends React.Component {
     const { area, coordinates, coordinates2 } = this.state;
 
     //
+    const locateOptions = {
+      position: "bottomleft",
+      strings: {
+        title: "Your location ",
+      },
+      onActivate: () => {}, // callback before engine starts retrieving locations
+    };
     const position = this.state.coordinatesCenter;
     const { profile } = this.props;
     if (profile.role === "User" || profile.role === "Admin") {
@@ -211,9 +219,8 @@ export class Dashboard extends React.Component {
         osm: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         BGMountains: "https://bgmtile.kade.si/{z}/{x}/{y}.png",
         GoogleHybrid: "https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
-        Sentinel2:
-          "https://kade.si/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/jpeg&TRANSPARENT=true&LAYERS=Landsat-8&TILED=true&format=image%2Fvnd.jpeg-png&WIDTH=320&HEIGHT=320&CRS=EPSG%3A3857&STYLES=&MAP_RESOLUTION=112.5&BBOX={x}{y}{x}{y}",
-        Sentinel3: "https://kade.si/cgi-bin/mapserv?",
+        // Sentinel2:
+        //   "https://kade.si/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/jpeg&TRANSPARENT=true&LAYERS=Landsat-8&TILED=true&format=image%2Fvnd.jpeg-png&WIDTH=320&HEIGHT=320&CRS=EPSG%3A3857&STYLES=&MAP_RESOLUTION=112.5&BBOX={x}{y}{x}{y}",
         OpenTopoMap: "https:/opentopomap.org/{z}/{x}/{y}.png",
         hot: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
         dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
@@ -240,6 +247,9 @@ export class Dashboard extends React.Component {
             onCreate={this.onCreate}
             onLocationfound={this.handleLocationFound}
           >
+            <LocateControl options={locateOptions} startDirectly>
+              <span className="fa fa-map-marker"></span>
+            </LocateControl>
             <LayersControl position="bottomright">
               <LayersControl.BaseLayer name="OpenStreetMap.BlackAndWhite">
                 <TileLayer
@@ -267,6 +277,21 @@ export class Dashboard extends React.Component {
               </LayersControl.BaseLayer>
               <LayersControl.BaseLayer name="OpenTopoMap">
                 <WMSTileLayer url="https:/opentopomap.org/{z}/{x}/{y}.png" />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="BGtopoVJ-50K">
+                <WMSTileLayer
+                  layers={["BGtopoVJ-raster-v3.00"]}
+                  url="https://kade.si/cgi-bin/mapserv?"
+                  format="image/vnd.jpeg-png"
+                  transparent="true"
+                  tiled="true"
+                />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="Bing Maps">
+                <WMSTileLayer
+                  imagerySet="AerialWithLabels"
+                  key="AslT_8wrLp_jVe4n6fYZajm0jUZ1hFcVYqRdbISgbkXJ9qmKoL-WYAB2Lj8ML7XV"
+                />
               </LayersControl.BaseLayer>
               <Search />
 
