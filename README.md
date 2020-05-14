@@ -35,4 +35,4 @@ About the project: soilviews.com
 
 ## Architecture
 
-![Image description](public\Soilview_technology.PNG)
+![Architecture](public/Soilview_technology.PNG)
