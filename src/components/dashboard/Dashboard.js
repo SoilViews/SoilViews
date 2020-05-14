@@ -7,6 +7,7 @@ import {
   GeoJSON,
   Marker,
   Popup,
+  WMSTileLayer,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
@@ -40,7 +41,7 @@ const polygon = [
   [42.699295, 23.313643],
   [42.679295, 23.313643],
 ];
-
+const enablePopups = document.getElementById("enablePopups");
 export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -203,7 +204,6 @@ export class Dashboard extends React.Component {
 
     //
     const position = this.state.coordinatesCenter;
-
     const { profile } = this.props;
     if (profile.role === "User" || profile.role === "Admin") {
       console.log("User role", profile.role);
@@ -213,6 +213,7 @@ export class Dashboard extends React.Component {
         GoogleHybrid: "https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
         Sentinel2:
           "https://kade.si/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/jpeg&TRANSPARENT=true&LAYERS=Landsat-8&TILED=true&format=image%2Fvnd.jpeg-png&WIDTH=320&HEIGHT=320&CRS=EPSG%3A3857&STYLES=&MAP_RESOLUTION=112.5&BBOX={x}{y}{x}{y}",
+        Sentinel3: "https://kade.si/cgi-bin/mapserv?",
         OpenTopoMap: "https:/opentopomap.org/{z}/{x}/{y}.png",
         hot: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
         dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
@@ -286,14 +287,22 @@ export class Dashboard extends React.Component {
               layers="NDVI"
               // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
             />
-            <CustomWMSLayer
+            {/* <CustomWMSLayer
               layers={["Sentinel-2"]}
               options={{
                 format: "image/vnd.jpeg-png",
                 transparent: "true",
                 tiled: "true",
+                crossOrigin: null,
               }}
               url="https://kade.si/cgi-bin/mapserv?"
+            /> */}
+            <WMSTileLayer
+              layers={["Sentinel-2"]}
+              url="https://kade.si/cgi-bin/mapserv?"
+              format="image/vnd.jpeg-png"
+              transparent="true"
+              tiled="true"
             />
             <Marker position={position}>
               <Popup>Тест</Popup>
