@@ -32,3 +32,7 @@ About the project: soilviews.com
 ### 1.docker build -t soilviews:1.0 .
 
 ### 2.docker run -d -p 3000:3000 -e TZ=Europe/Sofia --name soilviews soilviews:1.0
+
+## Architecture
+
+![Image description](public\Soilview_technology.PNG)
