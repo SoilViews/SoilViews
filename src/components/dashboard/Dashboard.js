@@ -29,6 +29,8 @@ import { storage } from "../../firebase/index";
 import { format } from "date-fns";
 import LocateControl from "./LocateControl";
 import NmScale from "@marfle/react-leaflet-nmscale";
+import FullscreenControl from "react-leaflet-fullscreen";
+import "react-leaflet-fullscreen/dist/styles.css";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
@@ -249,6 +251,7 @@ export class Dashboard extends React.Component {
             onLocationfound={this.handleLocationFound}
           >
             {/* startDirectly */}
+            <FullscreenControl position="topleft" />
             <LocateControl options={locateOptions}>
               <span className="fa fa-map-marker"></span>
             </LocateControl>
