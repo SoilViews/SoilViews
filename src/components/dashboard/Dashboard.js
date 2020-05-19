@@ -60,6 +60,7 @@ export class Dashboard extends React.Component {
       showPolygons: false,
       geojsonvisible: false,
       keyMAP: Math.random(),
+      kmlNameDescription: "",
     };
   }
   //Set location when the map is visualized
@@ -89,19 +90,20 @@ export class Dashboard extends React.Component {
     var tokml = require("tokml");
     var kml = tokml(data);
     console.log("KMLLLLLLLL", kml);
-    var kmlNameDescription = tokml(data, {
-      name: "name",
-      description: "description",
+    this.setState({
+      akmlNameDescriptionrea: tokml(data, {
+        name: "name",
+        description: "description",
+      }),
     });
-    console.log("kmlNameDescription", kmlNameDescription);
+
     var convertedData = JSON.stringify(data);
     console.log(convertedData);
     var FileSaver = require("file-saver");
-    var blob = new Blob([kmlNameDescription], {
+    var blob = new Blob([this.state.kmlNameDescription], {
       type: "text/plain;charset=utf-8",
     });
     FileSaver.saveAs(blob, "coordinates.kml");
-
     //Save kml file with formated filename
     var date = new Date();
     var formattedDate = format(date, "DD-MM-YYYY_H:mma");
@@ -120,16 +122,17 @@ export class Dashboard extends React.Component {
     });
 
     for (const result of drawedCord) this.state.coordinates.push(result);
-    // console.log(this.state.coordinates[0]);
+    console.log(this.state.coordinates[0]);
   };
 
-  saveToFile() {
+  saveToFile = (e) => {
     var FileSaver = require("file-saver");
-    var blob = new Blob(["Greetings from SoilViews!"], {
+    const { kmlNameDescription } = this.state;
+    var blob = new Blob([kmlNameDescription], {
       type: "text/plain;charset=utf-8",
     });
-    FileSaver.saveAs(blob, "Greetings from SoilViews.txt");
-  }
+    FileSaver.saveAs(blob, "coordinates.kml");
+  };
 
   //for future upgrade
   saveToFile1(content, filename) {
@@ -201,6 +204,10 @@ export class Dashboard extends React.Component {
       coordinatesCenter: coords,
     });
   };
+
+  resetMap() {
+    console.log("Reset");
+  }
 
   render() {
     //Here we shorten the area and the coordinated definition
@@ -422,7 +429,14 @@ export class Dashboard extends React.Component {
             className="waves-effect waves-light btn"
             onClick={this.saveToFile}
           >
-            Download file
+            Download drawed shape in kml File
+          </button>
+          <br />
+          <button
+            className="waves-effect waves-light btn"
+            onClick={this.resetMap}
+          >
+            Clear map
           </button>
           <br />
           <br />
