@@ -300,10 +300,11 @@ export class Dashboard extends React.Component {
                 />
               </LayersControl.BaseLayer>
               <LayersControl.BaseLayer name="Bing Maps">
-                <WMSTileLayer
+                {/* TODO */}
+                {/* <WMSTileLayer
                   imagerySet="AerialWithLabels"
                   key="AslT_8wrLp_jVe4n6fYZajm0jUZ1hFcVYqRdbISgbkXJ9qmKoL-WYAB2Lj8ML7XV"
-                />
+                /> */}
               </LayersControl.BaseLayer>
               <Search />
 
