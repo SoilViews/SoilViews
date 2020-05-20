@@ -299,13 +299,6 @@ export class Dashboard extends React.Component {
                   tiled="true"
                 />
               </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="Bing Maps">
-                {/* TODO */}
-                {/* <WMSTileLayer
-                  imagerySet="AerialWithLabels"
-                  key="AslT_8wrLp_jVe4n6fYZajm0jUZ1hFcVYqRdbISgbkXJ9qmKoL-WYAB2Lj8ML7XV"
-                /> */}
-              </LayersControl.BaseLayer>
               <Search />
 
               <div className="geojson-toggle">
