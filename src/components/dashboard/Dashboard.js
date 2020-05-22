@@ -22,7 +22,6 @@ import { saveAs } from "file-saver";
 import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
 import "../dashboard/GeojsonLayer.css";
 import Search from "react-leaflet-search";
-import Basemap from "./Basemap";
 import "./Map.css";
 import L from "leaflet";
 import { storage } from "../../firebase/index";
@@ -50,7 +49,6 @@ export class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      basemap: "osm",
       downloadURLs: [],
       area: "",
       coordinates: [],
@@ -164,12 +162,6 @@ export class Dashboard extends React.Component {
   };
 
   componentDidMount() {}
-  onBMChange = (bm) => {
-    // console.log(this);
-    this.setState({
-      basemap: bm,
-    });
-  };
 
   //same for polygon
   onEachFeaturePoint(feature, layer) {
@@ -225,19 +217,7 @@ export class Dashboard extends React.Component {
     const { profile } = this.props;
     if (profile.role === "User" || profile.role === "Admin") {
       console.log("User role", profile.role);
-      const basemapsDict = {
-        osm: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        BGMountains: "https://bgmtile.kade.si/{z}/{x}/{y}.png",
-        GoogleHybrid: "https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
-        // Sentinel2:
-        //   "https://kade.si/cgi-bin/mapserv?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=image/jpeg&TRANSPARENT=true&LAYERS=Landsat-8&TILED=true&format=image%2Fvnd.jpeg-png&WIDTH=320&HEIGHT=320&CRS=EPSG%3A3857&STYLES=&MAP_RESOLUTION=112.5&BBOX={x}{y}{x}{y}",
-        OpenTopoMap: "https:/opentopomap.org/{z}/{x}/{y}.png",
-        hot: "https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
-        dark: "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}@2x.png",
-        cycle: "https://dev.{s}.tile.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
-        sentinel:
-          "http://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663?REQUEST=GetMap&BBOX=3238005,5039853,3244050,5045897&LAYERS=TRUE_COLOR&MAXCC=20&WIDTH=320&HEIGHT=320&FORMAT=image/jpeg&TIME=2018-03-29/2018-05-29",
-      };
+
       return (
         <div id="map" className="dashboard container">
           <br />
@@ -299,8 +279,52 @@ export class Dashboard extends React.Component {
                   tiled="true"
                 />
               </LayersControl.BaseLayer>
-              <Search />
-
+              <LayersControl.BaseLayer name="Google Hybrid">
+                <WMSTileLayer
+                  layers={["BGtopoVJ-raster-v3.00"]}
+                  url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
+                  format="image/vnd.jpeg-png"
+                  transparent="true"
+                  tiled="true"
+                />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="BGMountains">
+                <WMSTileLayer
+                  layers={["BGtopoVJ-raster-v3.00"]}
+                  url="https://bgmtile.kade.si/{z}/{x}/{y}.png"
+                  format="image/vnd.jpeg-png"
+                  transparent="true"
+                  tiled="true"
+                />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="OpenTopoMap">
+                <WMSTileLayer
+                  layers={["BGtopoVJ-raster-v3.00"]}
+                  url="https:/opentopomap.org/{z}/{x}/{y}.png"
+                  format="image/vnd.jpeg-png"
+                  transparent="true"
+                  tiled="true"
+                />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="OSM HOT">
+                <WMSTileLayer
+                  layers={["BGtopoVJ-raster-v3.00"]}
+                  url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
+                  format="image/vnd.jpeg-png"
+                  transparent="true"
+                  tiled="true"
+                />
+              </LayersControl.BaseLayer>
+              <LayersControl.BaseLayer name="CYCLE MAP">
+                <WMSTileLayer
+                  layers={["BGtopoVJ-raster-v3.00"]}
+                  url="https://dev.{s}.tile.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
+                  format="image/vnd.jpeg-png"
+                  transparent="true"
+                  tiled="true"
+                />
+              </LayersControl.BaseLayer>
+              <Search position="topright" />
               <div className="geojson-toggle">
                 <label>Show Polygons </label>
                 <input
@@ -342,7 +366,7 @@ export class Dashboard extends React.Component {
               {/* /////////////////////////////////////// */}
               <TileLayer
                 attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url={basemapsDict[this.state.basemap]}
+                url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
                 layers="NDVI"
                 // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
               />
@@ -375,11 +399,6 @@ export class Dashboard extends React.Component {
                 // pointToLayer={this.pointToLayer.bind(this)}
               />
             )}
-            <Basemap
-              style={{ select: "yes" }}
-              basemap={this.state.basemap}
-              onChange={this.onBMChange}
-            />
             <FeatureGroup>
               <EditControl
                 position="topleft"
@@ -393,6 +412,10 @@ export class Dashboard extends React.Component {
                 onDeleteStop={this._onDeleteStop}
                 draw={{
                   rectangle: false,
+                  marker: false,
+                  circleMarker: false,
+                  circle: false,
+                  circlemarker: false,
                 }}
               />
             </FeatureGroup>

@@ -23,13 +23,18 @@ const Footer = (props) => {
               <h5 className="white-text">Settings</h5>
               <ul>
                 <li>
-                  <Link to="/ContactForm" className="white-text" href="#!">
-                    Contact Us
+                  <Link to="/Profile" className="white-text" href="#!">
+                    My Profile
                   </Link>
                 </li>
                 <li>
                   <Link to="/Dashboard" className="white-text" href="#!">
                     Dashboard
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/HelpPage" className="white-text" href="#!">
+                    Documentation
                   </Link>
                 </li>
               </ul>
@@ -46,6 +51,11 @@ const Footer = (props) => {
                   <NavLink to="/SignUp" className="white-text" href="#!">
                     SignUp
                   </NavLink>
+                </li>
+                <li>
+                  <Link to="/ContactForm" className="white-text" href="#!">
+                    Contact Us
+                  </Link>
                 </li>
               </ul>
             </div>

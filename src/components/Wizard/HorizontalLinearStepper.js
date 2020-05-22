@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 function getSteps() {
   return [
     "Start",
-    "Map your Land",
+    "Find your Land",
     "Choose preferred crops",
     "Confirm your order",
   ];
@@ -163,11 +163,11 @@ const HorizontalLinearStepper = (props) => {
       case 3:
         return (
           <div style={{ padding: "2% 0" }}>
-            <SelectedCropsCards 
-              selectedCrops={selectedCrops} 
+            <SelectedCropsCards
+              selectedCrops={selectedCrops}
               getArea={getArea}
               getLandCoordinates={getLandCoordinates}
-              />
+            />
           </div>
         );
       default:
