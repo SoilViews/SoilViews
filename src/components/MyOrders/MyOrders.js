@@ -68,7 +68,19 @@ export class MyOrders extends React.Component {
                       </StyledTableCell>
                       <StyledTableCell>{order.order}</StyledTableCell>
                       <StyledTableCell>{order.area}</StyledTableCell>
-                      <StyledTableCell>{order.status.value}</StyledTableCell>
+                      {order.status.value === "Completed" ? (
+                        <StyledTableCell
+                          style={{ backgroundColor: "green", color: "white" }}
+                        >
+                          {order.status.value}
+                        </StyledTableCell>
+                      ) : (
+                        <StyledTableCell
+                          style={{ backgroundColor: "red", color: "white" }}
+                        >
+                          {order.status.value}
+                        </StyledTableCell>
+                      )}
                       <StyledTableCell>
                         <Link
                           className="btn waves-effect waves-light"
