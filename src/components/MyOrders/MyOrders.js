@@ -70,13 +70,31 @@ export class MyOrders extends React.Component {
                       <StyledTableCell>{order.area}</StyledTableCell>
                       {order.status.value === "Completed" ? (
                         <StyledTableCell
-                          style={{ backgroundColor: "green", color: "white" }}
+                          style={{
+                            backgroundColor: "green",
+                            color: "white",
+                            fontSize: 20,
+                          }}
+                        >
+                          {order.status.value}
+                        </StyledTableCell>
+                      ) : order.status.value === "In progress" ? (
+                        <StyledTableCell
+                          style={{
+                            backgroundColor: "purple",
+                            color: "white",
+                            fontSize: 20,
+                          }}
                         >
                           {order.status.value}
                         </StyledTableCell>
                       ) : (
                         <StyledTableCell
-                          style={{ backgroundColor: "red", color: "white" }}
+                          style={{
+                            backgroundColor: "red",
+                            color: "white",
+                            fontSize: 20,
+                          }}
                         >
                           {order.status.value}
                         </StyledTableCell>
