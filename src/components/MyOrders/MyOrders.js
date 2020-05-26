@@ -66,7 +66,12 @@ export class MyOrders extends React.Component {
                       <StyledTableCell>
                         {order.createdAt.toDate().toDateString()}
                       </StyledTableCell>
-                      <StyledTableCell>{order.order}</StyledTableCell>
+                      <StyledTableCell>
+                        {order.order.map((order) => (
+                          <li key={order.toString()}>{order.toString()}</li>
+                        ))}
+                        {console.log(order.order.toString())}
+                      </StyledTableCell>
                       <StyledTableCell>{order.area}</StyledTableCell>
                       {order.status.value === "Completed" ? (
                         <StyledTableCell

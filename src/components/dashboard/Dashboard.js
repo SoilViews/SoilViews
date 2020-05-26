@@ -114,7 +114,7 @@ export class Dashboard extends React.Component {
     //Save arean and coordinates
 
     var Area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
-    var area1 = L.GeometryUtil.formattedNumber(Area * 0.001);
+    var area1 = L.GeometryUtil.formattedNumber(Area * 0.001) + "  m²";
     console.log(area1);
     this.setState({
       area: area1,
