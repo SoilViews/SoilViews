@@ -11,6 +11,7 @@ import { connect } from "react-redux";
 import { saveOrderData } from "../../store/actions/newOrder";
 import { Link } from "react-router-dom";
 import Alert from "./Alert";
+import AlertDrawedPoly from "./AlertDrawedPoly";
 import { NewCheckboxes } from "./NewCheckBoxes";
 import { SelectedCropsCards } from "./SelectedCropsCards";
 import firebase from "../../firebase";
@@ -39,6 +40,7 @@ function getSteps() {
 const HorizontalLinearStepper = (props) => {
   const classes = useStyles();
   const [errorStatus, setErrorStatus] = React.useState(null);
+  const [errorStatusPolly, setErrorStatusPolly] = React.useState(null);
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
@@ -78,6 +80,24 @@ const HorizontalLinearStepper = (props) => {
     const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
     if (activeStep === 2 && selectedCrops.length < 1) {
       setErrorStatus({ msg: "Must Select one crop", type: "Warning" });
+    } else {
+      let newSkipped = skipped;
+      if (isStepSkipped(activeStep)) {
+        newSkipped = new Set(newSkipped.values());
+        newSkipped.delete(activeStep);
+      }
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+      setSkipped(newSkipped);
+    }
+  };
+  const handleNextPolyDrawStep = () => {
+    //get boxes
+    const getArea = props.area;
+    if (activeStep === 1 && getArea == null) {
+      setErrorStatusPolly({
+        msg: "Must Draw atleast one polygon",
+        type: "Warning",
+      });
     } else {
       let newSkipped = skipped;
       if (isStepSkipped(activeStep)) {
@@ -136,6 +156,7 @@ const HorizontalLinearStepper = (props) => {
         return (
           <div style={{ padding: "2% 0" }}>
             <Typography variant="h4">Find your land on the map</Typography>
+            <AlertDrawedPoly errorStatusPolly={errorStatusPolly} />
             <ul>
               <li>
                 Find your land on the map and mark it using the map tools.
@@ -269,7 +290,7 @@ const HorizontalLinearStepper = (props) => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleNext}
+                onClick={activeStep === 1 ? handleNextPolyDrawStep : handleNext}
                 className={classes.button}
                 style={{
                   ...(activeStep === 3 ? { display: "none" } : {}),

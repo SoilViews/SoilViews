@@ -50,7 +50,7 @@ export class Dashboard extends React.Component {
     super(props);
     this.state = {
       downloadURLs: [],
-      area: "",
+      area: null,
       coordinates: [],
       coordinatesCenter: [42.696295, 23.303643],
       zoom: 10,
@@ -89,7 +89,7 @@ export class Dashboard extends React.Component {
     var kml = tokml(data);
     console.log("KMLLLLLLLL", kml);
     this.setState({
-      akmlNameDescriptionrea: tokml(data, {
+      kmlNameDescription: tokml(data, {
         name: "name",
         description: "description",
       }),
@@ -97,11 +97,12 @@ export class Dashboard extends React.Component {
 
     var convertedData = JSON.stringify(data);
     console.log(convertedData);
-    var FileSaver = require("file-saver");
+    // var FileSaver = require("file-saver");
     var blob = new Blob([this.state.kmlNameDescription], {
       type: "text/plain;charset=utf-8",
     });
-    FileSaver.saveAs(blob, "coordinates.kml");
+    // FileSaver.saveAs(blob, "coordinates.kml");
+
     //Save kml file with formated filename
     var date = new Date();
     var formattedDate = format(date, "DD-MM-YYYY_H:mma");
@@ -113,7 +114,7 @@ export class Dashboard extends React.Component {
     //Save arean and coordinates
 
     var Area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
-    var area1 = L.GeometryUtil.formattedNumber(Area * 0.001) + "  m²";
+    var area1 = L.GeometryUtil.formattedNumber(Area * 0.001);
     console.log(area1);
     this.setState({
       area: area1,
@@ -324,54 +325,55 @@ export class Dashboard extends React.Component {
                   tiled="true"
                 />
               </LayersControl.BaseLayer>
-              <Search position="topright" />
-              <div className="geojson-toggle">
-                <label>Show Polygons </label>
-                <input
-                  style={{ opacity: 1, pointerEvents: "auto" }}
-                  type="checkbox"
-                  name="layertoggle"
-                  id="layertoggle"
-                  value={this.state.showPolygons}
-                  onChange={this.onGeojsonPolygons}
-                />
-              </div>
-              {this.state.showPolygons && (
-                <GeoJSON
-                  data={geojson}
-                  style={this.geoJSONStyle}
-                  value={this.state.showPolygons}
-                />
-              )}
-
-              <div className="geojson-toggle1">
-                <label>Show Markers </label>
-                <input
-                  style={{ opacity: 1, pointerEvents: "auto" }}
-                  type="checkbox"
-                  name="layertoggle"
-                  id="layertoggle"
-                  value={this.state.showMarkers}
-                  onChange={this.onGeojsonMarkers}
-                />
-              </div>
-              {this.state.showMarkers && (
-                <GeoJSON
-                  data={points}
-                  style={this.geoJSONStyle}
-                  value={this.state.showMarkers}
-                  onEachFeature={this.onEachFeaturePoint.bind(this)}
-                />
-              )}
-              {/* /////////////////////////////////////// */}
-              <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
-                layers="NDVI"
-                // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+            </LayersControl>
+            <Search position="topright" />
+            <div className="geojson-toggle">
+              <label>Show Polygons </label>
+              <input
+                style={{ opacity: 1, pointerEvents: "auto" }}
+                type="checkbox"
+                name="layertoggle"
+                id="layertoggle"
+                value={this.state.showPolygons}
+                onChange={this.onGeojsonPolygons}
               />
-              <NmScale />
-              {/* <CustomWMSLayer
+            </div>
+            {this.state.showPolygons && (
+              <GeoJSON
+                data={geojson}
+                style={this.geoJSONStyle}
+                value={this.state.showPolygons}
+              />
+            )}
+
+            <div className="geojson-toggle1">
+              <label>Show Markers </label>
+              <input
+                style={{ opacity: 1, pointerEvents: "auto" }}
+                type="checkbox"
+                name="layertoggle"
+                id="layertoggle"
+                value={this.state.showMarkers}
+                onChange={this.onGeojsonMarkers}
+              />
+            </div>
+            {this.state.showMarkers && (
+              <GeoJSON
+                data={points}
+                style={this.geoJSONStyle}
+                value={this.state.showMarkers}
+                onEachFeature={this.onEachFeaturePoint.bind(this)}
+              />
+            )}
+            {/* /////////////////////////////////////// */}
+            <TileLayer
+              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+              url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
+              layers="NDVI"
+              // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+            />
+            <NmScale />
+            {/* <CustomWMSLayer
               layers={["Sentinel-2"]}
               options={{
                 format: "image/vnd.jpeg-png",
@@ -381,14 +383,14 @@ export class Dashboard extends React.Component {
               }}
               url="https://kade.si/cgi-bin/mapserv?"
             /> */}
-              {/* <WMSTileLayer
+            {/* <WMSTileLayer
                 layers={["Sentinel-2"]}
                 url="https://kade.si/cgi-bin/mapserv?"
                 format="image/vnd.jpeg-png"
                 transparent="true"
                 tiled="true"
               /> */}
-            </LayersControl>
+
             <Marker position={position}>
               <Popup>Тест</Popup>
             </Marker>
