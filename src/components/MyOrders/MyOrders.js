@@ -153,6 +153,7 @@ export default compose(
       return [
         {
           collection: "orders",
+          orderBy: ["createdAt", "desc"],
         },
       ];
     return [
