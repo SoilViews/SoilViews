@@ -41,6 +41,7 @@ const HorizontalLinearStepper = (props) => {
   const classes = useStyles();
   const [errorStatus, setErrorStatus] = React.useState(null);
   const [errorStatusPolly, setErrorStatusPolly] = React.useState(null);
+  //Change step start for dev
   const [activeStep, setActiveStep] = React.useState(0);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();

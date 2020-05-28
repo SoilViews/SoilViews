@@ -1,5 +1,7 @@
 import React from 'react';
 import { FormControlLabel, Checkbox, Grid } from '@material-ui/core';
+// import Favorite from '@material-ui/icons/Favorite';
+// import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
 
 import styles from './NewCheckboxes.module.css'
 
@@ -31,6 +33,8 @@ export const NewCheckboxes = ( { crops, handleCropChange } ) => {
                             onChange={handleCropChange}
                             name="Vegetables"
                             color="primary"
+                            // icon={<FavoriteBorder />} 
+                            // checkedIcon={<Favorite />}
                         />
                     }
                     label="Vegetables:"

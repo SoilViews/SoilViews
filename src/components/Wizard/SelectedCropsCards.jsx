@@ -21,14 +21,13 @@ export const SelectedCropsCards = ({
           </Grid>
         ))}
       </Grid>
-      <Typography variant="body">
-        Total land area:
+      <Typography className={styles.OrderItem} variant="body">
+        <span>Total land area: </span>
         {getArea}
       </Typography>
-      <br />
-      <br />
-      <Typography variant="body">
-        Loaction:&nbsp;{getLandCoordinates.toString() + " "}
+      <Typography className={styles.OrderItem} variant="body">
+        <span>Location: </span>
+        {getLandCoordinates.toString() + " "}
       </Typography>
     </div>
   );
