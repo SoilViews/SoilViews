@@ -207,7 +207,7 @@ export class Dashboard extends React.Component {
 
   render() {
     //Here we shorten the area and the coordinated definition
-    const { area, coordinates, coordinates2 } = this.state;
+    const area = this.props;
 
     //
     const locateOptions = {
@@ -225,11 +225,11 @@ export class Dashboard extends React.Component {
       return (
         <div id="map" className="dashboard container">
           <br />
-          <HorizontalLinearStepper
+          {/* <HorizontalLinearStepper
             area={area}
             coordinates={coordinates}
             coordinates2={coordinates2}
-          />
+          /> */}
           <br />
           <hr />
           <Map
