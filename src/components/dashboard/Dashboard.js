@@ -30,6 +30,9 @@ import LocateControl from "./LocateControl";
 import NmScale from "@marfle/react-leaflet-nmscale";
 import FullscreenControl from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/dist/styles.css";
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import styles from "./Dashboard.module.css"
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
@@ -462,12 +465,7 @@ export class Dashboard extends React.Component {
         </div>
       );
     } else {
-      return (
-        <h1 className="header center orange-text">
-          You don't have access to this page,please make account to access the
-          page
-        </h1>
-      );
+      return <CircularProgress size="50rem" className={styles.loader}/>;
     }
   }
 }
