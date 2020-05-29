@@ -11,10 +11,11 @@ import { connect } from "react-redux";
 import { saveOrderData } from "../../store/actions/newOrder";
 import { Link } from "react-router-dom";
 import Alert from "./Alert";
-import AlertDrawedPoly from "./AlertDrawedPoly";
+import AlertNoPoly from "./AlertNoPoly";
 import { NewCheckboxes } from "./NewCheckBoxes";
 import { SelectedCropsCards } from "./SelectedCropsCards";
 import firebase from "../../firebase";
+import Dashboard from "../dashboard/Dashboard"
 //Stepper Styles
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -92,11 +93,10 @@ const HorizontalLinearStepper = (props) => {
     }
   };
   const handleNextPolyDrawStep = () => {
-    //get boxes
     const getArea = props.area;
     if (activeStep === 1 && getArea == null) {
       setErrorStatusPolly({
-        msg: "Must Draw atleast one polygon",
+        msg: "Must Draw at least one polygon",
         type: "Warning",
       });
     } else {
@@ -157,7 +157,7 @@ const HorizontalLinearStepper = (props) => {
         return (
           <div style={{ padding: "2% 0" }}>
             <Typography variant="h4">Find your land on the map</Typography>
-            <AlertDrawedPoly errorStatusPolly={errorStatusPolly} />
+            <AlertNoPoly errorStatusPolly={errorStatusPolly} />
             <ul>
               <li>
                 Find your land on the map and mark it using the map tools.

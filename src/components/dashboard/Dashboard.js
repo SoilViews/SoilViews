@@ -465,7 +465,11 @@ export class Dashboard extends React.Component {
         </div>
       );
     } else {
-      return <CircularProgress size="50rem" className={styles.loader}/>;
+      return (
+      <div className={styles.container}>
+              <CircularProgress size="40rem" className={styles.loader}/>;
+      </div>
+      )
     }
   }
 }

@@ -17,6 +17,7 @@ import EditUser from "./components/Admin/EditUser";
 import EditOrder from "./components/MyOrders/EditOrder";
 import PersistentDrawerLeft from "./components/DrawerLeft/PersistentDrawerLeft";
 import MyOrders from "./components/MyOrders/MyOrders";
+import HorizontalLinearStepper from "./components/Wizard/HorizontalLinearStepper"
 
 function App() {
   const [checked] = useState(true);
@@ -48,6 +49,7 @@ function App() {
               <Route path="/HelpPage" component={Documentation} />
               <Route path="/AdminPanel" component={AdminPanel} />
               <Route path="/MyOrders" component={MyOrders} />
+              <Route path="/NewOrder" component={HorizontalLinearStepper} />
               <Route path="/" component={indexPage} />
             </Switch>
           </header>
