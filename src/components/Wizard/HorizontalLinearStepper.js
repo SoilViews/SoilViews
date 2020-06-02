@@ -15,7 +15,7 @@ import AlertNoPoly from "./AlertNoPoly";
 import { NewCheckboxes } from "./NewCheckBoxes";
 import { SelectedCropsCards } from "./SelectedCropsCards";
 import firebase from "../../firebase";
-import Dashboard from "../dashboard/Dashboard"
+import Dashboard from "../dashboard/Dashboard";
 //Stepper Styles
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,6 +44,9 @@ const HorizontalLinearStepper = (props) => {
   const [errorStatusPolly, setErrorStatusPolly] = React.useState(null);
   //Change step start for dev
   const [activeStep, setActiveStep] = React.useState(0);
+  const [area, areaHandler] = React.useState(props.area);
+  const [coordinates, coordinatesHandler] = React.useState(props.coordinates);
+  const [viewMap, setMap] = React.useState(props.viewToolbar);
   const [skipped, setSkipped] = React.useState(new Set());
   const steps = getSteps();
   const initialCrops = {
@@ -57,6 +60,10 @@ const HorizontalLinearStepper = (props) => {
 
   const [crops, setCrops] = React.useState(initialCrops);
 
+  const setMap1 = () => {
+    setMap({ viewMap: true });
+  };
+
   const handleCropChange = (event) => {
     setCrops({ ...crops, [event.target.name]: event.target.checked });
   };
@@ -64,11 +71,6 @@ const HorizontalLinearStepper = (props) => {
   const handleResetCrops = () => {
     setCrops(initialCrops);
   };
-
-  //GETS THE LAND AREA
-  const getArea = props.area;
-  //GETS THE LAND COORDINATES
-  const getLandCoordinates = props.coordinates;
 
   //STEPPER FUNCTIONALITY***************
   const isStepOptional = (step) => {
@@ -78,6 +80,7 @@ const HorizontalLinearStepper = (props) => {
     return skipped.has(step);
   };
   const handleNext = () => {
+    setMap1();
     //get boxes
     const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
     if (activeStep === 2 && selectedCrops.length < 1) {
@@ -93,8 +96,8 @@ const HorizontalLinearStepper = (props) => {
     }
   };
   const handleNextPolyDrawStep = () => {
-    const getArea = props.area;
-    if (activeStep === 1 && getArea == null) {
+    console.log(area);
+    if (activeStep === 1 && area == null) {
       setErrorStatusPolly({
         msg: "Must Draw at least one polygon",
         type: "Warning",
@@ -116,18 +119,18 @@ const HorizontalLinearStepper = (props) => {
   //CHANGE HERE
   const Save = () => {
     const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
-    console.log(getLandCoordinates);
-    console.log(getArea);
+    console.log(coordinates);
+    console.log(area);
     const db = firebase.firestore();
     db.collection("orders").add({
       authorFirstName: props.profile.firstName,
       authorLastName: props.profile.lastName,
       userId: props.auth,
       order: selectedCrops,
-      area: getArea,
+      area: area,
       createdAt: new Date(),
       status: [{ value: "Submitted", label: "Submitted" }],
-      ...getLandCoordinates[0],
+      // ...getLandCoordinates[0],
     });
     handleResetCrops();
     handleNext();
@@ -164,14 +167,11 @@ const HorizontalLinearStepper = (props) => {
               </li>
               <li>Or upload a digital file of your land</li>
             </ul>
-            {/* <p>
-              Your area is:
-              {getArea}
-            </p>
-            <p key={getLandCoordinates}>
-              Your Coordinates are:
-              {getLandCoordinates}
-            </p> */}
+            <Dashboard
+              viewMap={viewMap}
+              areaHandler={areaHandler}
+              coordinatesHandler={coordinatesHandler}
+            />
           </div>
         );
       case 2:
@@ -187,8 +187,8 @@ const HorizontalLinearStepper = (props) => {
           <div style={{ padding: "2% 0" }}>
             <SelectedCropsCards
               selectedCrops={selectedCrops}
-              getArea={getArea}
-              getLandCoordinates={getLandCoordinates}
+              getArea={area}
+              getLandCoordinates={coordinates}
             />
           </div>
         );
@@ -205,108 +205,112 @@ const HorizontalLinearStepper = (props) => {
   };
   //STEPPER FUNCTIONALITY***************
   return (
-    <div className={classes.root}>
-      <Stepper activeStep={activeStep}>
-        {steps.map((label, index) => {
-          const stepProps = {};
-          const labelProps = {};
-          if (isStepSkipped(index)) {
-            stepProps.completed = false;
-          }
-          return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
-            </Step>
-          );
-        })}
-      </Stepper>
-      <div>
-        {activeStep === steps.length ? (
-          <div>
-            <div style={{ padding: "2% 0" }}>
-              <Typography varian="h6">Your order was completed.</Typography>
-              <Typography varian="h6">
-                You may track its process on "My orders" page.
-              </Typography>
-            </div>
-            <Button
-              onClick={handleReset}
-              className={classes.button}
-              variant="contained"
-            >
-              New Order
-            </Button>
-            <Button
-              // onClick={}
-              className={classes.button}
-              variant="contained"
-              color="primary"
-            >
-              {/* TODO Link TO MY ORDERS PAGE */}
-              <Link style={{ color: "white" }} to="/MyOrders">
-                My Orders
-              </Link>
-            </Button>
-          </div>
-        ) : (
-          <div>
-            <Typography component="span" className={classes.instructions}>
-              {getStepContent(activeStep)}
-            </Typography>
+    <div id="map" className="dashboard container">
+      <div className={classes.root}>
+        <Stepper activeStep={activeStep}>
+          {steps.map((label, index) => {
+            const stepProps = {};
+            const labelProps = {};
+            if (isStepSkipped(index)) {
+              stepProps.completed = false;
+            }
+            return (
+              <Step key={label} {...stepProps}>
+                <StepLabel {...labelProps}>{label}</StepLabel>
+              </Step>
+            );
+          })}
+        </Stepper>
+        <div>
+          {activeStep === steps.length ? (
             <div>
+              <div style={{ padding: "2% 0" }}>
+                <Typography varian="h6">Your order was completed.</Typography>
+                <Typography varian="h6">
+                  You may track its process on "My orders" page.
+                </Typography>
+              </div>
               <Button
-                style={{
-                  ...(activeStep === 0 ? { display: "none" } : {}),
-                }}
-                disabled={activeStep === 0}
-                onClick={handleBack}
+                onClick={handleReset}
                 className={classes.button}
+                variant="contained"
               >
-                Back
+                New Order
               </Button>
+              <Button
+                // onClick={}
+                className={classes.button}
+                variant="contained"
+                color="primary"
+              >
+                {/* TODO Link TO MY ORDERS PAGE */}
+                <Link style={{ color: "white" }} to="/MyOrders">
+                  My Orders
+                </Link>
+              </Button>
+            </div>
+          ) : (
+            <div>
+              <Typography component="span" className={classes.instructions}>
+                {getStepContent(activeStep)}
+              </Typography>
+              <div>
+                <Button
+                  style={{
+                    ...(activeStep === 0 ? { display: "none" } : {}),
+                  }}
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  className={classes.button}
+                >
+                  Back
+                </Button>
 
-              {isStepOptional(activeStep) && (
+                {isStepOptional(activeStep) && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={(e) => {
+                      mapEvent(e);
+                    }}
+                    className={classes.button}
+                  >
+                    Draw a polygon
+                  </Button>
+                )}
+                <Button
+                  style={{ ...(activeStep !== 3 ? { display: "none" } : {}) }}
+                  disabled={activeStep === 0}
+                  onClick={Save}
+                  className={classes.button}
+                  variant="contained"
+                  color="primary"
+                >
+                  Review and Submit
+                </Button>
+
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={(e) => {
-                    mapEvent(e);
-                  }}
+                  onClick={
+                    activeStep === 1 ? handleNextPolyDrawStep : handleNext
+                  }
                   className={classes.button}
+                  style={{
+                    ...(activeStep === 3 ? { display: "none" } : {}),
+                  }}
                 >
-                  Draw a polygon
+                  {activeStep === 0
+                    ? "Start"
+                    : activeStep === steps.length - 1
+                    ? "Start"
+                    : "Next"}
+                  {/* {activeStep === steps.length - 1 ?  "Start" : "Next"} */}
                 </Button>
-              )}
-              <Button
-                style={{ ...(activeStep !== 3 ? { display: "none" } : {}) }}
-                disabled={activeStep === 0}
-                onClick={Save}
-                className={classes.button}
-                variant="contained"
-                color="primary"
-              >
-                Review and Submit
-              </Button>
-
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={activeStep === 1 ? handleNextPolyDrawStep : handleNext}
-                className={classes.button}
-                style={{
-                  ...(activeStep === 3 ? { display: "none" } : {}),
-                }}
-              >
-                {activeStep === 0
-                  ? "Start"
-                  : activeStep === steps.length - 1
-                  ? "Start"
-                  : "Next"}
-                {/* {activeStep === steps.length - 1 ?  "Start" : "Next"} */}
-              </Button>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ import "../../leaflet.filelayer";
 import { connect } from "react-redux";
 import { saveData } from "../../store/actions/authActions";
 import { saveAs } from "file-saver";
-import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
+// import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
 import "../dashboard/GeojsonLayer.css";
 import Search from "react-leaflet-search";
 import "./Map.css";
@@ -30,9 +30,10 @@ import LocateControl from "./LocateControl";
 import NmScale from "@marfle/react-leaflet-nmscale";
 import FullscreenControl from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/dist/styles.css";
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { popupContent, popupHead } from "./popupStyles";
 
-import styles from "./Dashboard.module.css"
+import styles from "./Dashboard.module.css";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
@@ -60,6 +61,7 @@ export class Dashboard extends React.Component {
       showMarkers: false,
       showPolygons: false,
       geojsonvisible: false,
+      viewToolbar: false,
       keyMAP: Math.random(),
       kmlNameDescription: "",
     };
@@ -117,14 +119,16 @@ export class Dashboard extends React.Component {
     //Save arean and coordinates
 
     var Area = L.GeometryUtil.geodesicArea(layer.getLatLngs()[0]);
-    var area1 = L.GeometryUtil.formattedNumber(Area * 0.001) + "  m²";
-    console.log(area1);
+    var areaFormatted = L.GeometryUtil.formattedNumber(Area * 0.001) + "  m²";
+    console.log(areaFormatted);
     this.setState({
-      area: area1,
+      area: areaFormatted,
     });
+    this.props.areaHandler(areaFormatted);
 
     for (const result of drawedCord) this.state.coordinates.push(result);
     console.log(this.state.coordinates[0]);
+    this.props.coordinatesHandler(this.state.coordinates);
   };
 
   saveToFile = (e) => {
@@ -207,8 +211,7 @@ export class Dashboard extends React.Component {
 
   render() {
     //Here we shorten the area and the coordinated definition
-    const { area, coordinates, coordinates2 } = this.state;
-
+    const { viewMap } = this.props;
     //
     const locateOptions = {
       position: "bottomleft",
@@ -225,11 +228,6 @@ export class Dashboard extends React.Component {
       return (
         <div id="map" className="dashboard container">
           <br />
-          <HorizontalLinearStepper
-            area={area}
-            coordinates={coordinates}
-            coordinates2={coordinates2}
-          />
           <br />
           <hr />
           <Map
@@ -395,7 +393,19 @@ export class Dashboard extends React.Component {
               /> */}
 
             <Marker position={position}>
-              <Popup>Тест</Popup>
+              <Popup className="request-popup">
+                <div style={popupContent}>
+                  <img
+                    src="https://cdn3.iconfinder.com/data/icons/basicolor-arrows-checks/24/149_check_ok-512.png"
+                    width="150"
+                    height="150"
+                    alt="no img"
+                  />
+                  <div className="m-2" style={popupHead}>
+                    Success!
+                  </div>
+                </div>
+              </Popup>
             </Marker>
             {this.state.geojsonvisible && (
               <GeoJSON
@@ -405,24 +415,26 @@ export class Dashboard extends React.Component {
               />
             )}
             <FeatureGroup>
-              <EditControl
-                position="topleft"
-                onEdited={this._onEditPath}
-                onCreated={this.onCreate}
-                onDeleted={this._onDeleted}
-                onMounted={this._mounted}
-                onEditStart={this._onEditStart}
-                onEditStop={this._onEditStop}
-                onDeleteStart={this._onDeleteStart}
-                onDeleteStop={this._onDeleteStop}
-                draw={{
-                  rectangle: false,
-                  marker: false,
-                  circleMarker: false,
-                  circle: false,
-                  circlemarker: false,
-                }}
-              />
+              {viewMap && (
+                <EditControl
+                  position="topleft"
+                  onEdited={this._onEditPath}
+                  onCreated={this.onCreate}
+                  onDeleted={this._onDeleted}
+                  onMounted={this._mounted}
+                  onEditStart={this._onEditStart}
+                  onEditStop={this._onEditStop}
+                  onDeleteStart={this._onDeleteStart}
+                  onDeleteStop={this._onDeleteStop}
+                  draw={{
+                    rectangle: false,
+                    marker: false,
+                    circleMarker: false,
+                    circle: false,
+                    circlemarker: false,
+                  }}
+                />
+              )}
             </FeatureGroup>
             <Polygon color="purple" positions={polygon} />
             <GeoJSON
@@ -466,10 +478,10 @@ export class Dashboard extends React.Component {
       );
     } else {
       return (
-      <div className={styles.container}>
-              <CircularProgress size="40rem" className={styles.loader}/>;
-      </div>
-      )
+        <div className={styles.container}>
+          <CircularProgress size="40rem" className={styles.loader} />;
+        </div>
+      );
     }
   }
 }
