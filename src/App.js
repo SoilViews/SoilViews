@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import "./App.css";
 import Nabvar from "../src/components/layout/Navbar";
-import Dashboard from "../src/components/dashboard/Dashboard";
+// import Dashboard from "../src/components/dashboard/Dashboard";
 import indexPage from "../src/components/index/indexPage";
 import SignIn from "./components/auth/SignIn";
 import ResetPassword from "./components/auth/ResetPassword";
@@ -17,7 +17,7 @@ import EditUser from "./components/Admin/EditUser";
 import EditOrder from "./components/MyOrders/EditOrder";
 import PersistentDrawerLeft from "./components/DrawerLeft/PersistentDrawerLeft";
 import MyOrders from "./components/MyOrders/MyOrders";
-import HorizontalLinearStepper from "./components/Wizard/HorizontalLinearStepper"
+import HorizontalLinearStepper from "./components/Wizard/HorizontalLinearStepper";
 
 function App() {
   const [checked] = useState(true);
@@ -42,7 +42,7 @@ function App() {
               <Route path="/SignIn" component={SignIn} />
               <Route path="/SignUp" component={SignUp} />
               <Route path="/CreateProject" component={CreateProject} />
-              <Route path="/Dashboard" component={Dashboard} />
+              <Route path="/Dashboard" component={HorizontalLinearStepper} />
               <Route path="/Profile" component={Profile} />
               <Route path="/ResetPassword" component={ResetPassword} />
               <Route path="/ContactForm" component={ContactForm} />

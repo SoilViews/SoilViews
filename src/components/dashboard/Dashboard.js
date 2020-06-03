@@ -205,9 +205,11 @@ export class Dashboard extends React.Component {
     });
   };
 
-  resetMap() {
-    console.log("Reset");
-  }
+  resetMap = (e) => {
+    this.setState({ keyMAP: Math.random(), area: null });
+    var areaReset = null;
+    this.props.areaHandler(areaReset);
+  };
 
   render() {
     //Here we shorten the area and the coordinated definition
@@ -445,7 +447,7 @@ export class Dashboard extends React.Component {
           </Map>
           <br />
           <br />
-          <button
+          {/* <button
             className="waves-effect waves-light btn"
             onClick={this.onGeojsonToggleButton}
           >
@@ -458,7 +460,7 @@ export class Dashboard extends React.Component {
           >
             Парцел 2--> сочи към конкретен маркер
           </button>
-          <br />
+          <br /> */}
           <button
             className="waves-effect waves-light btn"
             onClick={this.saveToFile}

@@ -130,7 +130,7 @@ const HorizontalLinearStepper = (props) => {
       area: area,
       createdAt: new Date(),
       status: [{ value: "Submitted", label: "Submitted" }],
-      // ...getLandCoordinates[0],
+      ...coordinates[0],
     });
     handleResetCrops();
     handleNext();
@@ -203,6 +203,13 @@ const HorizontalLinearStepper = (props) => {
     var cb = document.getElementsByClassName("leaflet-draw-draw-polygon");
     return !cb[0].dispatchEvent(ee);
   };
+  const mapEvent1 = (e) => {
+    var ee = document.createEvent("Event");
+    ee.initEvent("click", true, true);
+    var cb = document.getElementsByClassName("leaflet-draw-edit-remove");
+    return !cb[0].dispatchEvent(ee);
+  };
+
   //STEPPER FUNCTIONALITY***************
   return (
     <div id="map" className="dashboard container">
@@ -276,6 +283,18 @@ const HorizontalLinearStepper = (props) => {
                     className={classes.button}
                   >
                     Draw a polygon
+                  </Button>
+                )}
+                {isStepOptional(activeStep) && (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={(e) => {
+                      mapEvent1(e);
+                    }}
+                    className={classes.button}
+                  >
+                    Remove a polygon
                   </Button>
                 )}
                 <Button
