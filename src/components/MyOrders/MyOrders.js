@@ -101,7 +101,7 @@ export class MyOrders extends React.Component {
                             fontSize: 20,
                           }}
                         >
-                          {order.status.value}
+                          {order.status[0].value}
                         </StyledTableCell>
                       )}
                       <StyledTableCell>
