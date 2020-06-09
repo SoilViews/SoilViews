@@ -10,11 +10,15 @@ In the project directory, you can run:
 
 ### `npm start`
 
-### How to start the server
+## Email server
 
-### in the console type: cd src/components/server
+### How to start the email server
 
-### after you are at this directory run this command: node server.js
+### `in the console type to the email server directory: cd src/components/server`
+
+### `after you are at this directory run this command: node server.js`
+
+Open [http://localhost:4000](http://localhost:4000) and you should see Welcome to the Sendgrid Emailing Server
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
