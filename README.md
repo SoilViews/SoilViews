@@ -40,11 +40,11 @@ You will also see any lint errors in the console.
 Deploy URL: app.soilviews.com
 About the project: soilviews.com
 
-## How to build and run docker container with the app running on?
+## How to build docker image with all files and run docker container with the app running on container
 
-### 1.docker build -t soilviews:1.0 .
+### 1.docker build -t soilviews:1.0 . or with this command:npm run docker:build
 
-### 2.docker run -d -p 3000:3000 -e TZ=Europe/Sofia --name soilviews soilviews:1.0
+### 2.docker run -d -p 3000:3000 -e TZ=Europe/Sofia --name soilviews soilviews:1.0 or with this command: npm run docker:run
 
 ## Architecture
 

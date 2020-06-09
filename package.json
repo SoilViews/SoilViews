@@ -63,6 +63,8 @@
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"npm run server\"",
     "server": "cd src/components/server  && node server.js",
+    "docker:build": "docker build -t soilviews:1.0 .",
+    "docker:run": "docker run -d -p 3000:3000 -e TZ=Europe/Sofia --name soilviews soilviews:1.0",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
