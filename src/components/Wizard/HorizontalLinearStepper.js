@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
 }));
+const options = [{ value: "Submitted", label: "Submitted" }];
 //Step names
 function getSteps() {
   return [
@@ -115,6 +116,12 @@ const HorizontalLinearStepper = (props) => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+  const sendEmail = (_) => {
+    fetch(
+      `http://127.0.0.1:4000/Dashboard?recipient=${props.profile.email}&sender=al.velchevv@gmail.com&topic=OrderSubmitted&text=Your order is submitted`
+    ) //query string url
+      .catch((err) => console.error(err));
+  };
   //SAVE TO FIREBASE
   //CHANGE HERE
   const Save = () => {
@@ -129,9 +136,10 @@ const HorizontalLinearStepper = (props) => {
       order: selectedCrops,
       area: area,
       createdAt: new Date(),
-      status: [{ value: "Submitted", label: "Submitted" }],
+      status: options,
       ...coordinates[0],
     });
+    sendEmail();
     handleResetCrops();
     handleNext();
   };
