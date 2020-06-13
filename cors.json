@@ -1,6 +1,6 @@
 [
   {
-    "origin": ["http://origin1.example.com"],
+    "origin": ["https://origin1.example.com"],
     "responseHeader": ["Content-Type"],
     "method": ["GET"],
     "maxAgeSeconds": 3600

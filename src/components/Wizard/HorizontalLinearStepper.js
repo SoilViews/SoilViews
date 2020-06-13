@@ -118,7 +118,7 @@ const HorizontalLinearStepper = (props) => {
   };
   const sendEmail = (_) => {
     fetch(
-      `http://127.0.0.1:4000/Dashboard?recipient=${props.profile.email}&sender=al.velchevv@gmail.com&topic=OrderSubmitted&text=Your order is submitted`
+      `https://127.0.0.1:4000/Dashboard?recipient=${props.profile.email}&sender=al.velchevv@gmail.com&topic=OrderSubmitted&text=Your order is submitted`
     ) //query string url
       .catch((err) => console.error(err));
   };

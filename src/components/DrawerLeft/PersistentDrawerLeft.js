@@ -4,13 +4,23 @@ import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { ListItemIcon, ListItemText, ListItem, Divider, List, Toolbar, AppBar, CssBaseline, Drawer } from "@material-ui/core/";
+import {
+  ListItemIcon,
+  ListItemText,
+  ListItem,
+  Divider,
+  List,
+  Toolbar,
+  AppBar,
+  CssBaseline,
+  Drawer,
+} from "@material-ui/core/";
 import MailIcon from "@material-ui/icons/Mail";
 import Navbar from "../layout/Navbar";
 import InfoIcon from "@material-ui/icons/Info";
 import { Link } from "react-router-dom";
 import DrawerHead from "./DrawerHead";
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
 
@@ -48,9 +58,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  drawerHeader: {
-
-  },
+  drawerHeader: {},
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -94,7 +102,9 @@ export const PersistentDrawerLeft = (props) => {
         <ListItemText primary="Log Out" />
       </ListItem>
     </Link>
-  ) : (<hidden></hidden>);
+  ) : (
+    <hidden></hidden>
+  );
 
   return (
     <div className={classes.root}>
@@ -146,7 +156,7 @@ export const PersistentDrawerLeft = (props) => {
             </ListItem>
           </Link>
           <a
-            href="http://soilviews.com"
+            href="https://soilviews.com"
             target="blank"
             onClick={handleDrawerClose}
           >
@@ -163,7 +173,7 @@ export const PersistentDrawerLeft = (props) => {
       </Drawer>
     </div>
   );
-}
+};
 const mapDispatchToProps = (dispatch) => {
   return {
     signOut: () => dispatch(signOut()),
@@ -177,6 +187,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PersistentDrawerLeft);
-
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PersistentDrawerLeft);
