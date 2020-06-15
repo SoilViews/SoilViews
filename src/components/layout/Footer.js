@@ -1,6 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
+import LanguageBar from "./LanguageBar"
+
+import styles from "./styles/Footer.module.css"
 
 const Footer = (props) => {
   return (
@@ -63,6 +66,9 @@ const Footer = (props) => {
         </div>
         <div className="footer-copyright">
           <div className="container">
+            <div className={styles.position}>
+              <LanguageBar />
+            </div>
             Created by <a href="https://soilviews.com/"> SoilViews </a>
           </div>
         </div>
