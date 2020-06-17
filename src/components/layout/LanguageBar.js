@@ -15,13 +15,20 @@ const LanguageBar = () => {
                 countryCode="BG"
                 svg
                 className={styles.flag}
-                title="BG" />
+                title="Български" />
             <ReactCountryFlag
                 onClick={() => changeLanguage('en')}
                 countryCode="GB"
                 svg
                 className={styles.flag}
                 title="GB"
+            />
+            <ReactCountryFlag
+                onClick={() => changeLanguage('de')}
+                countryCode="DE"
+                svg
+                className={styles.flag}
+                title="DE"
             />
         </div>
     );

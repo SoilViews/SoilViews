@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { signIn } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 import { NavLink } from "react-router-dom";
+import { withTranslation } from 'react-i18next'; // for class component
+
 
 class SignIn extends Component {
     constructor(props) {
@@ -25,23 +27,23 @@ class SignIn extends Component {
         e.preventDefault();
         this.props.signIn(this.state)
     }
+
     render() {
         const { authError, auth } = this.props;
+ 
         if (auth.uid) return <Redirect to="/" />
+        const { t } = this.props;
         return (
             <div>
-                <div className="title">
-                    <h3 className="center-align grey-text">Welcome!</h3>
-                </div>
                 <div className="row">
                     <div className="col s12 l4 offset-l4">
                         <div className="card grey lighten-3">
                             <div className="card-content">
-                                <h4 className="card-title center-align">Login</h4>
+                                <h4 className="card-title center-align">SoilViews {t('Login')}</h4>
                                 <form onSubmit={this.onSubmitForm}>
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <i className="material-icons prefix">email</i>
+                                            <i className="material-icons prefix">mail</i>
                                             <input type="email" placeholder='Email' id="email" className="validate" onChange={this.onChangeInput} />
 
                                         </div>
@@ -54,13 +56,13 @@ class SignIn extends Component {
                                         </div>
                                     </div>
                                     <div className="row center-align">
-                                        <button className="btn waves-effect waves-light" type="submit" name="action">Login <i className="material-icons right">send</i> </button>
+                                        <button className="btn waves-effect waves-light" type="submit" name="action">{t('Login')}<i className="material-icons right">send</i> </button>
                                         <div className="red-text center">
                                             {authError ? <p>{authError}</p> : null}
                                         </div>
                                     </div>
-                                    <span><NavLink to='/signup'>Register</NavLink></span>
-                                    <span style={{ float: "right" }}><NavLink to='/ResetPassword'>Forgot password?</NavLink></span>
+                                    <span><NavLink to='/signup'>{t('Register')}</NavLink></span>
+                                    <span style={{ float: "right" }}><NavLink to='/ResetPassword'>{t('Forgot password?')}</NavLink></span>
                                 </form>
                             </div>
                         </div>
@@ -85,4 +87,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
+export default connect(mapStateToProps, mapDispatchToProps) (withTranslation()(SignIn));

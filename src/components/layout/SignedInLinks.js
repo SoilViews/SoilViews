@@ -4,25 +4,26 @@ import { NavLink } from "react-router-dom";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
 import { Grid } from "@material-ui/core/";
+import { useTranslation } from 'react-i18next';
 
 const SignedInLinks = (props) => {
 
   const isAdmin = (props.profile.role === "Admin");
-
+  const { t } = useTranslation();
   return (
     <div>
       <Grid container>
         {isAdmin ? (
           <Grid item >
-            <NavLink to="/AdminPanel">AdminPanel</NavLink>
+            <NavLink to="/AdminPanel">{t('AdminPanel')}</NavLink>
           </Grid>
         )
           : (<li></li>)}
         <Grid item>
-          <NavLink to="/MyOrders">MyOrders</NavLink>
+          <NavLink to="/MyOrders">{t('MyOrders')}</NavLink>
         </Grid>
         <Grid item >
-          <a onClick={props.signOut}>Log Out</a>
+          <a onClick={props.signOut}>{t('Log Out')}</a>
         </Grid>
         <Grid item >
           <NavLink to="/Profile" className="btn btn-floating grey">

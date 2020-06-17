@@ -103,13 +103,10 @@ class SignUp extends Component {
     return (
       <React.Fragment>
         <div className="row">
-          <div className="title">
-            <h3 className="center-align grey-text">Register New User</h3>
-          </div>
           <div className="col s12 l4 offset-l4">
             <div className="card grey lighten-3">
               <div className="card-content">
-                <h4 className="card-title center-align">Register</h4>
+                <h4 className="card-title center-align">{t('Register')}</h4>
                 <form onSubmit={this.onSubmitForm} id="reg-form">
                   <div className="row">
                     <div className="input-field col s12">

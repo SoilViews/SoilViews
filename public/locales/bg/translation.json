@@ -3,5 +3,25 @@
     "Get your soil analysis today" : "Анализирайте земята си днес",
     "Increase your predictability and crop yields" : "Повишете прогнозните добиви",
     "we combine soil samples and Copernicus satelite imaging" : "Комбинирайте Коперникус сателитни изображения и наземни почвени изследвания",
-    "Start Here" : "Започнете тук"
+    "Start Here" : "Започнете тук",
+    "Login" : "Вход",
+    "AdminPanel" : "Администратор",
+    "MyOrders" : "Моите поръчки",
+    "Log Out" : "Излез",
+    
+    "About SoilViews Web App" : "About SoilViews Web App",
+    "We deliver soil analysis combining Satelite imaging and soil samples." : "We deliver soil analysis combining Satelite imaging and soil samples.",
+    "Read more" : "Read more",
+    "Settings" : "Settings",
+    "My Profile" : "My Profile",
+    "Dashboard" : "Dashboard",
+    "Documentation" : "Documentation",
+    "Connect" : "Connect",
+    "SignIn" : "SignIn",
+    "SignUp" : "SignUp",
+    "Contact Us" : "Contact Us",
+    "Created by" : "Created by",
+    "Email" : "Email",
+    "Register" : "Register",
+    "Forgot password?" : "Forgot password?"
 }
