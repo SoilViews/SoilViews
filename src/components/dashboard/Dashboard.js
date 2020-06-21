@@ -32,6 +32,10 @@ import FullscreenControl from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/dist/styles.css";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { popupContent, popupHead } from "./popupStyles";
+import { Typography } from "@material-ui/core"
+import { withTranslation } from 'react-i18next';
+import { NavLink } from 'react-router-dom'
+import LockIcon from '@material-ui/icons/Lock';
 
 import styles from "./Dashboard.module.css";
 
@@ -169,7 +173,7 @@ export class Dashboard extends React.Component {
     });
   };
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   //same for polygon
   onEachFeaturePoint(feature, layer) {
@@ -220,10 +224,12 @@ export class Dashboard extends React.Component {
       strings: {
         title: "Your location ",
       },
-      onActivate: () => {}, // callback before engine starts retrieving locations
+      onActivate: () => { }, // callback before engine starts retrieving locations
     };
     const position = this.state.coordinatesCenter;
     const { profile } = this.props;
+    //This is for the translation
+    const { t } = this.props;
     if (profile.role === "User" || profile.role === "Admin") {
       console.log("User role", profile.role);
 
@@ -373,7 +379,7 @@ export class Dashboard extends React.Component {
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
               layers="NDVI"
-              // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+            // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
             />
             <NmScale />
             {/* <CustomWMSLayer
@@ -413,7 +419,7 @@ export class Dashboard extends React.Component {
               <GeoJSON
                 data={points}
                 onEachFeature={this.onEachFeaturePoint.bind(this)}
-                // pointToLayer={this.pointToLayer.bind(this)}
+              // pointToLayer={this.pointToLayer.bind(this)}
               />
             )}
             <FeatureGroup>
@@ -481,7 +487,12 @@ export class Dashboard extends React.Component {
     } else {
       return (
         <div className={styles.container}>
-          <CircularProgress size="40rem" className={styles.loader} />;
+          <NavLink to='/signin'>
+            
+            <Typography>
+            <LockIcon className={styles.centered}></LockIcon>
+              {t('Please login to continue')}</Typography>
+          </NavLink>
         </div>
       );
     }
@@ -501,4 +512,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(Dashboard));

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/actions/authActions";
+import { withTranslation } from 'react-i18next'; // for class component
 
 class SignUp extends Component {
   constructor(props) {
@@ -99,6 +100,8 @@ class SignUp extends Component {
     const { errors } = this.state;
 
     if (auth.uid) return <Redirect to="/Dashboard" />;
+
+    const { t } = this.props;
 
     return (
       <React.Fragment>
@@ -240,4 +243,4 @@ const mapDispatchToProps = (dipsatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SignUp));

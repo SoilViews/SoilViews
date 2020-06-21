@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { sendPasswordResetEmail } from '../../store/actions/authActions'
 import { Redirect } from 'react-router-dom'
 import InputEmail from './InputEmail'
+import { withTranslation } from 'react-i18next'; // for class component
 
 class ResetPassword extends Component {
   state = {
@@ -42,32 +43,28 @@ class ResetPassword extends Component {
     // e.preventDefault();
    
         this.props.sendPasswordResetEmail(this.state.email);
-        window.alert("Email has been sent to you,Please check and verify.");
-  
-    
-               
+        window.alert("Email has been sent to you,Please check and verify.");      
   }
-
   render() {
     const { auth, authError } = this.props;
     const { errors } = this.state;
+    const { t } = this.props;
     if (auth.uid) return <Redirect to='/profile' /> 
     return (
       <div className="container" style={{ paddingTop: "50px" }}>
-        <span>Please enter your email address below and we will send you information to recover your account</span>
         <form onSubmit={this.handleSubmit} className="white">   
-            <h5 className="grey-text text-darken-3">Password Reset</h5>
+            <h5 className="grey-text text-darken-3">{t('Password Reset')}</h5>
                
             <InputEmail handleChange={this.handleChange.bind(this)}/>
             <span style={{ color: "red" }}>{this.state.errors["email"]}</span>
             <div className="input-field">
-            <button className="btn waves-effect waves-light" type="submit" name="action">Submit <i className="material-icons right">send</i> </button>
+            <button className="btn waves-effect waves-light" type="submit" name="action">{t('Submit')}<i className="material-icons right">send</i> </button>
                 <div className="red-text center">
                   { authError ? <p>{authError}</p> : null }
                 </div>
                 <div className={`${this.errorClass()} error`}>
                                         {errors.map(error => (
-                                            <p key={error}>Error: {error}</p>
+                                            <p key={error}>{t('Error')}: {error}</p>
                                         ))}
                                     </div>
             </div>
@@ -87,4 +84,4 @@ const mapDispatchToProps = (dispatch) => {
     sendPasswordResetEmail: (emailAddress) => dispatch(sendPasswordResetEmail(emailAddress)),
   }
 }
-export default connect (mapStateToProps, mapDispatchToProps)(ResetPassword)
+export default connect (mapStateToProps, mapDispatchToProps)(withTranslation()(ResetPassword));

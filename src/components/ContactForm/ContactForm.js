@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from 'react-redux'
 import { sendMessage } from '../../store/actions/authActions'
+import { withTranslation } from 'react-i18next';
+
 class ContactForm extends React.Component {
     constructor(props) {
         super(props)
@@ -65,10 +67,11 @@ class ContactForm extends React.Component {
   render() {
     
     const { errors } = this.state;
+    const { t } = this.props;
    return(
     <React.Fragment>
                 <div className="title">
-                    <h3 className="center-align grey-text">Contact Form</h3>
+                    <h3 className="center-align grey-text">{t('Contact Form')}</h3>
                 </div>
                 <div className="row">
                     <div className="col s12 l10 offset-l1">
@@ -100,7 +103,7 @@ class ContactForm extends React.Component {
                                         ))}
                                     </div>
                                     <div className="row center-align">
-                                        <button className="btn waves-effect waves-light" type="submit" name="action">submit <i className="material-icons right">send</i> </button>
+                                        <button className="btn waves-effect waves-light" type="submit" name="action"><i className="material-icons right">send</i> </button>
                                     </div>
 
                                 </form>
@@ -127,4 +130,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm)
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(ContactForm));

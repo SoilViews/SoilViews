@@ -23,5 +23,10 @@
     "Created by" : "Created by",
     "Email" : "Email",
     "Register" : "Register",
-    "Forgot password?" : "Forgot password?"
+    "Forgot password?" : "Forgot password?",
+    "Password Reset" : "Password Reset",
+    "Submit" : "Submit",
+    "Error" : "Error",
+    "Contact Form" : "Contact Form",
+    "Please login to continue" : "Please login to continue"
 }

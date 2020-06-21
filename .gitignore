@@ -24,3 +24,4 @@ yarn-error.log*
 
 #Firebase
 .firebase/hosting.*
+src/components/Help/classTr.js

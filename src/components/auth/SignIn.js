@@ -5,7 +5,6 @@ import { Redirect } from 'react-router-dom'
 import { NavLink } from "react-router-dom";
 import { withTranslation } from 'react-i18next'; // for class component
 
-
 class SignIn extends Component {
     constructor(props) {
         super(props)
