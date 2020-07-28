@@ -9,6 +9,7 @@ class LocateControl extends Component {
 
     const lc = new Locate(options);
     lc.addTo(map);
+    //
 
     if (startDirectly) {
       // request location update and set location
