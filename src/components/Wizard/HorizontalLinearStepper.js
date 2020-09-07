@@ -154,14 +154,14 @@ const HorizontalLinearStepper = (props) => {
     switch (step) {
       case 0:
         return (
-          <div style={{ padding: "2% 0" }}>
+          <div style={{ padding: "10% 0" }}>
             <Typography variant="h4">Submit your order in few steps</Typography>
-            <Typography variant="h6">Find your land on the map</Typography>
+            <Typography variant="h6">1. Find your land on the map</Typography>
             <Typography variant="h6">
-              Mark it using the tools or upload a file
+              2. Mark it using the tools or upload a file
             </Typography>
-            <Typography variant="h6">Select preferred crops</Typography>
-            <Typography variant="h6">Get your results</Typography>
+            <Typography variant="h6">3. Select preferred crops</Typography>
+            <Typography variant="h6">4. Get your results</Typography>
           </div>
         );
       case 1:

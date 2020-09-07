@@ -41,10 +41,10 @@ const Footer = (props) => {
                     {t('Documentation')}
                   </Link>
                 </li>
-              </ul>
+              </ul> 
             </div>
             <div className="col l3 s12">
-              <h5 className="white-text">{t('Connect')}</h5>
+              <h5 className="white-text">{t('How to reach us')}</h5>
               <ul>
                 <li>
                   <NavLink to="/SignIn" className="white-text" href="#!">

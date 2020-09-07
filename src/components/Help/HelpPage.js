@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { compose } from "redux";
 import SimpleAlert from "../Wizard/Alert";
-import MaterialTable from "./MaterialTable"
 
 export const GrandParent = () => {
   const [name, setName] = useState("i'm Grand Parent");
@@ -37,7 +36,6 @@ class HelpPage extends React.Component {
     return (
       <div className="container">
         <div className="row">
-          <MaterialTable />
         </div>
       </div>
     );
