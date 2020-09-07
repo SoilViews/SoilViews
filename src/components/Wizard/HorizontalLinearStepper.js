@@ -16,6 +16,8 @@ import { NewCheckboxes } from "./NewCheckBoxes";
 import { SelectedCropsCards } from "./SelectedCropsCards";
 import firebase from "../../firebase";
 import Dashboard from "../dashboard/Dashboard";
+import Step2 from "./Step2";
+
 //Stepper Styles
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -167,14 +169,8 @@ const HorizontalLinearStepper = (props) => {
       case 1:
         return (
           <div style={{ padding: "2% 0" }}>
-            <Typography variant="h4">Find your land on the map</Typography>
             <AlertNoPoly errorStatusPolly={errorStatusPolly} />
-            <ul>
-              <li>
-                Find your land on the map and mark it using the map tools.
-              </li>
-              <li>Or upload a digital file of your land</li>
-            </ul>
+            <Step2></Step2>
             <Dashboard
               viewMap={viewMap}
               areaHandler={areaHandler}
