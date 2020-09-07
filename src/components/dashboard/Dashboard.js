@@ -7,8 +7,6 @@ import {
   GeoJSON,
   Marker,
   Popup,
-  WMSTileLayer,
-  LayersControl,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
@@ -35,6 +33,7 @@ import { Typography } from "@material-ui/core";
 import { withTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import LockIcon from "@material-ui/icons/Lock";
+import AllLayers from "./AllLayers"
 
 import styles from "./Dashboard.module.css";
 
@@ -113,7 +112,7 @@ export class Dashboard extends React.Component {
 
     //Save kml file with formated filename
     var date = new Date();
-    var formattedDate = format(date, "DD-MM-YYYY_H:mma");
+    var formattedDate = format(date, "dd-mm-yyyy_h:mma");
     console.log(formattedDate);
     const filename = formattedDate + "_" + this.props.profile.firstName;
     console.log(filename);
@@ -251,89 +250,7 @@ export class Dashboard extends React.Component {
             <LocateControl options={locateOptions}>
               <span className="fa fa-map-marker"></span>
             </LocateControl>
-            <LayersControl position="bottomright">
-              <LayersControl.BaseLayer name="OpenStreetMap.BlackAndWhite">
-                <TileLayer
-                  attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                  url="https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="Sentinel-2">
-                <WMSTileLayer
-                  layers={["Sentinel-2"]}
-                  url="https://kade.si/cgi-bin/mapserv?"
-                  format="image/vnd.jpeg-png"
-                  transparent="true"
-                  tiled="true"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="Landsat-8">
-                <WMSTileLayer
-                  layers={["Landsat-8"]}
-                  url="https://kade.si/cgi-bin/mapserv?"
-                  format="image/vnd.jpeg-png"
-                  transparent="true"
-                  tiled="true"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="OpenTopoMap">
-                <WMSTileLayer url="https:/opentopomap.org/{z}/{x}/{y}.png" />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="BGtopoVJ-50K">
-                <WMSTileLayer
-                  layers={["BGtopoVJ-raster-v3.00"]}
-                  url="https://kade.si/cgi-bin/mapserv?"
-                  format="image/vnd.jpeg-png"
-                  transparent="true"
-                  tiled="true"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="Google Hybrid">
-                <WMSTileLayer
-                  layers={["BGtopoVJ-raster-v3.00"]}
-                  url="https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}"
-                  format="image/vnd.jpeg-png"
-                  transparent="true"
-                  tiled="true"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="BGMountains">
-                <WMSTileLayer
-                  layers={["BGtopoVJ-raster-v3.00"]}
-                  url="https://bgmtile.kade.si/{z}/{x}/{y}.png"
-                  format="image/vnd.jpeg-png"
-                  transparent="true"
-                  tiled="true"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="OpenTopoMap">
-                <WMSTileLayer
-                  layers={["BGtopoVJ-raster-v3.00"]}
-                  url="https:/opentopomap.org/{z}/{x}/{y}.png"
-                  format="image/vnd.jpeg-png"
-                  transparent="true"
-                  tiled="true"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="OSM HOT">
-                <WMSTileLayer
-                  layers={["BGtopoVJ-raster-v3.00"]}
-                  url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
-                  format="image/vnd.jpeg-png"
-                  transparent="true"
-                  tiled="true"
-                />
-              </LayersControl.BaseLayer>
-              <LayersControl.BaseLayer name="CYCLE MAP">
-                <WMSTileLayer
-                  layers={["BGtopoVJ-raster-v3.00"]}
-                  url="https://dev.{s}.tile.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png"
-                  format="image/vnd.jpeg-png"
-                  transparent="true"
-                  tiled="true"
-                />
-              </LayersControl.BaseLayer>
-            </LayersControl>
+            <AllLayers/>
             <Search position="topright" />
             <div className="geojson-toggle">
               <label>Show Polygons </label>
