@@ -17,7 +17,9 @@ import EditUser from "./components/Admin/EditUser";
 import EditOrder from "./components/MyOrders/EditOrder";
 import PersistentDrawerLeft from "./components/DrawerLeft/PersistentDrawerLeft";
 import MyOrders from "./components/MyOrders/MyOrders";
+import AboutUs from "./components/About/AboutUs"
 import HorizontalLinearStepper from "./components/Wizard/HorizontalLinearStepper";
+import Acknowledgements from "./components/Acknowledgements/Acknowledgements"
 
 function App() {
   const [checked] = useState(true);
@@ -50,6 +52,8 @@ function App() {
               <Route path="/AdminPanel" component={AdminPanel} />
               <Route path="/MyOrders" component={MyOrders} />
               <Route path="/NewOrder" component={HorizontalLinearStepper} />
+              <Route path="/About" component={AboutUs} />
+              <Route path="/Acknowledgements" component={Acknowledgements} />
               <Route path="/" component={indexPage} />
             </Switch>
           </header>
