@@ -23,6 +23,7 @@ import DrawerHead from "./DrawerHead";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { connect } from "react-redux";
 import { signOut } from "../../store/actions/authActions";
+import { useTranslation } from "react-i18next";
 
 const drawerWidth = 240;
 
@@ -93,13 +94,15 @@ export const PersistentDrawerLeft = (props) => {
     setOpen(false);
   };
 
+  const { t } = useTranslation();
+
   const profileState = props.auth.uid ? (
     <Link to="/" onClick={props.signOut}>
       <ListItem button onClick={handleDrawerClose}>
         <ListItemIcon>
           <ExitToAppIcon />
         </ListItemIcon>
-        <ListItemText primary="Log Out" />
+        <ListItemText primary={t("Log Out")} />
       </ListItem>
     </Link>
   ) : (
