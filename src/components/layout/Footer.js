@@ -1,10 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
-import LanguageBar from "./LanguageBar"
-import { useTranslation } from 'react-i18next';
+import { Link } from "react-router-dom";
+import LanguageBar from "./LanguageBar";
+import { useTranslation } from "react-i18next";
 
-import styles from "./styles/Footer.module.css"
+import styles from "./styles/Footer.module.css";
 
 const Footer = (props) => {
   const { t } = useTranslation();
@@ -14,51 +14,52 @@ const Footer = (props) => {
         <div className="container">
           <div className="row">
             <div className="col l6 s12">
-              <h5 className="white-text">{t('About SoilViews Web App')}</h5>
+              <h5 className="white-text">{t("About SoilViews Web App")}</h5>
               <p className="grey-text text-lighten-4">
-                {t('We deliver soil analysis combining Satelite imaging and soil samples.')}
-                <Link to="/AboutUs" className="white-text" href="#!">
-                  ({t('Read more')})
+                {t("We deliver")}
+                <p>
+                  <Link to="/AboutUs" className="white-text" href="#!">
+                    ({t("Read more")})
                 </Link>
+                </p>
                 {/* SoilViews Web App gives you analylisis on what crops could grow best on any specific land. Based on quality hyperspectral saatelite imaging and close work with soil specialists we deliver insights that would help you increase your crop yeilds. */}
               </p>
             </div>
             <div className="col l3 s12">
-              <h5 className="white-text">{t('Settings')}</h5>
-              <ul>
+              <ul className={styles.rowItems}>
+
                 <li>
                   <Link to="/Profile" className="white-text" href="#!">
-                    {t('My Profile')}
+                    {t("My Profile")}
                   </Link>
                 </li>
                 <li>
                   <Link to="/Dashboard" className="white-text" href="#!">
-                    {t('Dashboard')}
+                    {t("Dashboard")}
                   </Link>
                 </li>
                 <li>
                   <Link to="/HelpPage" className="white-text" href="#!">
-                    {t('Documentation')}
+                    {t("Documentation")}
                   </Link>
                 </li>
-              </ul> 
+              </ul>
             </div>
             <div className="col l3 s12">
-              <h5 className="white-text">{t('How to reach us')}</h5>
-              <ul>
+              <ul className={styles.rowItems}>
                 <li>
-                  <NavLink to="/SignIn" className="white-text" href="#!">
-                    {t('SignIn')}
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/SignUp" className="white-text" href="#!">
-                    {t('SignUp')}
-                  </NavLink>
+                  <Link to="/about" className="white-text" href="#!">
+                    {t("Our Team")}
+                  </Link>
                 </li>
                 <li>
                   <Link to="/ContactForm" className="white-text" href="#!">
-                    {t('Contact Us')}
+                    {t("Contact Us")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/Acknowledgements" className="white-text" href="#!">
+                    {t("Acknowledgements")}
                   </Link>
                 </li>
               </ul>
@@ -70,7 +71,7 @@ const Footer = (props) => {
             <div className={styles.position}>
               <LanguageBar />
             </div>
-            {t('Created by')} <a href="https://soilviews.com/"> SoilViews </a>
+            {t("Created by")} <a href="https://soilviews.com/"> SoilViews </a>
           </div>
         </div>
       </footer>
