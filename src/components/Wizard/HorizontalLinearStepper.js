@@ -17,6 +17,10 @@ import { SelectedCropsCards } from "./SelectedCropsCards";
 import firebase from "../../firebase";
 import Dashboard from "../dashboard/Dashboard";
 import Step2 from "./Step2";
+import LockIcon from "@material-ui/icons/Lock";
+import { useTranslation } from 'react-i18next';
+
+import styles from "./HorizontalLinearStepper.module.css";
 
 //Stepper Styles
 const useStyles = makeStyles((theme) => ({
@@ -42,6 +46,7 @@ function getSteps() {
   ];
 }
 const HorizontalLinearStepper = (props) => {
+  const { t } = useTranslation();
   const classes = useStyles();
   const [errorStatus, setErrorStatus] = React.useState(null);
   const [errorStatusPolly, setErrorStatusPolly] = React.useState(null);
@@ -76,9 +81,9 @@ const HorizontalLinearStepper = (props) => {
   };
 
   //STEPPER FUNCTIONALITY***************
-  const isStepOptional = (step) => {
-    return step === 1;
-  };
+  // const isStepOptional = (step) => {
+  //   return step === 1;
+  // };
   const isStepSkipped = (step) => {
     return skipped.has(step);
   };
@@ -155,17 +160,30 @@ const HorizontalLinearStepper = (props) => {
     const selectedCrops = Object.keys(crops).filter((crop) => crops[crop]);
     switch (step) {
       case 0:
-        return (
-          <div style={{ padding: "10% 0" }}>
-            <Typography variant="h4">Submit your order in few steps</Typography>
-            <Typography variant="h6">1. Find your land on the map</Typography>
-            <Typography variant="h6">
-              2. Mark it using the tools or upload a file
+        if (props.profile.role === "User" || props.profile.role === "Admin") {
+          return (
+            <div style={{ padding: "10% 0" }}>
+              <Typography variant="h4">Submit your order in few steps</Typography>
+              <Typography variant="h6">1. Find your land on the map</Typography>
+              <Typography variant="h6">
+                2. Mark it using the tools or upload a file
             </Typography>
-            <Typography variant="h6">3. Select preferred crops</Typography>
-            <Typography variant="h6">4. Get your results</Typography>
-          </div>
-        );
+              <Typography variant="h6">3. Select preferred crops</Typography>
+              <Typography variant="h6">4. Get your results</Typography>
+            </div>
+          )
+        } else {
+          return (
+            <div className={styles.container}>
+              <Link to="/signin">
+                <Typography>
+                  <LockIcon className={styles.centered}></LockIcon>
+                  {t("Please login to continue")}
+                </Typography>
+              </Link>
+            </div>
+          )
+        };
       case 1:
         return (
           <div style={{ padding: "2% 0" }}>
@@ -201,18 +219,18 @@ const HorizontalLinearStepper = (props) => {
     }
   }
   //LEAFLET Polygon draw
-  const mapEvent = (e) => {
-    var ee = document.createEvent("Event");
-    ee.initEvent("click", true, true);
-    var cb = document.getElementsByClassName("leaflet-draw-draw-polygon");
-    return !cb[0].dispatchEvent(ee);
-  };
-  const mapEvent1 = (e) => {
-    var ee = document.createEvent("Event");
-    ee.initEvent("click", true, true);
-    var cb = document.getElementsByClassName("leaflet-draw-edit-remove");
-    return !cb[0].dispatchEvent(ee);
-  };
+  // const mapEvent = (e) => {
+  //   var ee = document.createEvent("Event");
+  //   ee.initEvent("click", true, true);
+  //   var cb = document.getElementsByClassName("leaflet-draw-draw-polygon");
+  //   return !cb[0].dispatchEvent(ee);
+  // };
+  // const mapEvent1 = (e) => {
+  //   var ee = document.createEvent("Event");
+  //   ee.initEvent("click", true, true);
+  //   var cb = document.getElementsByClassName("leaflet-draw-edit-remove");
+  //   return !cb[0].dispatchEvent(ee);
+  // };
 
   //STEPPER FUNCTIONALITY***************
   return (
@@ -261,22 +279,22 @@ const HorizontalLinearStepper = (props) => {
               </Button>
             </div>
           ) : (
-            <div>
-              <Typography component="span" className={classes.instructions}>
-                {getStepContent(activeStep)}
-              </Typography>
               <div>
-                <Button
-                  style={{
-                    ...(activeStep === 0 ? { display: "none" } : {}),
-                  }}
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  className={classes.button}
-                >
-                  Back
+                <Typography component="span" className={classes.instructions}>
+                  {getStepContent(activeStep)}
+                </Typography>
+                <div>
+                  <Button
+                    style={{
+                      ...(activeStep === 0 ? { display: "none" } : {}),
+                    }}
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    className={classes.button}
+                  >
+                    Back
                 </Button>
-
+                  {/* This needs to be moved
                 {isStepOptional(activeStep) && (
                   <Button
                     variant="contained"
@@ -301,38 +319,40 @@ const HorizontalLinearStepper = (props) => {
                     Remove a polygon
                   </Button>
                 )}
-                <Button
-                  style={{ ...(activeStep !== 3 ? { display: "none" } : {}) }}
-                  disabled={activeStep === 0}
-                  onClick={Save}
-                  className={classes.button}
-                  variant="contained"
-                  color="primary"
-                >
-                  Review and Submit
+This needs to be moved */}
+
+                  <Button
+                    style={{ ...(activeStep !== 3 ? { display: "none" } : {}) }}
+                    disabled={activeStep === 0}
+                    onClick={Save}
+                    className={classes.button}
+                    variant="contained"
+                    color="primary"
+                  >
+                    Review and Submit
                 </Button>
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={
-                    activeStep === 1 ? handleNextPolyDrawStep : handleNext
-                  }
-                  className={classes.button}
-                  style={{
-                    ...(activeStep === 3 ? { display: "none" } : {}),
-                  }}
-                >
-                  {activeStep === 0
-                    ? "Start"
-                    : activeStep === steps.length - 1
-                    ? "Start"
-                    : "Next"}
-                  {/* {activeStep === steps.length - 1 ?  "Start" : "Next"} */}
-                </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={
+                      activeStep === 1 ? handleNextPolyDrawStep : handleNext
+                    }
+                    className={classes.button}
+                    style={{
+                      ...(activeStep === 3 ? { display: "none" } : {}),
+                    }}
+                  >
+                    {activeStep === 0
+                      ? "Start"
+                      : activeStep === steps.length - 1
+                        ? "Start"
+                        : "Next"}
+                    {/* {activeStep === steps.length - 1 ?  "Start" : "Next"} */}
+                  </Button>
+                </div>
               </div>
-            </div>
-          )}
+            )}
         </div>
       </div>
     </div>
