@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { signUp } from "../../store/actions/authActions";
-import { withTranslation } from 'react-i18next'; // for class component
+import { withTranslation } from "react-i18next"; // for class component
 
 class SignUp extends Component {
   constructor(props) {
@@ -109,7 +109,7 @@ class SignUp extends Component {
           <div className="col s12 l4 offset-l4">
             <div className="card grey lighten-3">
               <div className="card-content">
-                <h4 className="card-title center-align">{t('Register')}</h4>
+                <h4 className="card-title center-align">{t("Register")}</h4>
                 <form onSubmit={this.onSubmitForm} id="reg-form">
                   <div className="row">
                     <div className="input-field col s12">
@@ -243,4 +243,7 @@ const mapDispatchToProps = (dipsatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withTranslation()(SignUp));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTranslation()(SignUp));
