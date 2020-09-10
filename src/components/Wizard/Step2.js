@@ -35,16 +35,16 @@ const Step2 = () => {
   return (
     <div>
       <Grid container spacing={1}>
-        <Grid item xs={6}>
+        <Grid item xs={12} md={6}>
           <Typography variant="h4">Find your land on the map</Typography>
           <ul>
             <li>Find your land on the map and mark it using the map tools.</li>
             <li>Or upload a digital file of your land</li>
           </ul>
         </Grid>
-        <Grid item xs={6}>
-          <Grid container spacing={3}>
-            <Grid item xs={3}>
+        <Grid item xs={12} md={6}>
+          <Grid className={styles.center} container spacing={5}>
+            <Grid item xs={12} sm={6} md={6} lg={3}>
               <FormControl>
                 <InputLabel>Област</InputLabel>
                 <Select
@@ -61,7 +61,7 @@ const Step2 = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} md={6} lg={3}>
               <FormControl>
                 <InputLabel>Община</InputLabel>
                 <Select
@@ -78,7 +78,7 @@ const Step2 = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} md={6} lg={3}>
               <FormControl>
                 <InputLabel>Землище</InputLabel>
                 <Select
@@ -95,7 +95,7 @@ const Step2 = () => {
               </FormControl>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={6} md={6} lg={3}>
               <FormControl>
                 <InputLabel>Масив</InputLabel>
                 <Select
