@@ -34,6 +34,7 @@ import { withTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import LockIcon from "@material-ui/icons/Lock";
 import AllLayers from "./AllLayers"
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import styles from "./Dashboard.module.css";
 
@@ -171,7 +172,7 @@ export class Dashboard extends React.Component {
     });
   };
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   //same for polygon
   onEachFeaturePoint(feature, layer) {
@@ -222,15 +223,13 @@ export class Dashboard extends React.Component {
       strings: {
         title: "Your location ",
       },
-      onActivate: () => {}, // callback before engine starts retrieving locations
+      onActivate: () => { }, // callback before engine starts retrieving locations
     };
     const position = this.state.coordinatesCenter;
     const { profile } = this.props;
     //This is for the translation
     const { t } = this.props;
     if (profile.role === "User" || profile.role === "Admin") {
-      console.log("User role", profile.role);
-
       return (
         <div id="map" className="dashboard container">
           <br />
@@ -250,7 +249,7 @@ export class Dashboard extends React.Component {
             <LocateControl options={locateOptions}>
               <span className="fa fa-map-marker"></span>
             </LocateControl>
-            <AllLayers/>
+            <AllLayers />
             <Search position="topright" />
             <div className="geojson-toggle">
               <label>Show Polygons </label>
@@ -295,7 +294,7 @@ export class Dashboard extends React.Component {
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
               layers="NDVI"
-              // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+            // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
             />
             <NmScale />
             {/* <CustomWMSLayer
@@ -335,7 +334,7 @@ export class Dashboard extends React.Component {
               <GeoJSON
                 data={points}
                 onEachFeature={this.onEachFeaturePoint.bind(this)}
-                // pointToLayer={this.pointToLayer.bind(this)}
+              // pointToLayer={this.pointToLayer.bind(this)}
               />
             )}
             <FeatureGroup>
@@ -367,8 +366,6 @@ export class Dashboard extends React.Component {
               onEachFeature={this.onEachFeature}
             />
           </Map>
-          <br />
-          <br />
           {/* <button
             className="waves-effect waves-light btn"
             onClick={this.onGeojsonToggleButton}
@@ -383,22 +380,26 @@ export class Dashboard extends React.Component {
             Парцел 2--> сочи към конкретен маркер
           </button>
           <br /> */}
-          <button
-            className="waves-effect waves-light btn"
-            onClick={this.saveToFile}
-          >
-            Download drawed shape in kml File
+          <Typography>
+            Click on the <LocationOnIcon className={styles.centered}></LocationOnIcon>
+            icon to use your current location.
+           <Typography variant="caption" > Device location must be enabled</Typography>
+          </Typography>
+
+          <div className={styles.whiteSpace15}>
+            <button
+              className="waves-effect waves-light btn"
+              onClick={this.saveToFile}
+            >
+              Download drawed shape in kml File
           </button>
-          <br />
-          <button
-            className="waves-effect waves-light btn"
-            onClick={this.resetMap}
-          >
-            Clear map
-          </button>
-          <br />
-          <br />
-        </div>
+            <br />
+            <button
+              className="waves-effect waves-light btn"
+              onClick={this.resetMap}
+            >Clear map</button>
+          </div>
+        </div >
       );
     } else {
       return (
