@@ -89,7 +89,11 @@ const AllLayers = () => {
           tiled="true"
         />
       </LayersControl.BaseLayer>
-      <LayersControl.BaseLayer name="Test Request to Sentinel Hub API">
+      <LayersControl.BaseLayer name="Test Request to Sentinel Hub API returning NDVI filter">
+
+        {/* link to manage filter by given criteria
+          https://apps.sentinel-hub.com/sentinel-playground/?baseWmsUrl=services.sentinel-hub.com&instanceID=bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663&source=S2&lat=10.001310360636941&lng=4.998779296875&zoom=9&preset=NDVI&layers=B01,B02,B03&maxcc=20&gain=1.0&gamma=1.0&time=2020-04-01%7C2020-10-08&atmFilter=&showDates=false */}
+
         <WMSTileLayer
           layers="NDVI"
           format="image/jpeg"
@@ -101,6 +105,17 @@ const AllLayers = () => {
           maxZoom="16"
           preset="NDVI"
           time="2020-04-01/2020-10-08"
+        />
+      </LayersControl.BaseLayer>
+      <LayersControl.BaseLayer name="Test Request  Sentinel Hub API for some other layer">
+        {/* documentation readed
+        https://www.sentinel-hub.com/develop/api/ogc/ogc-examples/ */}
+        <WMSTileLayer
+          layers="TRUE_COLOR"
+          format="image/jpeg"
+          transparent="true"
+          tiled="true"
+          url="http://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663?REQUEST=GetMap&BBOX=3238005,5039853,3244050,5045897&LAYERS=TRUE_COLOR&MAXCC=20&WIDTH=320&HEIGHT=320&FORMAT=image/jpeg&TIME=2018-03-29/2018-05-29"
         />
       </LayersControl.BaseLayer>
     </LayersControl>
