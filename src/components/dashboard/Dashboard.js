@@ -296,24 +296,6 @@ export class Dashboard extends React.Component {
             // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
             />
             <NmScale />
-            {/* <CustomWMSLayer
-              layers={["Sentinel-2"]}
-              options={{
-                format: "image/vnd.jpeg-png",
-                transparent: "true",
-                tiled: "true",
-                crossOrigin: null,
-              }}
-              url="https://kade.si/cgi-bin/mapserv?"
-            /> */}
-            {/* <WMSTileLayer
-                layers={["Sentinel-2"]}
-                url="https://kade.si/cgi-bin/mapserv?"
-                format="image/vnd.jpeg-png"
-                transparent="true"
-                tiled="true"
-              /> */}
-
             <Marker position={position}>
               <Popup className="request-popup">
                 <div style={popupContent}>
