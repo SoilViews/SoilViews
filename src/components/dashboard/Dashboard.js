@@ -19,7 +19,7 @@ import { saveData } from "../../store/actions/authActions";
 import { saveAs } from "file-saver";
 // import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
 import "../dashboard/GeojsonLayer.css";
-import Search from "react-leaflet-search";
+import ReactLeafletSearch from "react-leaflet-search";
 import "./Map.css";
 import L from "leaflet";
 import { storage } from "../../firebase/index";
@@ -35,14 +35,13 @@ import { NavLink } from "react-router-dom";
 import LockIcon from "@material-ui/icons/Lock";
 import AllLayers from "./AllLayers"
 import LocationOnIcon from '@material-ui/icons/LocationOn';
-
+// import CustomWMSLayer from "./CustomWMSLayer";
 import styles from "./Dashboard.module.css";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
 // import {  getFirestore } from 'redux-firestore'
 // import sophia_postcodes from '../Files/rpu_sofia.geojson'
-// import CustomWMSLayer from "./CustomWMSLayer";
 
 //Hardcoded coordinates of polygons
 const polygon = [
@@ -250,7 +249,7 @@ export class Dashboard extends React.Component {
               <span className="fa fa-map-marker"></span>
             </LocateControl>
             <AllLayers />
-            <Search position="topright" />
+            <ReactLeafletSearch closeResultsOnClick={true} position="topright" showPopup="false" />
             <div className="geojson-toggle">
               <label>Show Polygons </label>
               <input
