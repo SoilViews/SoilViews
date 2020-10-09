@@ -156,7 +156,7 @@ class ContactForm extends React.Component {
                                         ))}
                                     </div>
                                     <div className="row center-align">
-                                        <button className="btn waves-effect waves-light" type="submit" name="action"><i className="material-icons right">send</i> </button>
+                                        <button className="btn waves-effect waves-light" type="submit" name="action">SUBMIT<i className="material-icons right" /> </button>
                                     </div>
 
                                 </form>
