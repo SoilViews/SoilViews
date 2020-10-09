@@ -29,5 +29,15 @@
   "Contact Form": "Форма за контакт",
   "Please login to continue": "Моля, влезте в профила си",
   "Our Team": "За екипа",
-  "Acknowledgements": "Благодарности"
+  "Acknowledgements": "Благодарности",
+  "Telephon validation": "Телефонният номер трябва да бъде дълъг поне 10 символа",
+  "FirstnameValid": "Моля,въведете вашето име",
+  "CityValid": "Моля, въведете град",
+  "EmptyTelephonValidation": "Моля, въведете вашият email адрес",
+  "LastnameValid": "Моля, въведе вашата фамилия",
+  "EmailValid": "Email адресър трябва да е дълъг поне 5 символа",
+  "EmailValid1": "Email трябва да съдържа @",
+  "EmailValid3": "Email трябва да съдържа .",
+  "PasswordValid": "Паролата ви трябва да е дълга поне 6 символа",
+  "SendMessageContactFormValid": "Моля, въведе съобщение"
 }

@@ -331,6 +331,7 @@ export class Dashboard extends React.Component {
                   onDeleteStart={this._onDeleteStart}
                   onDeleteStop={this._onDeleteStop}
                   draw={{
+                    polyline: false,
                     rectangle: false,
                     marker: false,
                     circleMarker: false,

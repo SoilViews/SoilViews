@@ -61,35 +61,35 @@ class SignUp extends Component {
   validate = (firstName, lastName, email, password, city, telephone) => {
     const errors = [];
     if (firstName.length === 0) {
-      errors.push("First Name can't be empty");
+      errors.push(this.props.t("FirstnameValid"));
     }
     if (city.length === 0) {
-      errors.push("City can't be empty");
+      errors.push(this.props.t("CityValid"));
     }
     if (telephone.length === 0) {
-      errors.push("Telephone number can't be empty");
+      errors.push(this.props.t("EmptyTelephonValidation"));
     }
 
     if (telephone.length < 10) {
-      errors.push("Telephone number should be at least 10 charcters long");
+      errors.push(this.props.t("Telephon validation"));
     }
 
     if (lastName.length === 0) {
-      errors.push("Last Name can't be empty");
+      errors.push(this.props.t("LastnameValid"));
     }
 
     if (email.length < 5) {
-      errors.push("Email should be at least 5 charcters long");
+      errors.push(this.props.t("EmailValid"));
     }
     if (email.split("").filter((x) => x === "@").length !== 1) {
-      errors.push("Email should contain a @");
+      errors.push(this.props.t("EmailValid1"));
     }
     if (email.indexOf(".") === -1) {
-      errors.push("Email should contain at least one dot");
+      errors.push(this.props.t("EmailValid3"));
     }
 
     if (password.length < 6) {
-      errors.push("Password should be at least 6 characters long");
+      errors.push(this.props.t("PasswordValid"));
     }
 
     return errors;

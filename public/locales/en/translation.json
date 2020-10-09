@@ -29,5 +29,15 @@
   "Contact Form": "Contact Form",
   "Please login to continue": "Please login to continue",
   "Our Team": "Our Team",
-  "Acknowledgements": "Acknowledgements"
+  "Acknowledgements": "Acknowledgements",
+  "Telephon validation": "Telephone number should be at least 10 charcters long",
+  "FirstnameValid": "First Name can't be empty",
+  "CityValid": "City can't be empty",
+  "EmptyTelephonValidation": "Telephone number can't be empty",
+  "LastnameValid": "Last Name can't be empty",
+  "EmailValid": "Email should be at least 5 charcters long",
+  "EmailValid1": "Email should contain a @",
+  "EmailValid3": "Email should contain at least one dot",
+  "PasswordValid": "Password should be at least 6 characters long",
+  "SendMessageContactFormValid": "Message can't be empty"
 }
