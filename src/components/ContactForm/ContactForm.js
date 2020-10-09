@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from 'react-redux'
 import { sendMessage } from '../../store/actions/authActions'
 import { withTranslation } from 'react-i18next';
-
+import { TextField, Grid } from "@material-ui/core";
 class ContactForm extends React.Component {
     constructor(props) {
         super(props)
@@ -81,20 +81,73 @@ class ContactForm extends React.Component {
 
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <input type="text" placeholder='name' id="name" onChange={this.onChangeInput} />
+                                            <Grid item xs={12}>
+                                                <TextField
+                                                    placeholder='Type your name here'
+                                                    name='name'
+                                                    label='Enter your name'
+                                                    id="name"
+                                                    type="text"
+                                                    variant='outlined'
+                                                    InputLabelProps={{
+                                                        shrink: true
+                                                    }}
+                                                    onChange={this.onChangeInput}
+                                                    required
+                                                    inputProps={{
+                                                        minLength: 3,
+                                                        maxLength: 20
+                                                    }}
+
+                                                    fullWidth
+                                                />
+                                            </Grid>
+                                        </div>
+
+                                    </div>
+                                    <div className="row">
+                                        <div className="input-field col s12">
+                                            <TextField
+                                                placeholder='Type your email here'
+                                                name='email'
+                                                label='Enter your email'
+                                                id="email"
+                                                type="text"
+                                                variant='outlined'
+                                                InputLabelProps={{
+                                                    shrink: true
+                                                }}
+                                                required
+                                                inputProps={{
+                                                    minLength: 3,
+                                                    maxLength: 20
+                                                }}
+                                                error={!!errors["email"]}
+                                                fullWidth
+                                            />
 
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12">
-                                            <input type="text" placeholder='email' id="email" onChange={this.onChangeInput} />
-
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="input-field col s12">
-                                            <textarea id="message" placeholder='message' onChange={this.onChangeInput}></textarea>
-
+                                            <TextField
+                                                placeholder='Type your message here'
+                                                name='message'
+                                                label='Enter your message'
+                                                id="message"
+                                                type="text"
+                                                variant='outlined'
+                                                InputLabelProps={{
+                                                    shrink: true
+                                                }}
+                                                required
+                                                inputProps={{
+                                                    minLength: 3,
+                                                    maxLength: 20
+                                                }}
+                                                error={!!errors["message"]}
+                                                fullWidth
+                                            />
                                         </div>
                                     </div>
                                     <div className={`${this.errorClass()} error`}>
