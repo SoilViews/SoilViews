@@ -171,6 +171,63 @@ export class Dashboard extends React.Component {
     });
   };
 
+  // Function to send data to Blitline
+  sendHttpPostToBlitline(job_data) {
+    var http = require('http');
+
+    var options = {
+      host: 'api.blitline.com',
+      port: 80,
+      method: "POST",
+      path: '/job'
+    };
+
+    var req = http.request(options, function (res) {
+      res.on("data", function (chunk) {
+        console.log("Data=" + chunk);
+      });
+    }).on('error', function (e) {
+      console.log("Got error: " + e.message);
+    });
+
+    req.write("json=" + JSON.stringify(job_data));
+    req.end();
+  }
+
+
+  processHardcodedImageUrl() {
+    var job_data = {
+      "application_id": "8k9BXHJtK_sKYGltk_Fiobw",
+      "src": "https://cdn3.iconfinder.com/data/icons/basicolor-arrows-checks/24/149_check_ok-512.png",
+      "functions": [
+        {
+          "name": "sketch",
+          "save": { "image_identifier": "MY_CLIENT_ID" }
+        }]
+    };
+    this.sendHttpPostToBlitline(job_data);
+  }
+
+  // downloadImage() {
+  //   var fs = require('fs'),
+  //     request = require('request');
+
+  //   var download = function (uri, filename, callback) {
+  //     request.head(uri, function (err, res, body) {
+  //       console.log('content-type:', res.headers['content-type']);
+
+
+  //       request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+  //     });
+  //   };
+
+  //   download('https://www.google.com/images/srpr/logo3w.png', 'google.png', function () {
+  //     console.log('done');
+  //   });
+
+  // }
+
+
   componentDidMount() { }
 
   //same for polygon
@@ -375,6 +432,14 @@ export class Dashboard extends React.Component {
             >
               Download drawed shape in kml File
           </button>
+            <br />
+            {/* uncoment to see image processing job
+            <button
+              className="waves-effect waves-light btn"
+              onClick={this.processHardcodedImageUrl()}
+            >
+              Process hardcoded Image Url
+          </button> */}
             <br />
             <button
               className="waves-effect waves-light btn"

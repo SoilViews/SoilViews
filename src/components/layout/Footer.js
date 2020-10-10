@@ -15,7 +15,7 @@ const Footer = (props) => {
           <div className="row">
             <div className="col l6 s12">
               <h5 className="white-text">{t("About SoilViews Web App")}</h5>
-              <p className="grey-text text-lighten-4">
+              <div className="grey-text text-lighten-4">
                 {t("We deliver")}
                 <p>
                   <Link to="/AboutUs" className="white-text" href="#!">
@@ -23,7 +23,7 @@ const Footer = (props) => {
                 </Link>
                 </p>
                 {/* SoilViews Web App gives you analylisis on what crops could grow best on any specific land. Based on quality hyperspectral saatelite imaging and close work with soil specialists we deliver insights that would help you increase your crop yeilds. */}
-              </p>
+              </div>
             </div>
             <div className="col l3 s12">
               <ul className={styles.rowItems}>
