@@ -37,6 +37,8 @@ import AllLayers from "./AllLayers"
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 // import CustomWMSLayer from "./CustomWMSLayer";
 import styles from "./Dashboard.module.css";
+import Legend from "./Legend";
+import "../dashboard/styles.css";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 // import JSZip from 'jszip'
@@ -228,7 +230,10 @@ export class Dashboard extends React.Component {
   // }
 
 
-  componentDidMount() { }
+  componentDidMount() {
+    // if you want to test the image processing uncomment this code
+    // this.processHardcodedImageUrl() 
+  }
 
   //same for polygon
   onEachFeaturePoint(feature, layer) {
@@ -293,7 +298,7 @@ export class Dashboard extends React.Component {
           <hr />
           <Map
             key={this.state.keyMAP}
-            style={{ height: "50vh" }}
+            style={{ height: "65vh" }}
             center={position}
             zoom={13}
             onClick={this.handleClick}
@@ -352,6 +357,7 @@ export class Dashboard extends React.Component {
               layers="NDVI"
             // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
             />
+            <Legend />
             <NmScale />
             <Marker position={position}>
               <Popup className="request-popup">
