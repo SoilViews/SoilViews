@@ -16,7 +16,7 @@ const Legend = () => {
          let labels = [];
          let from;
          let to;
-
+         L.control.scale({ metric: true, imperial: false }).addTo(map);
          for (let i = 0; i < grades.length; i++) {
             from = grades[i];
             to = grades[i + 1];

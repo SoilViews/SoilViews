@@ -19,13 +19,12 @@ import { saveData } from "../../store/actions/authActions";
 import { saveAs } from "file-saver";
 // import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
 import "../dashboard/GeojsonLayer.css";
-import ReactLeafletSearch from "react-leaflet-search";
+import Search from "react-leaflet-search";
 import "./Map.css";
 import L from "leaflet";
 import { storage } from "../../firebase/index";
 import { format } from "date-fns";
 import LocateControl from "./LocateControl";
-import NmScale from "@marfle/react-leaflet-nmscale";
 import FullscreenControl from "react-leaflet-fullscreen";
 import "react-leaflet-fullscreen/dist/styles.css";
 import { popupContent, popupHead } from "./popupStyles";
@@ -311,11 +310,30 @@ export class Dashboard extends React.Component {
               <span className="fa fa-map-marker"></span>
             </LocateControl>
             <AllLayers />
-            <ReactLeafletSearch closeResultsOnClick={true} position="topright" showPopup="false" />
+            <Search
+              style={{ opacity: 1, pointerEvents: "auto" }}
+              position="topleft"
+              inputPlaceholder="sss placeholder"
+
+              showMarker={true}
+              zoom={7}
+              closeResultsOnClick={true}
+              openSearchOnLoad={false}
+
+
+
+            // default provider OpenStreetMap
+            // provider="BingMap"
+            // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
+            >
+              {(info) => (
+                <Marker position={info?.latLng}>{this.customPopup(info)}</Marker>
+              )}
+            </Search >
             <div className="geojson-toggle">
               <label>Show Polygons </label>
-              <input
-                style={{ opacity: 1, pointerEvents: "auto" }}
+              <inputpointer
+                style={{ opacity: 1, Events: "auto" }}
                 type="checkbox"
                 name="layertoggle"
                 id="layertoggle"
@@ -358,7 +376,6 @@ export class Dashboard extends React.Component {
             // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
             />
             <Legend />
-            <NmScale />
             <Marker position={position}>
               <Popup className="request-popup">
                 <div style={popupContent}>
