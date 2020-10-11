@@ -19,7 +19,7 @@ import { saveData } from "../../store/actions/authActions";
 import { saveAs } from "file-saver";
 // import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
 import "../dashboard/GeojsonLayer.css";
-import Search from "react-leaflet-search";
+import ReactLeafletSearch from "react-leaflet-search";
 import "./Map.css";
 import L from "leaflet";
 import { storage } from "../../firebase/index";
@@ -310,26 +310,7 @@ export class Dashboard extends React.Component {
               <span className="fa fa-map-marker"></span>
             </LocateControl>
             <AllLayers />
-            <Search
-              style={{ opacity: 1, pointerEvents: "auto" }}
-              position="topleft"
-              inputPlaceholder="sss placeholder"
-
-              showMarker={true}
-              zoom={7}
-              closeResultsOnClick={true}
-              openSearchOnLoad={false}
-
-
-
-            // default provider OpenStreetMap
-            // provider="BingMap"
-            // providerKey="AhkdlcKxeOnNCJ1wRIPmrOXLxtEHDvuWUZhiT4GYfWgfxLthOYXs5lUMqWjQmc27"
-            >
-              {(info) => (
-                <Marker position={info?.latLng}>{this.customPopup(info)}</Marker>
-              )}
-            </Search >
+            <ReactLeafletSearch />
             <div className="geojson-toggle">
               <label>Show Polygons </label>
               <inputpointer
