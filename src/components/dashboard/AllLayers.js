@@ -71,7 +71,7 @@ const AllLayers = () => {
           tiled="true"
         />
       </LayersControl.BaseLayer>
-      <LayersControl.BaseLayer name="OSM HOT">
+      {/* <LayersControl.BaseLayer name="OSM HOT">
         <WMSTileLayer
           layers={["BGtopoVJ-raster-v3.00"]}
           url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
@@ -79,7 +79,7 @@ const AllLayers = () => {
           transparent="true"
           tiled="true"
         />
-      </LayersControl.BaseLayer>
+      </LayersControl.BaseLayer> */}
       <LayersControl.BaseLayer name="CYCLE MAP">
         <WMSTileLayer
           layers={["BGtopoVJ-raster-v3.00"]}
@@ -116,6 +116,22 @@ const AllLayers = () => {
           transparent="true"
           tiled="true"
           url="http://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663?REQUEST=GetMap&BBOX=3238005,5039853,3244050,5045897&LAYERS=TRUE_COLOR&MAXCC=20&WIDTH=320&HEIGHT=320&FORMAT=image/jpeg&TIME=2018-03-29/2018-05-29"
+        />
+      </LayersControl.BaseLayer>
+      <LayersControl.BaseLayer name="Test Request to Sentinel Hub API returning image of polygon">
+        {/* Add layer over drawed polygon
+      https://forum.sentinel-hub.com/t/extract-an-aoi-from-a-ndvi-wms/589/16 */}
+        <WMSTileLayer
+          layers="MOISTURE_INDEX"
+          format="image/jpeg"
+          attribution='&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>'
+          url="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+          urlProcessingApi="https://services.sentinel-hub.com/ogc/wms/aeafc74a-c894-440b-a85b-964c7b26e471"
+          maxcc="20"
+          minZoom="6"
+          maxZoom="16"
+          preset="MOISTURE_INDEX"
+          time="2020-04-01/2020-10-11 "
         />
       </LayersControl.BaseLayer>
     </LayersControl>
