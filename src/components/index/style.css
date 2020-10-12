@@ -1,0 +1,33 @@
+.border {
+  border-radius: 10px !important;
+}
+.card-head {
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-size: 27px;
+  font-weight: 600;
+  color: #ecf0f1;
+  padding: 1em;
+}
+.card-head-content {
+  vertical-align: middle;
+}
+.card-head-content .price {
+  color: #ffbb33;
+  font-size: 16px !important;
+}
+.item-pricing-table {
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-size: 19px;
+  font-weight: bold;
+  color: #4b515d !important;
+  padding: 9px;
+}
+.item-pricing-table:nth-child(2n) {
+  background-color: #f4d9ea;
+}
+.purchase-btn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

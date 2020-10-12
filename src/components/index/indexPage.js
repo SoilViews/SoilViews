@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core/";
 import { withTranslation } from "react-i18next"; // for class component
 import styles from "./indexPage.module.css";
+import style from "./style.css";
 
 export class indexPage extends React.Component {
   render() {
@@ -42,96 +43,85 @@ export class indexPage extends React.Component {
                 Pricing
               </h1>
             </div>
-            <div class="section">
-              <div class="row">
-                <div class="col s12 m4">
-                  <div class="icon-block">
-                    <h2 class="center light-blue-text">
-                      <i class="material-icons">flash_on</i>
-                    </h2>
-                    <h5 class="center">
-                      Individual Entrepreneurs/Farmers & Scientists
-                    </h5>
+
+            <div className="row">
+              <div className="col s4">
+                <div className="card border">
+                  <div className="card-head green">
+                    <div className={style.orangeText}>
+                      <span>FREE</span>
+                      <br />
+                      <span className="price">FREE!</span>
+                    </div>
                   </div>
-                  <div className="card-body">
-                    <h3 class="center">
-                      <h3>€20</h3>
-                      <small className="text-muted">/ mo</small>
-                    </h3>
-                    <ul class="center">
-                      <li>Use of existing models</li>
-                      <li>Satellite imagery and data overlays</li>
-                      <li>Possible upgrades:</li>
-                      <ul className="center">
-                        <li>
-                          Land area monitoring and notifications based on model
-                          and location (0,1-0,8 eur/km2)
-                        </li>
-                        <li>Upload and intersection functionality</li>
-                      </ul>
-                    </ul>
+                  <div className="card-content no-padding">
+                    <p className="item-pricing-table">Lorem ipsum dolor.</p>
+                    <p className="item-pricing-table">Lorem ipsum dolor.</p>
+                    <p className="item-pricing-table">Lorem ipsum dolor.</p>
+                    <div align="center">
+                      <button
+                        align="center"
+                        className="btn waves-effect waves-light green purchase-btn"
+                      >
+                        register
+                      </button>
+                    </div>
                   </div>
                 </div>
-
-                <div class="col s12 m4">
-                  <div class="icon-block">
-                    <h2 class="center light-blue-text">
-                      <i class="material-icons">flash_on</i>
-                    </h2>
-                    <h5 class="center">Governments & NGOs</h5>
+              </div>
+              <div className="col s4">
+                <div className="card border">
+                  <div className="card-head blue">
+                    <div className="card-head-content">
+                      <span>MONTH</span>
+                      <br />
+                      <span className="price">$ 23.43</span>
+                    </div>
                   </div>
-                  <div className="card-body">
-                    <h3 class="center">
-                      <h3>€20</h3>
-                      <small className="text-muted">/ mo</small>
-                    </h3>
-                    <ul class="center">
-                      <li>Use of existing models</li>
-                      <li>Satellite imagery and data overlays</li>
-                      <li>Possible upgrades:</li>
-                      <ul className="center">
-                        <li>
-                          Land area monitoring and notifications based on model
-                          and location (0,1-0,8 eur/km2)
-                        </li>
-                        <li>Upload and intersection functionality</li>
-                      </ul>
-                    </ul>
+                  <div className="card-content no-padding">
+                    <p className="item-pricing-table">Lorem ipsum dolor.</p>
+                    <p className="item-pricing-table">Lorem ipsum dolor.</p>
+                    <p className="item-pricing-table">Lorem ipsum dolor.</p>
+                    <div align="center">
+                      <button
+                        align="center"
+                        className="btn waves-effect waves-light blue purchase-btn"
+                      >
+                        purchase
+                      </button>
+                    </div>
                   </div>
                 </div>
-
-                <div class="col s12 m4">
-                  <div class="icon-block">
-                    <h2 class="center light-blue-text">
-                      <i class="material-icons">flash_on</i>
-                    </h2>
-                    <h5 class="center">Private companies</h5>
+              </div>
+              <div className="col s4">
+                <div className="card border">
+                  <div className="card-head orange">
+                    <div className="card-head-content">
+                      <span>YEAR</span>
+                      <br />
+                      <span className="price">$ 239.43</span>
+                    </div>
                   </div>
-                  <div className="card-body">
-                    <h3 class="center">
-                      <h3>€20</h3>
-                      <small className="text-muted">/ mo</small>
-                    </h3>
-                    <ul class="center">
-                      <li>Use of existing models</li>
-                      <li>Satellite imagery and data overlays</li>
-                      <li>Possible upgrades:</li>
-                      <ul className="center">
-                        <li>
-                          Land area monitoring and notifications based on model
-                          and location (0,1-0,8 eur/km2)
-                        </li>
-                        <li>Upload and intersection functionality</li>
-                      </ul>
-                    </ul>
+                  <div className="card-content no-padding">
+                    <p className="item-pricing-table">Lorem ipsum dolor.</p>
+                    <p className="item-pricing-table">Lorem ipsum dolor.</p>
+                    <p className="item-pricing-table">Lorem ipsum dolor.</p>
+                    <div align="center">
+                      <button
+                        align="center"
+                        className="btn waves-effect waves-light orange purchase-btn"
+                      >
+                        purchase
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <hr />
-          <div>
-            <h1 className="text-center">Team</h1>
+          <div className="row center">
+            <h1 className={styles.orangeText}>Team</h1>
             <p className="text-center">
               SoilViews helps people make use of the satellite data that is
               being generated every day.
