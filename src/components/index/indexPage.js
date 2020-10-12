@@ -127,7 +127,7 @@ export class indexPage extends React.Component {
               SoilViews helps people make use of the satellite data that is
               being generated every day.
             </p>
-            <h1>Place our picture here.....</h1>
+            <img alt="team" src={require("./team.jpg")} />
           </div>
           <hr />
           <div className="row center">
