@@ -20,14 +20,13 @@ const Footer = (props) => {
                 <p>
                   <Link to="/AboutUs" className="white-text" href="#!">
                     ({t("Read more")})
-                </Link>
+                  </Link>
                 </p>
                 {/* SoilViews Web App gives you analylisis on what crops could grow best on any specific land. Based on quality hyperspectral saatelite imaging and close work with soil specialists we deliver insights that would help you increase your crop yeilds. */}
               </div>
             </div>
             <div className="col l3 s12">
               <ul className={styles.rowItems}>
-
                 <li>
                   <Link to="/Profile" className="white-text" href="#!">
                     {t("My Profile")}
@@ -61,6 +60,11 @@ const Footer = (props) => {
                   <Link to="/Acknowledgements" className="white-text" href="#!">
                     {t("Acknowledgements")}
                   </Link>
+                </li>
+                <li>
+                  <a className="white-text" href="mailto:al.velchevv@gmail.com">
+                    Send direct email
+                  </a>
                 </li>
               </ul>
             </div>
