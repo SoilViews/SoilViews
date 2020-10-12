@@ -4,6 +4,7 @@ import { Typography } from "@material-ui/core/";
 import { withTranslation } from "react-i18next"; // for class component
 import styles from "./indexPage.module.css";
 import style from "./style.css";
+import Mailchimp from "react-mailchimp-form";
 
 export class indexPage extends React.Component {
   render() {
@@ -127,6 +128,27 @@ export class indexPage extends React.Component {
               being generated every day.
             </p>
             <h1>Place our picture here.....</h1>
+          </div>
+          <hr />
+          <div className="row center">
+            <h1 className={styles.orangeText}>Want to know when we launch?</h1>
+            <Mailchimp
+              action="https://soilviews.us19.list-manage.com/subscribe/post?u=6c2d9042d080c53e50bee4a40&amp;id=3b6e268c42"
+              fields={[
+                {
+                  name: "EMAIL",
+                  placeholder: "Email",
+                  type: "email",
+                  required: true,
+                },
+                {
+                  name: "FNAME",
+                  placeholder: "Name",
+                  type: "text",
+                  required: true,
+                },
+              ]}
+            />
           </div>
         </div>
       </div>
