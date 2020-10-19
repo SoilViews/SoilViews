@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core/";
 import { withTranslation } from "react-i18next"; // for class component
 import styles from "./indexPage.module.css";
-import style from "./style.css";
 import Mailchimp from "react-mailchimp-form";
 
 export class indexPage extends React.Component {
