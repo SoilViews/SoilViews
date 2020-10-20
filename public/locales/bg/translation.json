@@ -9,7 +9,7 @@
   "MyOrders": "Моите поръчки",
   "Log Out": "Излез",
   "About SoilViews Web App": "Повече за SoilViews приложението",
-  "We deliver": "Предоставяме почвени анализи, съчетани със сателитни стимки и почвени проби",
+  "We deliver We deliver soil analysis combining Satelite imaging and soil samples.": "Предоставяме почвени анализи, съчетани със сателитни стимки и почвени проби",
   "Read more": "Повече",
   "Settings": "Меню",
   "My Profile": "Профил",
@@ -33,11 +33,13 @@
   "Telephon validation": "Телефонният номер трябва да бъде дълъг поне 10 символа",
   "FirstnameValid": "Моля,въведете вашето име",
   "CityValid": "Моля, въведете град",
-  "EmptyTelephonValidation": "Моля, въведете вашият email адрес",
+  "EmptyTelephonValidation": "Моля, въведете вашият имейл адрес",
   "LastnameValid": "Моля, въведе вашата фамилия",
-  "EmailValid": "Email адресър трябва да е дълъг поне 5 символа",
-  "EmailValid1": "Email трябва да съдържа @",
-  "EmailValid3": "Email трябва да съдържа .",
-  "PasswordValid": "Паролата ви трябва да е дълга поне 6 символа",
-  "SendMessageContactFormValid": "Моля, въведе съобщение"
+  "EmailValid": "Имейлът трябва да е дълъг поне 5 символа",
+  "EmailValid1": "Имейлът трябва да съдържа @",
+  "EmailValid3": "Имейлът трябва да съдържа .",
+  "PasswordValid": "Паролата трябва да е от поне 6 символа",
+  "SendMessageContactFormValid": "Моля, въведе съобщение",
+  "Pricing": "Цена",
+  "Subscribe": "Абониране"
 }

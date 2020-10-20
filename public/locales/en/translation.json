@@ -9,7 +9,7 @@
   "MyOrders": "MyOrders",
   "Log Out": "Log Out",
   "About SoilViews Web App": "About SoilViews Web App",
-  "We deliver": "We deliver soil analysis combining Satelite imaging and soil samples.",
+  "We deliver soil analysis combining Satelite imaging and soil samples.": "We deliver soil analysis combining Satelite imaging and soil samples.",
   "Read more": "Read more",
   "Settings": "Menu",
   "My Profile": "My Profile",
@@ -39,5 +39,7 @@
   "EmailValid1": "Email should contain a @",
   "EmailValid3": "Email should contain at least one dot",
   "PasswordValid": "Password should be at least 6 characters long",
-  "SendMessageContactFormValid": "Message can't be empty"
+  "SendMessageContactFormValid": "Message can't be empty",
+  "Pricing": "Pricing",
+  "Subscribe": "Subscribe"
 }
