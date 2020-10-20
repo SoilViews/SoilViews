@@ -16,9 +16,9 @@ const Footer = (props) => {
             <div className="col l6 s12">
               <h5 className="white-text">{t("About SoilViews Web App")}</h5>
               <div className="grey-text text-lighten-4">
-                {t("We deliver")}
+                {t("We deliver We deliver soil analysis combining Satelite imaging and soil samples.")}
                 <p>
-                  <Link to="/AboutUs" className="white-text" href="#!">
+                  <Link to="/about" className="white-text" href="#!">
                     ({t("Read more")})
                   </Link>
                 </p>
@@ -35,6 +35,11 @@ const Footer = (props) => {
                 <li>
                   <Link to="/Dashboard" className="white-text" href="#!">
                     {t("Dashboard")}
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/Pricing" className="white-text" href="#!">
+                    {t("Pricing")}
                   </Link>
                 </li>
                 <li>
@@ -57,14 +62,14 @@ const Footer = (props) => {
                   </Link>
                 </li>
                 <li>
+                  <a className="white-text" href="https://soilviews.com/#subscribe">
+                    {t("Subscribe")}
+                  </a>
+                </li>
+                <li>
                   <Link to="/Acknowledgements" className="white-text" href="#!">
                     {t("Acknowledgements")}
                   </Link>
-                </li>
-                <li>
-                  <a className="white-text" href="mailto:al.velchevv@gmail.com">
-                    Send direct email
-                  </a>
                 </li>
               </ul>
             </div>
