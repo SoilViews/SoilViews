@@ -274,6 +274,9 @@ export class Dashboard extends React.Component {
     this.props.areaHandler(areaReset);
   };
 
+  moveTo = () => {
+    this.setState({ coordinatesCenter: [42.5035355,24.1737867]})
+  }
   render() {
     //Here we shorten the area and the coordinated definition
     const { viewMap } = this.props;
@@ -303,6 +306,7 @@ export class Dashboard extends React.Component {
             onClick={this.handleClick}
             onCreate={this.onCreate}
             onLocationfound={this.handleLocationFound}
+            useFlyTo={false}
           >
             {/* startDirectly */}
             <FullscreenControl position="topleft" />
@@ -449,6 +453,10 @@ export class Dashboard extends React.Component {
               className="waves-effect waves-light btn"
               onClick={this.resetMap}
             >Clear map</button>
+            <button
+              className="waves-effect waves-light btn"
+              onClick={this.moveTo}
+            >Move to another location</button>
           </div>
         </div >
       );

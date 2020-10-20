@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { compose } from "redux";
 import SimpleAlert from "../Wizard/Alert";
 import Pricing from "../Pricing/Pricing"
+import TestDrop from "./TestDrop";
 
 export const GrandParent = () => {
   const [name, setName] = useState("i'm Grand Parent");
@@ -40,7 +41,7 @@ class HelpPage extends React.Component {
           <p>Documentation page</p>
           <p>Instructions for use</p>
           <p>Documentation on everyuser action</p>
-          <Pricing />
+          <TestDrop />
         </div>
       </div >
     );
