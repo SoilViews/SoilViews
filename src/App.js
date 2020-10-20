@@ -20,6 +20,7 @@ import MyOrders from "./components/MyOrders/MyOrders";
 import AboutUs from "./components/About/AboutUs"
 import HorizontalLinearStepper from "./components/Wizard/HorizontalLinearStepper";
 import Acknowledgements from "./components/Acknowledgements/Acknowledgements"
+import Pricing from "./components/Pricing/Pricing"
 
 function App() {
   const [checked] = useState(true);
@@ -54,6 +55,7 @@ function App() {
               <Route path="/NewOrder" component={HorizontalLinearStepper} />
               <Route path="/About" component={AboutUs} />
               <Route path="/Acknowledgements" component={Acknowledgements} />
+              <Route path="/Pricing" component={Pricing} />
               <Route path="/" component={indexPage} />
             </Switch>
           </header>

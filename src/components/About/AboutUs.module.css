@@ -1,0 +1,10 @@
+p {
+    font-family: roboto;
+    font-size: x-large;
+    color: #505050;
+}
+
+.responsive{
+    max-width: 100%;
+    height: auto;
+}
