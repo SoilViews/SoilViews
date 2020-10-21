@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { compose } from "redux";
 import SimpleAlert from "../Wizard/Alert";
-import Pricing from "../Pricing/Pricing"
 import TestDrop from "./TestDrop";
 
 export const GrandParent = () => {

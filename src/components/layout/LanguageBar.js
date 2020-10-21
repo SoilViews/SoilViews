@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactCountryFlag from "react-country-flag"
 import { useTranslation } from 'react-i18next';
+import cx from "classnames";
 
 import styles from './styles/LanguageBar.module.css'
 
@@ -10,12 +11,13 @@ const LanguageBar = () => {
         i18n.changeLanguage(lng)
     }
     return (
-        <div className={styles.position}>
-            <ReactCountryFlag onClick={() => changeLanguage('bg')}
+        <div className={cx(styles.position, styles.cursor)}>
+                <ReactCountryFlag onClick={() => changeLanguage('bg')}
                 countryCode="BG"
                 svg
                 className={styles.flag}
                 title="Български" />
+            
             <ReactCountryFlag
                 onClick={() => changeLanguage('en')}
                 countryCode="GB"
