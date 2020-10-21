@@ -1,0 +1,35 @@
+[
+    {
+        "No Region": "No Region"
+    },
+    {
+        "village": 1,
+        "name": "Дондуково",
+        "ekatte": 22945,
+        "province": "Монтана",
+        "municipality": "Брусарци",
+        "postal code": 3659,
+        "municipality code": "MON07",
+        "geo": "23.101429,43.712163"
+    },
+    {
+        "village": 1,
+        "name": "Буковец",
+        "ekatte": 6971,
+        "province": "Монтана",
+        "municipality": "Брусарци",
+        "postal code": 3678,
+        "municipality code": "MON07",
+        "geo": "22.9739,43.595409"
+    },
+    {
+        "village": 0,
+        "name": "Панагюрище",
+        "ekatte": 55302,
+        "province": "Пазарджик",
+        "municipality": "Панагюрище",
+        "postal code": 4500,
+        "municipality code": "PAZ20",
+        "geo": "24.185962,42.500791"
+    }
+]

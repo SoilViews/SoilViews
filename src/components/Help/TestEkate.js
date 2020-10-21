@@ -1,6 +1,5 @@
-import React from "react";
+import React from 'react';
 import {
-  Typography,
   Grid,
   FormControl,
   InputLabel,
@@ -8,26 +7,18 @@ import {
   Select,
 } from "@material-ui/core";
 
-import styles from "./Step2.module.css";
-//import full file and test for unique values in each category
+import styles from "./testEkate.module.css"
+import data from "./testEkate.json"
 
-// import ekate from "./ekate.json"
-
-// var uniqueRegion = [];
-// for (var i = 0; i < ekate.length; i++) {
-//   if (uniqueRegion.indexOf(ekate[i].province) === -1) {
-//     uniqueRegion.push(ekate[i].province);
-//   }
-// }
-
-const Step2 = () => {
-  const [region, setRegion] = React.useState("");
+const TestEkate = () => {
+//javascript
+  const [province, setProvince] = React.useState("");
   const [mun, setMun] = React.useState("");
   const [land, setLand] = React.useState("");
   const [array, setArray] = React.useState("");
 
-  const regionChange = (event) => {
-    setRegion(event.target.value);
+  const provinceChange = (event) => {
+    setProvince(event.target.value);
   };
 
   const munChange = (event) => {
@@ -42,17 +33,18 @@ const Step2 = () => {
     setArray(event.target.value);
   };
 
-  return (
-    <div>
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h4">Find your land on the map</Typography>
-          <ul>
-            <li>Find your land on the map and mark it using the map tools.</li>
-            <li>Or upload a digital file of your land</li>
-          </ul>
-        </Grid>
-        <Grid item xs={12} md={6}>
+  var selectMun = data
+  //item.province returns list and province returns item, this needs to be fixed
+    // .filter((item) => {
+    //   return item.province === province
+    //   })
+    .map((item,key) => {
+      return <MenuItem key={key} value={key}>{item.municipality}</MenuItem>
+      })
+
+    return (
+        <div>
+       <Grid item xs={12} md={6}>
           <Grid className={styles.center} container spacing={5}>
             <Grid item xs={12} sm={6} md={6} lg={3}>
               <FormControl>
@@ -61,12 +53,12 @@ const Step2 = () => {
                   className={styles.selectBox}
                   labelId=""
                   id=""
-                  value={region}
-                  onChange={regionChange}
+                  value={province}
+                  onChange={provinceChange}
                 >
-                  <MenuItem value={10}>София</MenuItem>
-                  <MenuItem value={20}>Пловдив</MenuItem>
-                  <MenuItem value={30}>Варна</MenuItem>
+                  {data.map((item,key) => {
+                    return <MenuItem key={key} value={key}>{item.province}</MenuItem>
+                  })}
                 </Select>
               </FormControl>
             </Grid>
@@ -75,15 +67,14 @@ const Step2 = () => {
               <FormControl>
                 <InputLabel>Община</InputLabel>
                 <Select
+                  disabled = {!province}
                   className={styles.selectBox}
                   labelId=""
                   id=""
                   value={mun}
                   onChange={munChange}
                 >
-                  <MenuItem value={10}>1</MenuItem>
-                  <MenuItem value={20}>2</MenuItem>
-                  <MenuItem value={30}>3</MenuItem>
+                  {selectMun}
                 </Select>
               </FormControl>
             </Grid>
@@ -98,9 +89,9 @@ const Step2 = () => {
                   value={land}
                   onChange={landChange}
                 >
-                  <MenuItem value={10}>x</MenuItem>
-                  <MenuItem value={20}>y</MenuItem>
-                  <MenuItem value={30}>z</MenuItem>
+                  {data.map((item,key) => {
+                    return <MenuItem value={key} key={key}>{item.ekatte}</MenuItem>
+                  })}
                 </Select>
               </FormControl>
             </Grid>
@@ -123,9 +114,9 @@ const Step2 = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </div>
-  );
+        </div>
+    );
 };
 
-export default Step2;
+
+export default TestEkate;
