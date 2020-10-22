@@ -33,17 +33,21 @@ const TestEkate = () => {
     setArray(event.target.value);
   };
 
-  var selectMun = data
-  //item.province returns list and province returns item, this needs to be fixed
-    // .filter((item) => {
-    //   return item.province === province
-    //   })
-    .map((item,key) => {
-      return <MenuItem key={key} value={key}>{item.municipality}</MenuItem>
-      })
+  //gets the unique Provinces 
+  let uniqieProvince = [...new Set(data.map(item => item.province))]; 
+
+  //Gets the unique municipalities part of the chosen Province
+  let uniqueMunicipality = [...new Set (data.filter((item) => {
+                        return item.province === province })
+                              .map((item,key) => {
+                        return <MenuItem key={key} value={item.municipality}>{item.municipality}</MenuItem>
+                        }))]; 
 
     return (
         <div>
+          {uniqieProvince.map((item, key) => {
+            return <li key={key}>{item}</li>
+          })}
        <Grid item xs={12} md={6}>
           <Grid className={styles.center} container spacing={5}>
             <Grid item xs={12} sm={6} md={6} lg={3}>
@@ -56,9 +60,14 @@ const TestEkate = () => {
                   value={province}
                   onChange={provinceChange}
                 >
-                  {data.map((item,key) => {
-                    return <MenuItem key={key} value={key}>{item.province}</MenuItem>
-                  })}
+{/* Iterate provinces in the select menu */}
+                  {
+                    uniqieProvince
+                    .map((item,key) => {
+                      return <MenuItem key={key} value={item}>{item}</MenuItem>
+                    })
+                  }
+{/* Iterate provinces in the select menu */}
                 </Select>
               </FormControl>
             </Grid>
@@ -67,15 +76,15 @@ const TestEkate = () => {
               <FormControl>
                 <InputLabel>Община</InputLabel>
                 <Select
-                  disabled = {!province}
+                  disabled = {!province}  //Disable until province state is fulfilled
                   className={styles.selectBox}
                   labelId=""
                   id=""
                   value={mun}
                   onChange={munChange}
                 >
-                  {selectMun}
-                </Select>
+                {uniqueMunicipality}
+                </Select>  
               </FormControl>
             </Grid>
 
