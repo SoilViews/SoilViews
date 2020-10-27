@@ -12,22 +12,23 @@ import styles from "./Step2.module.css";
 //import full file and test for unique values in each category
 
 // import ekate from "./ekate.json"
+import data from "./testEkate.json"
 
-// var uniqueRegion = [];
+// var uniqueProvince = [];
 // for (var i = 0; i < ekate.length; i++) {
-//   if (uniqueRegion.indexOf(ekate[i].province) === -1) {
-//     uniqueRegion.push(ekate[i].province);
+//   if (uniqueProvince.indexOf(ekate[i].province) === -1) {
+//     uniqueProvince.push(ekate[i].province);
 //   }
 // }
 
 const Step2 = () => {
-  const [region, setRegion] = React.useState("");
+  const [province, setProvince] = React.useState("");
   const [mun, setMun] = React.useState("");
   const [land, setLand] = React.useState("");
   const [array, setArray] = React.useState("");
 
-  const regionChange = (event) => {
-    setRegion(event.target.value);
+  const provinceChange = (event) => {
+    setProvince(event.target.value);
   };
 
   const munChange = (event) => {
@@ -41,6 +42,18 @@ const Step2 = () => {
   const arrayChange = (event) => {
     setArray(event.target.value);
   };
+
+
+  //gets the unique Provinces 
+  let uniqieProvince = [...new Set(data.map(item => item.province))]; 
+
+  //Gets the unique municipalities part of the chosen Province
+  let uniqueMunicipality = [...new Set (data.filter((item) => {
+                        return item.province === province })
+                              .map((item,key) => {
+                        return <MenuItem key={key} value={item.municipality}>{item.municipality}</MenuItem>
+                        }))]; 
+
 
   return (
     <div>
@@ -61,30 +74,34 @@ const Step2 = () => {
                   className={styles.selectBox}
                   labelId=""
                   id=""
-                  value={region}
-                  onChange={regionChange}
+                  value={province}
+                  onChange={provinceChange}
                 >
-                  <MenuItem value={10}>София</MenuItem>
-                  <MenuItem value={20}>Пловдив</MenuItem>
-                  <MenuItem value={30}>Варна</MenuItem>
+{/* Iterate provinces in the select menu */}
+                  {
+                    uniqieProvince
+                    .map((item,key) => {
+                      return <MenuItem key={key} value={item}>{item}</MenuItem>
+                    })
+                  }
+{/* Iterate provinces in the select menu */}
                 </Select>
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={6} lg={3}>
+                       <Grid item xs={12} sm={6} md={6} lg={3}>
               <FormControl>
                 <InputLabel>Община</InputLabel>
                 <Select
+                  disabled = {!province}  //Disable until province state is fulfilled
                   className={styles.selectBox}
                   labelId=""
                   id=""
                   value={mun}
                   onChange={munChange}
                 >
-                  <MenuItem value={10}>1</MenuItem>
-                  <MenuItem value={20}>2</MenuItem>
-                  <MenuItem value={30}>3</MenuItem>
-                </Select>
+                {uniqueMunicipality}
+                </Select>  
               </FormControl>
             </Grid>
 
