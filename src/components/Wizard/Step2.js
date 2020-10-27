@@ -12,7 +12,7 @@ import styles from "./Step2.module.css";
 //import full file and test for unique values in each category
 
 // import ekate from "./ekate.json"
-import data from "./testEkate.json"
+import data from "./ekate.json"
 
 // var uniqueProvince = [];
 // for (var i = 0; i < ekate.length; i++) {
@@ -44,16 +44,36 @@ const Step2 = () => {
   };
 
 
-  //gets the unique Provinces 
-  let uniqieProvince = [...new Set(data.map(item => item.province))]; 
+  //gets the unique Provinces
+  let uniqueProvince = [...new Set(data.map((item) => item.province))].map(
+    (item, key) => {
+      return (
+        <MenuItem key={key} value={item}>
+          {item}
+        </MenuItem>
+      );
+    }
+  );
 
-  //Gets the unique municipalities part of the chosen Province
-  let uniqueMunicipality = [...new Set (data.filter((item) => {
-                        return item.province === province })
-                              .map((item,key) => {
-                        return <MenuItem key={key} value={item.municipality}>{item.municipality}</MenuItem>
-                        }))]; 
-
+  //filter Municipalities by their province 
+  let filterMun = data
+    .filter((x) => x.province === province)
+    .map(item => {
+      return item.municipality
+    });
+    
+//removing the duplicate values from the array of filtered provinces
+  let ReduceDupMun = filterMun.reduce((acc,item) => {
+    if (!acc.includes(item)){
+      acc.push(item);
+    }
+  return acc
+  },[])
+  
+//Mapping the reduced list of Municipalities
+  let uniqueMunicipalityMapped = ReduceDupMun.map((item,key) => {
+  return <MenuItem key={key} value={item}>{item}</MenuItem>
+  })
 
   return (
     <div>
@@ -78,12 +98,7 @@ const Step2 = () => {
                   onChange={provinceChange}
                 >
 {/* Iterate provinces in the select menu */}
-                  {
-                    uniqieProvince
-                    .map((item,key) => {
-                      return <MenuItem key={key} value={item}>{item}</MenuItem>
-                    })
-                  }
+                  {uniqueProvince}
 {/* Iterate provinces in the select menu */}
                 </Select>
               </FormControl>
@@ -100,7 +115,7 @@ const Step2 = () => {
                   value={mun}
                   onChange={munChange}
                 >
-                {uniqueMunicipality}
+                {uniqueMunicipalityMapped}
                 </Select>  
               </FormControl>
             </Grid>
