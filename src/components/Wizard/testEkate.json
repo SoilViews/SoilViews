@@ -28,5 +28,15 @@
         "postal code": 4500,
         "municipality code": "PAZ20",
         "geo": "24.185962,42.500791"
+    },
+    {
+        "village": 1,
+        "name": "Оборище",
+        "ekatte": 53103,
+        "province": "Пазарджик",
+        "municipality": "Панагюрище",
+        "postal code": 4522,
+        "municipality code": "PAZ20",
+        "geo": "24.0833,42.5167"
     }
 ]
