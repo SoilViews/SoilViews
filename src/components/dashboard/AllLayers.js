@@ -1,9 +1,5 @@
-import React from 'react';
-import {
-  TileLayer,
-  WMSTileLayer,
-  LayersControl,
-} from "react-leaflet";
+import React from "react";
+import { TileLayer, WMSTileLayer, LayersControl } from "react-leaflet";
 
 const AllLayers = () => {
   return (
@@ -90,7 +86,6 @@ const AllLayers = () => {
         />
       </LayersControl.BaseLayer>
       <LayersControl.BaseLayer name="Test Request to Sentinel Hub API returning NDVI filter">
-
         {/* link to manage filter by given criteria
           https://apps.sentinel-hub.com/sentinel-playground/?baseWmsUrl=services.sentinel-hub.com&instanceID=bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663&source=S2&lat=10.001310360636941&lng=4.998779296875&zoom=9&preset=NDVI&layers=B01,B02,B03&maxcc=20&gain=1.0&gamma=1.0&time=2020-04-01%7C2020-10-08&atmFilter=&showDates=false */}
 
@@ -98,7 +93,7 @@ const AllLayers = () => {
           layers="NDVI"
           format="image/jpeg"
           attribution='&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>'
-          url="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+          url="https://services.sentinel-hub.com/ogc/wms/5fbea5fa-d1e4-4d92-b262-d4fc2c853f81"
           urlProcessingApi="https://services.sentinel-hub.com/ogc/wms/aeafc74a-c894-440b-a85b-964c7b26e471"
           maxcc="20"
           minZoom="6"
@@ -115,7 +110,7 @@ const AllLayers = () => {
           format="image/jpeg"
           transparent="true"
           tiled="true"
-          url="http://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663?REQUEST=GetMap&BBOX=3238005,5039853,3244050,5045897&LAYERS=TRUE_COLOR&MAXCC=20&WIDTH=320&HEIGHT=320&FORMAT=image/jpeg&TIME=2018-03-29/2018-05-29"
+          url="http://services.sentinel-hub.com/ogc/wms/5fbea5fa-d1e4-4d92-b262-d4fc2c853f81?REQUEST=GetMap&BBOX=3238005,5039853,3244050,5045897&LAYERS=TRUE_COLOR&MAXCC=20&WIDTH=320&HEIGHT=320&FORMAT=image/jpeg&TIME=2018-03-29/2018-05-29"
         />
       </LayersControl.BaseLayer>
       <LayersControl.BaseLayer name="Test Request to Sentinel Hub API returning image of polygon">
@@ -125,7 +120,7 @@ const AllLayers = () => {
           layers="MOISTURE_INDEX"
           format="image/jpeg"
           attribution='&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>'
-          url="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+          url="https://services.sentinel-hub.com/ogc/wms/5fbea5fa-d1e4-4d92-b262-d4fc2c853f81"
           urlProcessingApi="https://services.sentinel-hub.com/ogc/wms/aeafc74a-c894-440b-a85b-964c7b26e471"
           maxcc="20"
           minZoom="6"
