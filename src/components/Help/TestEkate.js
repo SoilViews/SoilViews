@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 
 import styles from "./testEkate.module.css";
-import data from "./testEkate.json";
+import data from "../../data/ekate.json";
 
 const TestEkate = () => {
   //javascript
@@ -32,7 +32,7 @@ const TestEkate = () => {
   const arrayChange = (event) => {
     setArray(event.target.value);
   };
-
+  //TODO: Sort data
   //gets the unique Provinces
   let uniqueProvince = [...new Set(data.map((item) => item.province))].map(
     (item, key) => {
@@ -52,12 +52,17 @@ const TestEkate = () => {
     });
 
 //removing the duplicate values from the array of filtered provinces
-  let uniqueMunicipality = filterMun.reduce((acc,item) => {
+  let ReduceDupMun = filterMun.reduce((acc,item) => {
     if (!acc.includes(item)){
       acc.push(item);
     }
   return acc
   },[])
+
+  //Mapping the reduced list of Municipalities
+  let uniqueMunicipalityMapped = ReduceDupMun.map((item,key) => {
+  return <MenuItem key={key} value={item}>{item}</MenuItem>
+  })
 
   return (
     <div>
@@ -92,7 +97,7 @@ const TestEkate = () => {
                 value={mun}
                 onChange={munChange}
               >
-                <MenuItem value={uniqueMunicipality}>{uniqueMunicipality}</MenuItem>
+                {uniqueMunicipalityMapped}
               </Select>
             </FormControl>
           </Grid>

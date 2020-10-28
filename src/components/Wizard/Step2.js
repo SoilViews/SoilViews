@@ -12,7 +12,7 @@ import styles from "./Step2.module.css";
 //import full file and test for unique values in each category
 
 // import ekate from "./ekate.json"
-import data from "./ekate.json"
+import data from "../../data/ekate.json";
 
 // var uniqueProvince = [];
 // for (var i = 0; i < ekate.length; i++) {
@@ -24,7 +24,7 @@ import data from "./ekate.json"
 const Step2 = () => {
   const [province, setProvince] = React.useState("");
   const [mun, setMun] = React.useState("");
-  const [land, setLand] = React.useState("");
+  const [settlement, setSettlement] = React.useState("");
   const [array, setArray] = React.useState("");
 
   const provinceChange = (event) => {
@@ -35,45 +35,33 @@ const Step2 = () => {
     setMun(event.target.value);
   };
 
-  const landChange = (event) => {
-    setLand(event.target.value);
+  const settlementChange = (event) => {
+    setSettlement(event.target.value);
   };
 
   const arrayChange = (event) => {
     setArray(event.target.value);
   };
 
+  //gets the unique Provinces using new Set
+  let uniqueProvince = [...new Set(data.map((item) => item.province))];
 
-  //gets the unique Provinces
-  let uniqueProvince = [...new Set(data.map((item) => item.province))].map(
-    (item, key) => {
-      return (
-        <MenuItem key={key} value={item}>
-          {item}
-        </MenuItem>
-      );
-    }
-  );
-
-  //filter Municipalities by their province 
+  //filter Municipalities by their province with filter() and map()
   let filterMun = data
     .filter((x) => x.province === province)
-    .map(item => {
-      return item.municipality
+    .map((item) => {
+      return item.municipality;
     });
-    
-//removing the duplicate values from the array of filtered provinces
-  let ReduceDupMun = filterMun.reduce((acc,item) => {
-    if (!acc.includes(item)){
+
+  //removing the duplicate values from the array of filtered provinces using reduce()
+  let ReduceDupMun = filterMun.reduce((acc, item) => {
+    if (!acc.includes(item)) {
       acc.push(item);
     }
-  return acc
-  },[])
-  
-//Mapping the reduced list of Municipalities
-  let uniqueMunicipalityMapped = ReduceDupMun.map((item,key) => {
-  return <MenuItem key={key} value={item}>{item}</MenuItem>
-  })
+    return acc;
+  }, []);
+
+  //filter Municipalities by their province with filter() and map()
 
   return (
     <div>
@@ -97,42 +85,54 @@ const Step2 = () => {
                   value={province}
                   onChange={provinceChange}
                 >
-{/* Iterate provinces in the select menu */}
-                  {uniqueProvince}
-{/* Iterate provinces in the select menu */}
+                  {/* Iterate unique provinces in the select menu */}
+                  {uniqueProvince.map((item, key) => {
+                    return (
+                      <MenuItem key={key} value={item}>
+                        {item}
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
               </FormControl>
             </Grid>
 
-                       <Grid item xs={12} sm={6} md={6} lg={3}>
+            <Grid item xs={12} sm={6} md={6} lg={3}>
               <FormControl>
                 <InputLabel>Община</InputLabel>
                 <Select
-                  disabled = {!province}  //Disable until province state is fulfilled
+                  disabled={!province} //Disable until province state is fulfilled
                   className={styles.selectBox}
                   labelId=""
                   id=""
                   value={mun}
                   onChange={munChange}
                 >
-                {uniqueMunicipalityMapped}
-                </Select>  
+                  {/* Mapping the reduced list of Municipalities */}
+                  {ReduceDupMun.map((item, key) => {
+                    return (
+                      <MenuItem key={key} value={item}>
+                        {item}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
               </FormControl>
             </Grid>
 
             <Grid item xs={12} sm={6} md={6} lg={3}>
               <FormControl>
-                <InputLabel>Землище</InputLabel>
+                <InputLabel>Населено място</InputLabel>
                 <Select
+                  disabled={!settlement} //Disable until province state is fulfilled
                   className={styles.selectBox}
                   labelId=""
                   id=""
-                  value={land}
-                  onChange={landChange}
+                  value={settlement}
+                  onChange={settlementChange}
                 >
-                  <MenuItem value={10}>x</MenuItem>
-                  <MenuItem value={20}>y</MenuItem>
-                  <MenuItem value={30}>z</MenuItem>
+                  {/* List unique settlements by selected municipality */}
+                  {}
                 </Select>
               </FormControl>
             </Grid>
