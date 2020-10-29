@@ -9,17 +9,9 @@ import {
 } from "@material-ui/core";
 
 import styles from "./Step2.module.css";
-//import full file and test for unique values in each category
 
 // import ekate from "./ekate.json"
 import data from "../../data/ekate.json";
-
-// var uniqueProvince = [];
-// for (var i = 0; i < ekate.length; i++) {
-//   if (uniqueProvince.indexOf(ekate[i].province) === -1) {
-//     uniqueProvince.push(ekate[i].province);
-//   }
-// }
 
 const Step2 = () => {
   const [province, setProvince] = React.useState("");
@@ -54,108 +46,151 @@ const Step2 = () => {
     });
 
   //removing the duplicate values from the array of filtered provinces using reduce()
-  let ReduceDupMun = filterMun.reduce((acc, item) => {
-    if (!acc.includes(item)) {
-      acc.push(item);
+  let uniqueMun = filterMun.reduce((unique, item) => {
+    if (!unique.includes(item)) {
+      unique.push(item);
     }
-    return acc;
+    return unique;
   }, []);
 
   //filter Municipalities by their province with filter() and map()
+  let filterSettlement = data
+    .filter((x) => x.municipality === mun)
+    .map((item) => {
+      return item.settlement;
+    });
+
+  //removing the duplicate values from the array of filtered provinces using reduce()
+  let uniqueSettlement = filterSettlement.reduce((unique, item) => {
+    if (!unique.includes(item)) {
+      unique.push(item);
+    }
+    return unique;
+  }, []);
+
+  //filter ekatte number by mun and settlement
+  let filterEkatte = data
+    .filter((x) => {
+      return x.settlement === settlement && x.municipality === mun;
+    })
+    .map((item) => {
+      return item.ekatte;
+    });
+  //filter coordinates by mun and settlement
+  let filterGeo = data
+    .filter((x) => {
+      return (
+        x.municipality === mun &&
+        x.settlement === settlement &&
+        province !== "Хасково"
+      );
+    })
+    .map((item) => {
+      return item.geo;
+    });
 
   return (
     <div>
-      <Grid container spacing={1}>
-        <Grid item xs={12} md={6}>
-          <Typography variant="h4">Find your land on the map</Typography>
-          <ul>
-            <li>Find your land on the map and mark it using the map tools.</li>
-            <li>Or upload a digital file of your land</li>
-          </ul>
+      <Typography variant="h4">Find your land on the map</Typography>
+      <ul>
+        <li>Find your land on the map and mark it using the map tools.</li>
+        <li>Or upload a digital file of your land</li>
+      </ul>
+      <Grid
+        className={styles.center}
+        spacing={1}
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+      >
+        <Grid item xs={12} sm={3}>
+          <FormControl>
+            <InputLabel className={styles.center}>Област</InputLabel>
+            <Select
+              className={styles.selectBox}
+              labelId=""
+              id=""
+              value={province}
+              onChange={provinceChange}
+            >
+              {/* Iterate unique provinces in the select menu */}
+              {uniqueProvince.map((item, key) => {
+                return (
+                  <MenuItem key={key} value={item}>
+                    {item}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
         </Grid>
-        <Grid item xs={12} md={6}>
-          <Grid className={styles.center} container spacing={5}>
-            <Grid item xs={12} sm={6} md={6} lg={3}>
-              <FormControl>
-                <InputLabel>Област</InputLabel>
-                <Select
-                  className={styles.selectBox}
-                  labelId=""
-                  id=""
-                  value={province}
-                  onChange={provinceChange}
-                >
-                  {/* Iterate unique provinces in the select menu */}
-                  {uniqueProvince.map((item, key) => {
-                    return (
-                      <MenuItem key={key} value={item}>
-                        {item}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </Grid>
 
-            <Grid item xs={12} sm={6} md={6} lg={3}>
-              <FormControl>
-                <InputLabel>Община</InputLabel>
-                <Select
-                  disabled={!province} //Disable until province state is fulfilled
-                  className={styles.selectBox}
-                  labelId=""
-                  id=""
-                  value={mun}
-                  onChange={munChange}
-                >
-                  {/* Mapping the reduced list of Municipalities */}
-                  {ReduceDupMun.map((item, key) => {
-                    return (
-                      <MenuItem key={key} value={item}>
-                        {item}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              </FormControl>
-            </Grid>
+        <Grid item xs={12} sm={3}>
+          <FormControl>
+            <InputLabel>Община</InputLabel>
+            <Select
+              disabled={!province} //Disable until province state is fulfilled
+              className={styles.selectBox}
+              labelId=""
+              id=""
+              value={mun}
+              onChange={munChange}
+            >
+              {/* Mapping the reduced list of Municipalities */}
+              {uniqueMun.map((item, key) => {
+                return (
+                  <MenuItem key={key} value={item}>
+                    {item}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Grid>
 
-            <Grid item xs={12} sm={6} md={6} lg={3}>
-              <FormControl>
-                <InputLabel>Населено място</InputLabel>
-                <Select
-                  disabled={!settlement} //Disable until province state is fulfilled
-                  className={styles.selectBox}
-                  labelId=""
-                  id=""
-                  value={settlement}
-                  onChange={settlementChange}
-                >
-                  {/* List unique settlements by selected municipality */}
-                  {}
-                </Select>
-              </FormControl>
-            </Grid>
+        <Grid item xs={12} sm={3}>
+          <FormControl>
+            <InputLabel>Населено място</InputLabel>
+            <Select
+              disabled={!mun} //Disable until province state is selected
+              className={styles.settlementBox}
+              labelId=""
+              id=""
+              value={settlement}
+              onChange={settlementChange}
+            >
+              {/* Mapping the reduced list of Municipalities */}
+              {uniqueSettlement.map((item, key) => {
+                return (
+                  <MenuItem key={key} value={item}>
+                    {item}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </Grid>
 
-            <Grid item xs={12} sm={6} md={6} lg={3}>
-              <FormControl>
-                <InputLabel>Масив</InputLabel>
-                <Select
-                  className={styles.selectBox}
-                  labelId=""
-                  id=""
-                  value={array}
-                  onChange={arrayChange}
-                >
-                  <MenuItem value={10}>101</MenuItem>
-                  <MenuItem value={20}>102</MenuItem>
-                  <MenuItem value={30}>103</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
+        <Grid item xs={12} sm={3}>
+          <FormControl>
+            <InputLabel>Масив</InputLabel>
+            <Select
+              className={styles.selectBox}
+              labelId=""
+              id=""
+              value={array}
+              onChange={arrayChange}
+            >
+              <MenuItem value={10}>101</MenuItem>
+              <MenuItem value={20}>102</MenuItem>
+              <MenuItem value={30}>103</MenuItem>
+            </Select>
+          </FormControl>
         </Grid>
       </Grid>
+      {settlement ? <Typography>ЕКАТТЕ # {filterEkatte}</Typography> : ""}
+      {settlement ? <Typography>Coordinates: {filterGeo}</Typography> : ""}
     </div>
   );
 };

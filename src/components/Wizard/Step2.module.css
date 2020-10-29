@@ -1,8 +1,13 @@
 .selectBox {
-  min-width: 100px;
+  min-width: 80px;
 }
 
-.center{
+.settlementBox {
+  min-width: 145px;
+  text-align: left;
+}
+
+.center {
   margin: auto !important;
   text-align: center !important;
 }
