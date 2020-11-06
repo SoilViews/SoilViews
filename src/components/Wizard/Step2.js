@@ -19,9 +19,10 @@ const Step2 = () => {
   const [province, setProvince] = React.useState("");
   const [mun, setMun] = React.useState("");
   const [settlement, setSettlement] = React.useState("");
-  const [array, setArray] = React.useState("");
+  // const [array, setArray] = React.useState("");
   const [findGeo, setFindGeo] = React.useState("");
   const [ekatte, setEkatte] = React.useState("");
+  const [haskArray, setHaskArray] = React.useState("");
 
   //Filter GEO by current selection
   let provinceGeo = data
@@ -53,45 +54,62 @@ const Step2 = () => {
     .map((item) => {
       return item.geo;
     });
+
+  let haskMasiviGeo = haskovo_arrays
+    .filter((x) => x.masiv === haskArray)
+    //TODO filter if province !== settlemend return the first closest element + Elin Pelin case
+    .map((item) => {
+      return item.point_y + "," + item.point_x;
+    });
   //USESTATE CHANGE CONSTANTS
 
   const provinceChange = (event) => {
     setMun();
     setSettlement();
-    setArray();
+    // setArray();
     setEkatte();
     setFindGeo();
     setProvince(event.target.value);
+    setHaskArray();
   };
 
   const munChange = (event) => {
     setMun(event.target.value);
     setSettlement();
-    setArray();
+    // setArray();
     setEkatte();
     setFindGeo();
     findGeoCondition();
+    setHaskArray();
   };
 
   const settlementChange = (event) => {
     setSettlement(event.target.value);
 
-    setArray();
+    // setArray();
     setEkatte();
     setFindGeo();
     findGeoCondition();
+    setHaskArray();
   };
 
-  const arrayChange = (event) => {
-    setArray(event.target.value);
+  // const arrayChange = (event) => {
+  //   setArray(event.target.value);
 
-    setEkatte();
-    setFindGeo();
-    findGeoCondition();
-  };
+  //   setEkatte();
+  //   setFindGeo();
+  //   findGeoCondition();
+  // };
 
   const ekatteChange = (event) => {
     setEkatte(event.target.value);
+    setFindGeo();
+    findGeoCondition();
+    setHaskArray();
+  };
+
+  const haskArrayChange = (event) => {
+    setHaskArray(event.target.value);
     setFindGeo();
     findGeoCondition();
   };
@@ -284,14 +302,14 @@ const Step2 = () => {
                 className={styles.selectBox}
                 labelId=""
                 id=""
-                value={array}
-                onChange={arrayChange}
+                value={haskArray}
+                onChange={haskArrayChange}
               >
                 {/* Iterate all arrays from  haskovo_arrays.json */}
                 {haskovo_arrays.map((item, key) => {
                   return (
                     <MenuItem key={key} value={item.masiv}>
-                      {item}
+                      {item.masiv}
                     </MenuItem>
                   );
                 })}
@@ -322,6 +340,11 @@ const Step2 = () => {
       )}
       {findGeo ? (
         <Typography> The current place coordinates are: {findGeo}</Typography>
+      ) : (
+        ""
+      )}
+      {haskArray ? (
+        <Typography> Haskovo array location: {haskMasiviGeo}</Typography>
       ) : (
         ""
       )}
