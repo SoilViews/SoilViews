@@ -17,7 +17,6 @@ import "../../leaflet.filelayer";
 import { connect } from "react-redux";
 import { saveData } from "../../store/actions/authActions";
 import { saveAs } from "file-saver";
-// import HorizontalLinearStepper from "../Wizard/HorizontalLinearStepper";
 import "../dashboard/GeojsonLayer.css";
 import ReactLeafletSearch from "react-leaflet-search";
 import "./Map.css";
@@ -32,17 +31,16 @@ import { Typography } from "@material-ui/core";
 import { withTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import LockIcon from "@material-ui/icons/Lock";
-import AllLayers from "./AllLayers"
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import AllLayers from "./AllLayers";
+import "./filelayer.js";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 // import CustomWMSLayer from "./CustomWMSLayer";
 import styles from "./Dashboard.module.css";
 import Legend from "./Legend";
+import KmlUpload from "./KmlUpload";
 import "../dashboard/styles.css";
 
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
-// import JSZip from 'jszip'
-// import {  getFirestore } from 'redux-firestore'
-// import sophia_postcodes from '../Files/rpu_sofia.geojson'
 
 //Hardcoded coordinates of polygons
 const polygon = [
@@ -174,65 +172,45 @@ export class Dashboard extends React.Component {
 
   // Function to send data to Blitline
   sendHttpPostToBlitline(job_data) {
-    var http = require('http');
+    var http = require("http");
 
     var options = {
-      host: 'api.blitline.com',
+      host: "api.blitline.com",
       port: 80,
       method: "POST",
-      path: '/job'
+      path: "/job",
     };
 
-    var req = http.request(options, function (res) {
-      res.on("data", function (chunk) {
-        console.log("Data=" + chunk);
+    var req = http
+      .request(options, function (res) {
+        res.on("data", function (chunk) {
+          console.log("Data=" + chunk);
+        });
+      })
+      .on("error", function (e) {
+        console.log("Got error: " + e.message);
       });
-    }).on('error', function (e) {
-      console.log("Got error: " + e.message);
-    });
 
     req.write("json=" + JSON.stringify(job_data));
     req.end();
   }
 
-
   processHardcodedImageUrl() {
     var job_data = {
-      "application_id": "8k9BXHJtK_sKYGltk_Fiobw",
-      "src": "https://cdn3.iconfinder.com/data/icons/basicolor-arrows-checks/24/149_check_ok-512.png",
-      "functions": [
+      application_id: "8k9BXHJtK_sKYGltk_Fiobw",
+      src:
+        "https://cdn3.iconfinder.com/data/icons/basicolor-arrows-checks/24/149_check_ok-512.png",
+      functions: [
         {
-          "name": "sketch",
-          "save": { "image_identifier": "MY_CLIENT_ID" }
-        }]
+          name: "sketch",
+          save: { image_identifier: "MY_CLIENT_ID" },
+        },
+      ],
     };
     this.sendHttpPostToBlitline(job_data);
   }
 
-  // downloadImage() {
-  //   var fs = require('fs'),
-  //     request = require('request');
-
-  //   var download = function (uri, filename, callback) {
-  //     request.head(uri, function (err, res, body) {
-  //       console.log('content-type:', res.headers['content-type']);
-
-
-  //       request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-  //     });
-  //   };
-
-  //   download('https://www.google.com/images/srpr/logo3w.png', 'google.png', function () {
-  //     console.log('done');
-  //   });
-
-  // }
-
-
-  componentDidMount() {
-    // if you want to test the image processing uncomment this code
-    // this.processHardcodedImageUrl() 
-  }
+  componentDidMount() {}
 
   //same for polygon
   onEachFeaturePoint(feature, layer) {
@@ -275,8 +253,8 @@ export class Dashboard extends React.Component {
   };
 
   moveTo = () => {
-    this.setState({ coordinatesCenter: [42.5035355,24.1737867]})
-  }
+    this.setState({ coordinatesCenter: [42.5035355, 24.1737867] });
+  };
   render() {
     //Here we shorten the area and the coordinated definition
     const { viewMap } = this.props;
@@ -286,7 +264,7 @@ export class Dashboard extends React.Component {
       strings: {
         title: "Your location ",
       },
-      onActivate: () => { }, // callback before engine starts retrieving locations
+      onActivate: () => {}, // callback before engine starts retrieving locations
     };
     const position = this.state.coordinatesCenter;
     const { profile } = this.props;
@@ -358,8 +336,9 @@ export class Dashboard extends React.Component {
               attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
               url="http://{s}.tile.osm.org/{z}/{x}/{y}.png"
               layers="NDVI"
-            // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
+              // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
             />
+            <KmlUpload />
             <Legend />
             <Marker position={position}>
               <Popup className="request-popup">
@@ -380,7 +359,7 @@ export class Dashboard extends React.Component {
               <GeoJSON
                 data={points}
                 onEachFeature={this.onEachFeaturePoint.bind(this)}
-              // pointToLayer={this.pointToLayer.bind(this)}
+                // pointToLayer={this.pointToLayer.bind(this)}
               />
             )}
             <FeatureGroup>
@@ -413,24 +392,14 @@ export class Dashboard extends React.Component {
               onEachFeature={this.onEachFeature}
             />
           </Map>
-          {/* <button
-            className="waves-effect waves-light btn"
-            onClick={this.onGeojsonToggleButton}
-          >
-            Парцел 1 --> показва всички маркери от json файл
-          </button>
-          <br />
-          <button
-            className="waves-effect waves-light btn"
-            onClick={() => this.onButtonClick([41.9425557, 26.41389781])}
-          >
-            Парцел 2--> сочи към конкретен маркер
-          </button>
-          <br /> */}
           <Typography>
-            Click on the <LocationOnIcon className={styles.centered}></LocationOnIcon>
+            Click on the{" "}
+            <LocationOnIcon className={styles.centered}></LocationOnIcon>
             icon to use your current location.
-           <Typography variant="caption" > Device location must be enabled</Typography>
+            <Typography variant="caption">
+              {" "}
+              Device location must be enabled
+            </Typography>
           </Typography>
 
           <div className={styles.whiteSpace15}>
@@ -439,7 +408,7 @@ export class Dashboard extends React.Component {
               onClick={this.saveToFile}
             >
               Download drawed shape in kml File
-          </button>
+            </button>
             <br />
             {/* uncoment to see image processing job
             <button
@@ -452,13 +421,17 @@ export class Dashboard extends React.Component {
             <button
               className="waves-effect waves-light btn"
               onClick={this.resetMap}
-            >Clear map</button>
+            >
+              Clear map
+            </button>
             <button
               className="waves-effect waves-light btn"
               onClick={this.moveTo}
-            >Move to another location</button>
+            >
+              Move to another location
+            </button>
           </div>
-        </div >
+        </div>
       );
     } else {
       return (
