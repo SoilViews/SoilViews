@@ -6,7 +6,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  Button,
 } from "@material-ui/core";
 
 import styles from "./Step2.module.css";
@@ -69,11 +68,13 @@ const Step2 = () => {
     // setArray();
     setEkatte();
     setFindGeo();
+    findGeoCondition();
     setProvince(event.target.value);
     setHaskArray();
   };
 
   const munChange = (event) => {
+    setFindGeo();
     setMun(event.target.value);
     setSettlement();
     // setArray();
@@ -213,6 +214,7 @@ const Step2 = () => {
               // onBlur={findGeoCondition}
             >
               {/* Iterate unique provinces in the select menu */}
+              <MenuItem disabled>{"Област"}</MenuItem>
               {uniqueProvince.map((item, key) => {
                 return (
                   <MenuItem key={key} value={item}>
@@ -236,6 +238,7 @@ const Step2 = () => {
               onChange={munChange}
             >
               {/* Mapping the reduced list of Municipalities */}
+              <MenuItem disabled>{"Община"}</MenuItem>
               {uniqueMun.map((item, key) => {
                 return (
                   <MenuItem key={key} value={item}>
@@ -259,6 +262,7 @@ const Step2 = () => {
               onChange={settlementChange}
             >
               {/* Mapping the reduced list of Municipalities */}
+              <MenuItem disabled>{"Населено място"}</MenuItem>
               {uniqueSettlement.map((item, key) => {
                 return (
                   <MenuItem key={key} value={item}>
@@ -283,6 +287,7 @@ const Step2 = () => {
               defaultValue={"ekatte"}
             >
               {/* Mapping the reduced list of Municipalities */}
+              <MenuItem disabled>{"ЕКАТТЕ"}</MenuItem>
               {filterEkatte.map((item, key) => {
                 return (
                   <MenuItem key={key} value={item}>
@@ -306,6 +311,7 @@ const Step2 = () => {
                 onChange={haskArrayChange}
               >
                 {/* Iterate all arrays from  haskovo_arrays.json */}
+                <MenuItem disabled>{"Масив"}</MenuItem>
                 {haskovo_arrays.map((item, key) => {
                   return (
                     <MenuItem key={key} value={item.masiv}>
@@ -331,13 +337,13 @@ const Step2 = () => {
       ) : (
         ""
       )} */}
-      {province ? (
+      {/* {province ? (
         <Button variant="contained" color="primary" onClick={findGeoCondition}>
           Find
         </Button>
       ) : (
         ""
-      )}
+      )} */}
       {findGeo ? (
         <Typography> The current place coordinates are: {findGeo}</Typography>
       ) : (
