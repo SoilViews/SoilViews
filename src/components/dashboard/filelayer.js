@@ -1,11 +1,9 @@
 import L from "leaflet";
 import toGeoJSON from "@mapbox/togeojson";
-
 var FileLoader = L.Class.extend({
   includes: L.Mixin.Events,
   options: {
     layerOptions: {},
-    fileSizeLimit: 1024,
   },
 
   initialize: function (map, options) {
@@ -20,69 +18,32 @@ var FileLoader = L.Class.extend({
   },
 
   load: function (file /* File */) {
-    // Check file size
-    var fileSize = (file.size / 1024).toFixed(4);
-    if (fileSize > this.options.fileSizeLimit) {
-      this.fire("data:error", {
-        error: new Error(
-          "File size exceeds limit (" +
-            fileSize +
-            " > " +
-            this.options.fileSizeLimit +
-            "kb)"
-        ),
-      });
-      return;
-    }
-
     // Check file extension
     var ext = file.name.split(".").pop(),
       parser = this._parsers[ext];
     if (!parser) {
-      this.fire("data:error", {
-        error: new Error(
-          "Unsupported file type " + file.type + "(" + ext + ")"
-        ),
-      });
+      window.alert("Unsupported file type " + file.type + "(" + ext + ")");
       return;
     }
+    // Read selected file using HTML5 File API
     var reader = new FileReader();
     reader.onload = L.Util.bind(function (e) {
-      try {
-        this.fire("data:loading", { filename: file.name, format: ext });
-        var layer = parser.call(this, e.target.result, ext);
-        this.fire("data:loaded", {
-          layer: layer,
-          filename: file.name,
-          format: ext,
-        });
-      } catch (err) {
-        this.fire("data:error", { error: err });
-      }
+      this.fire("data:loading", { filename: file.name, format: ext });
+      var layer = parser.call(this, e.target.result, ext);
+      this.fire("data:loaded", {
+        layer: layer,
+        filename: file.name,
+        format: ext,
+      });
     }, this);
     reader.readAsText(file);
-    return reader;
   },
 
   _loadGeoJSON: function (content) {
-    this.options.rawData = content;
     if (typeof content == "string") {
       content = JSON.parse(content);
     }
-
-    //kmlLayer.addData(content)
-    this.options.layer.clearLayers();
-    this.options.layer.addData(content);
-    //var layer = L.geoJson(content, this.options.layerOptions);
-    /*
-        if (layer.getLayers().length === 0) {
-            throw new Error('GeoJSON has no valid layers.');
-        }
-        if (this.options.addToMap) {
-            layer.addTo(this._map);
-        }
-        return layer;
-        */
+    return L.geoJson(content, this.options.layerOptions).addTo(this._map);
   },
 
   _convertToGeoJSON: function (content, format) {
@@ -104,10 +65,6 @@ L.Control.FileLayerLoad = L.Control.extend({
     position: "topleft",
     fitBounds: true,
     layerOptions: {},
-    addToMap: true,
-    fileSizeLimit: 1024,
-    layer: null,
-    rawData: null,
   },
 
   initialize: function (options) {
@@ -116,7 +73,9 @@ L.Control.FileLayerLoad = L.Control.extend({
   },
 
   onAdd: function (map) {
-    this.loader = new FileLoader(map, this.options);
+    this.loader = new FileLoader(map, {
+      layerOptions: this.options.layerOptions,
+    });
 
     this.loader.on(
       "data:loaded",
@@ -124,7 +83,7 @@ L.Control.FileLayerLoad = L.Control.extend({
         // Fit bounds after loading
         if (this.options.fitBounds) {
           window.setTimeout(function () {
-            // map.fitBounds(e.layer.getBounds());
+            map.fitBounds(e.layer.getBounds()).zoomOut();
           }, 500);
         }
       },
@@ -173,6 +132,21 @@ L.Control.FileLayerLoad = L.Control.extend({
   },
 
   _initContainer: function () {
+    // Create an invisible file input
+    var fileInput = L.DomUtil.create("input", "hidden", container);
+    fileInput.type = "file";
+    fileInput.accept = ".gpx,.kml,.geojson";
+    fileInput.style.display = "none";
+    // Load on file change
+    var fileLoader = this.loader;
+    fileInput.addEventListener(
+      "change",
+      function (e) {
+        fileLoader.load(this.files[0]);
+      },
+      false
+    );
+
     // Create a button, and bind click on hidden file input
     var zoomName = "leaflet-control-filelayer leaflet-control-zoom",
       barName = "leaflet-bar",
@@ -183,32 +157,15 @@ L.Control.FileLayerLoad = L.Control.extend({
     link.href = "#";
     link.title = L.Control.FileLayerLoad.TITLE;
 
-    // Create an invisible file input
-    var fileInput = L.DomUtil.create("input", "hidden", container);
-    fileInput.type = "file";
-    if (!this.options.formats) {
-      fileInput.accept = ".gpx,.kml,.geojson";
-    } else {
-      fileInput.accept = this.options.formats.join(",");
-    }
-    fileInput.style.display = "none";
-    // Load on file change
-    var fileLoader = this.loader;
-    fileInput.addEventListener(
-      "change",
-      function (e) {
-        fileLoader.load(this.files[0]);
-        // reset so that the user can upload the same file again if they want to
-        this.value = "";
-      },
-      false
-    );
-
-    L.DomEvent.disableClickPropagation(link);
-    L.DomEvent.on(link, "click", function (e) {
-      fileInput.click();
-      e.preventDefault();
-    });
+    var stop = L.DomEvent.stopPropagation;
+    L.DomEvent.on(link, "click", stop)
+      .on(link, "mousedown", stop)
+      .on(link, "dblclick", stop)
+      .on(link, "click", L.DomEvent.preventDefault)
+      .on(link, "click", function (e) {
+        fileInput.click();
+        e.preventDefault();
+      });
     return container;
   },
 });
