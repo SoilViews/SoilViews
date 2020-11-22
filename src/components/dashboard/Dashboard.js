@@ -36,7 +36,7 @@ import "./filelayer.js";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 // import CustomWMSLayer from "./CustomWMSLayer";
 import styles from "./Dashboard.module.css";
-import Legend from "./Legend";
+// import Legend from "./Legend";
 import KmlUpload from "./KmlUpload";
 import "../dashboard/styles.css";
 
@@ -339,7 +339,7 @@ export class Dashboard extends React.Component {
               // baseUrl="https://services.sentinel-hub.com/ogc/wms/bb1c8a2f-5b11-42bb-8ce4-dbf7f5300663"
             />
             <KmlUpload />
-            <Legend />
+            {/* <Legend /> */}
             <Marker position={position}>
               <Popup className="request-popup">
                 <div style={popupContent}>
