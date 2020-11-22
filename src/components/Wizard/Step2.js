@@ -204,7 +204,7 @@ const Step2 = () => {
         {/* PROVINCE */}
         <Grid item xs={12} sm={2}>
           <FormControl>
-            <InputLabel className={styles.center}>Област</InputLabel>
+            <InputLabel className={styles.center}>Region</InputLabel>
             <Select
               className={styles.selectBox}
               labelId=""
@@ -214,7 +214,7 @@ const Step2 = () => {
               // onBlur={findGeoCondition}
             >
               {/* Iterate unique provinces in the select menu */}
-              <MenuItem disabled>{"Област"}</MenuItem>
+              <MenuItem disabled>{"Region"}</MenuItem>
               {uniqueProvince.map((item, key) => {
                 return (
                   <MenuItem key={key} value={item}>
@@ -228,7 +228,7 @@ const Step2 = () => {
         {/* MUNICIPALITY */}
         <Grid item xs={12} sm={2}>
           <FormControl>
-            <InputLabel>Община</InputLabel>
+            <InputLabel>Municipality</InputLabel>
             <Select
               disabled={!province} //Disable until province state is fulfilled
               className={styles.selectBox}
@@ -238,7 +238,7 @@ const Step2 = () => {
               onChange={munChange}
             >
               {/* Mapping the reduced list of Municipalities */}
-              <MenuItem disabled>{"Община"}</MenuItem>
+              <MenuItem disabled>{"Municipality"}</MenuItem>
               {uniqueMun.map((item, key) => {
                 return (
                   <MenuItem key={key} value={item}>
@@ -252,7 +252,7 @@ const Step2 = () => {
         {/* SETTLEMENT */}
         <Grid item xs={12} sm={2}>
           <FormControl>
-            <InputLabel>Населено място</InputLabel>
+            <InputLabel>Settlement</InputLabel>
             <Select
               disabled={!mun} //Disable until province state is selected
               className={styles.settlementBox}
@@ -262,7 +262,7 @@ const Step2 = () => {
               onChange={settlementChange}
             >
               {/* Mapping the reduced list of Municipalities */}
-              <MenuItem disabled>{"Населено място"}</MenuItem>
+              <MenuItem disabled>{"Settlement"}</MenuItem>
               {uniqueSettlement.map((item, key) => {
                 return (
                   <MenuItem key={key} value={item}>
@@ -302,7 +302,7 @@ const Step2 = () => {
         {province === "Хасково" ? (
           <Grid item xs={12} sm={2}>
             <FormControl>
-              <InputLabel>Масив</InputLabel>
+              <InputLabel>Array</InputLabel>
               <Select
                 className={styles.selectBox}
                 labelId=""
@@ -311,7 +311,7 @@ const Step2 = () => {
                 onChange={haskArrayChange}
               >
                 {/* Iterate all arrays from  haskovo_arrays.json */}
-                <MenuItem disabled>{"Масив"}</MenuItem>
+                <MenuItem disabled>{"Array"}</MenuItem>
                 {haskovo_arrays.map((item, key) => {
                   return (
                     <MenuItem key={key} value={item.masiv}>
