@@ -1,5 +1,9 @@
 import L from "leaflet";
 import toGeoJSON from "@mapbox/togeojson";
+var zoomName = "leaflet-control-filelayer leaflet-control-zoom";
+var barName = "leaflet-bar";
+var partName = barName + "-part";
+var container = L.DomUtil.create("div", zoomName + " " + barName);
 var FileLoader = L.Class.extend({
   includes: L.Mixin.Events,
   options: {
@@ -14,6 +18,7 @@ var FileLoader = L.Class.extend({
       geojson: this._loadGeoJSON,
       gpx: this._convertToGeoJSON,
       kml: this._convertToGeoJSON,
+      kmz: this._convertToGeoJSON,
     };
   },
 
@@ -116,12 +121,11 @@ L.Control.FileLayerLoad = L.Control.extend({
         e.stopPropagation();
         e.preventDefault();
 
-        var files = Array.prototype.slice.apply(e.dataTransfer.files),
-          i = files.length;
+        var files = Array.prototype.slice.apply(e.dataTransfer.files);
         setTimeout(function () {
           fileLoader.load(files.shift());
           if (files.length > 0) {
-            setTimeout(arguments.callee, 25);
+            setTimeout(setTimeout.caller, 25);
           }
         }, 25);
         map.scrollWheelZoom.enable();
@@ -135,7 +139,7 @@ L.Control.FileLayerLoad = L.Control.extend({
     // Create an invisible file input
     var fileInput = L.DomUtil.create("input", "hidden", container);
     fileInput.type = "file";
-    fileInput.accept = ".gpx,.kml,.geojson";
+    fileInput.accept = ".gpx,.kml,.geojson,.kmz";
     fileInput.style.display = "none";
     // Load on file change
     var fileLoader = this.loader;
@@ -148,10 +152,6 @@ L.Control.FileLayerLoad = L.Control.extend({
     );
 
     // Create a button, and bind click on hidden file input
-    var zoomName = "leaflet-control-filelayer leaflet-control-zoom",
-      barName = "leaflet-bar",
-      partName = barName + "-part",
-      container = L.DomUtil.create("div", zoomName + " " + barName);
     var link = L.DomUtil.create("a", zoomName + "-in " + partName, container);
     link.innerHTML = L.Control.FileLayerLoad.LABEL;
     link.href = "#";
