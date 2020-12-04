@@ -1,5 +1,13 @@
 import React from "react";
 import { TileLayer, WMSTileLayer, LayersControl } from "react-leaflet";
+import L from "leaflet";
+
+const polygon = [
+  [42.696295, 23.303643],
+  [42.699295, 23.303643],
+  [42.699295, 23.313643],
+  [42.679295, 23.313643],
+];
 
 const AllLayers = () => {
   return (
@@ -67,15 +75,6 @@ const AllLayers = () => {
           tiled="true"
         />
       </LayersControl.BaseLayer>
-      {/* <LayersControl.BaseLayer name="OSM HOT">
-        <WMSTileLayer
-          layers={["BGtopoVJ-raster-v3.00"]}
-          url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
-          format="image/vnd.jpeg-png"
-          transparent="true"
-          tiled="true"
-        />
-      </LayersControl.BaseLayer> */}
       <LayersControl.BaseLayer name="CYCLE MAP">
         <WMSTileLayer
           layers={["BGtopoVJ-raster-v3.00"]}
@@ -93,8 +92,25 @@ const AllLayers = () => {
           layers="NDVI"
           format="image/jpeg"
           attribution='&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>'
-          url="https://services.sentinel-hub.com/ogc/wms/5fbea5fa-d1e4-4d92-b262-d4fc2c853f81"
-          urlProcessingApi="https://services.sentinel-hub.com/ogc/wms/aeafc74a-c894-440b-a85b-964c7b26e471"
+          url="https://services.sentinel-hub.com/ogc/wms/0eb749da-a491-48e4-80e5-51913fc6af5d"
+          urlProcessingApi="https://services.sentinel-hub.com/ogc/wms/0eb749da-a491-48e4-80e5-51913fc6af5d"
+          maxcc="20"
+          minZoom="6"
+          maxZoom="16"
+          preset="NDVI"
+          time="2020-04-01/2020-10-08"
+        />
+      </LayersControl.BaseLayer>
+
+      <LayersControl.BaseLayer name="Test layer under drawed polygon">
+        <WMSTileLayer
+          version="1.3.0"
+          layers="NDVI"
+          format="image/jpeg"
+          crs={L.CRS.EPSG4326}
+          attribution='&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>'
+          url="https://services.sentinel-hub.com/ogc/wms/0eb749da-a491-48e4-80e5-51913fc6af5d"
+          geometry="POLYGON((42.696295 23.303643,42.699295 23.303643,42.699295 23.313643, 42.679295 23.313643,42.696295 23.303643))"
           maxcc="20"
           minZoom="6"
           maxZoom="16"
@@ -110,7 +126,7 @@ const AllLayers = () => {
           format="image/jpeg"
           transparent="true"
           tiled="true"
-          url="http://services.sentinel-hub.com/ogc/wms/5fbea5fa-d1e4-4d92-b262-d4fc2c853f81?REQUEST=GetMap&BBOX=3238005,5039853,3244050,5045897&LAYERS=TRUE_COLOR&MAXCC=20&WIDTH=320&HEIGHT=320&FORMAT=image/jpeg&TIME=2018-03-29/2018-05-29"
+          url="http://services.sentinel-hub.com/ogc/wms/0eb749da-a491-48e4-80e5-51913fc6af5d?REQUEST=GetMap&BBOX=3238005,5039853,3244050,5045897&LAYERS=TRUE_COLOR&MAXCC=20&WIDTH=320&HEIGHT=320&FORMAT=image/jpeg&TIME=2018-03-29/2018-05-29"
         />
       </LayersControl.BaseLayer>
       <LayersControl.BaseLayer name="Test Request to Sentinel Hub API returning image of polygon">
@@ -120,7 +136,7 @@ const AllLayers = () => {
           layers="MOISTURE_INDEX"
           format="image/jpeg"
           attribution='&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>'
-          url="https://services.sentinel-hub.com/ogc/wms/5fbea5fa-d1e4-4d92-b262-d4fc2c853f81"
+          url="https://services.sentinel-hub.com/ogc/wms/aeafc74a-c894-440b-a85b-964c7b26e471"
           urlProcessingApi="https://services.sentinel-hub.com/ogc/wms/aeafc74a-c894-440b-a85b-964c7b26e471"
           maxcc="20"
           minZoom="6"
