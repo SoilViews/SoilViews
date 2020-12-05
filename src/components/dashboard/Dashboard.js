@@ -115,7 +115,7 @@ export class Dashboard extends React.Component {
     console.log(formattedDate);
     const filename = formattedDate + "_" + this.props.profile.firstName;
     console.log(filename);
-    storage.ref(`files/${filename}.kml`).put(blob);
+    storage.ref(`KmlFiles/${filename}.kml`).put(blob);
 
     //Save arean and coordinates
 
