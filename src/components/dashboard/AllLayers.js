@@ -2,11 +2,12 @@ import React from "react";
 import { TileLayer, WMSTileLayer, LayersControl } from "react-leaflet";
 import L from "leaflet";
 
-const polygon = [
+const polygonCordinates = [
   [42.696295, 23.303643],
   [42.699295, 23.303643],
   [42.699295, 23.313643],
   [42.679295, 23.313643],
+  [42.696295, 23.303643],
 ];
 
 const AllLayers = () => {
@@ -110,7 +111,9 @@ const AllLayers = () => {
           crs={L.CRS.EPSG4326}
           attribution='&copy; <a href="http://www.sentinel-hub.com/" target="_blank">Sentinel Hub</a>'
           url="https://services.sentinel-hub.com/ogc/wms/0eb749da-a491-48e4-80e5-51913fc6af5d"
-          geometry="POLYGON((42.696295 23.303643,42.699295 23.303643,42.699295 23.313643, 42.679295 23.313643,42.696295 23.303643))"
+          geometry={`POLYGON((${polygonCordinates
+            .map((polygonCordinates) => polygonCordinates.join(" "))
+            .join(", ")}))`}
           maxcc="20"
           minZoom="6"
           maxZoom="16"

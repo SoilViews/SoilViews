@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import firebase from "../../firebase";
 import { Link } from "react-router-dom";
 import { storage } from "../../firebase/index";
+import { Button } from "@material-ui/core";
 
 class EditUser extends Component {
   date = new Date().getDate();
@@ -117,6 +118,7 @@ class EditUser extends Component {
 
     return errors;
   };
+
   handleUpload = () => {
     const { image } = this.state;
     if (image == null) {
@@ -275,42 +277,39 @@ class EditUser extends Component {
               </button>
             </form>
           </div>
+          <br />
           <div className="center">
             <br />
-            <h2 className="green-text">Soilview File Uploader</h2>
+            <h2 className="green-text">SoilViews File Uploader</h2>
+
             <br />
             <br />
-            <div className="file-field input-field">
-              <div className="btn">
-                <span>File</span>
-                <input type="file" onChange={this.handleChange} />
-              </div>
-              <div className="file-path-wrapper">
-                <input
-                  className="file-path validate"
-                  onChange={() => {}}
-                  type="text"
-                  value={this.state.imageName}
-                />
-              </div>
-            </div>
-            <button
-              type="submit"
-              onClick={this.handleUpload}
-              className="waves-effect waves-light btn"
-            >
-              {" "}
-              Upload{" "}
-            </button>
+            <Button variant="contained" component="label">
+              Select a file you want to upload
+              <input hidden type="file" onChange={this.handleChange} />
+            </Button>
+            <br />
             <br />
             <br />
             <img
-              src={this.state.imageurl || "https://via.placeholder.com/400x300"}
-              alt="Uploaded Images"
+              src={this.state.imageurl || "http://via.placeholder.com/300"}
+              alt="firebaseimg"
               height="300"
               width="400"
             />
+            <br />
+            <progress
+              className="center"
+              value={this.state.progress}
+              max="100"
+            />
           </div>
+          <button
+            className="waves-effect waves-light btn"
+            onClick={this.handleUpload}
+          >
+            Upload
+          </button>
         </div>
         <div className={`${this.errorClass()} error`}>
           {errors.map((error) => (
