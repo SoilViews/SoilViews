@@ -8,6 +8,7 @@ import {
   Marker,
   Popup,
 } from "react-leaflet";
+import Metrics from "./Metrics";
 import "leaflet/dist/leaflet.css";
 import { EditControl } from "react-leaflet-draw";
 import london_postcodes from "../Files/london_postcodes.json";
@@ -292,6 +293,7 @@ export class Dashboard extends React.Component {
               <span className="fa fa-map-marker"></span>
             </LocateControl>
             <AllLayers />
+            <Metrics />
             <ReactLeafletSearch />
             <div className="geojson-toggle">
               <label>Show Polygons </label>
