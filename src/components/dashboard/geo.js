@@ -75,3 +75,34 @@ export function serializeShapes(features) {
 // Sum of the outer-ring geodesic areas (m²) of Polygon features.
 export const totalGeodesicArea = (features) =>
   features.reduce((sum, f) => sum + geodesicArea(f.geometry?.coordinates?.[0] ?? []), 0);
+
+const isPoint = (p) => Array.isArray(p) && p.length >= 2 && Number.isFinite(p[0]) && Number.isFinite(p[1]);
+const toPoint = (p) => (isPoint(p) ? [p[0], p[1]] : Number.isFinite(p?.lng) && Number.isFinite(p?.lat) ? [p.lng, p.lat] : null);
+
+// Legacy orders stored the first ring spread as "0","1",... keys, each a [lng, lat] pair
+// (see polygonsCoordinates / handleSubmit in the Wizard).
+function legacyFeatures(order) {
+  const pts = [];
+  for (let i = 0; order[i] !== undefined; i++) {
+    const p = toPoint(order[i]);
+    if (!p) return [];
+    pts.push(p);
+  }
+  if (pts.length < 3) return [];
+  const [f, l] = [pts[0], pts[pts.length - 1]];
+  if (f[0] !== l[0] || f[1] !== l[1]) pts.push([...f]);
+  return [{ type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [pts] } }];
+}
+
+// Polygon features of a stored order: `shapes` JSON string, else the legacy numeric ring keys. [] on bad data.
+export function orderToFeatures(order) {
+  if (!order) return [];
+  if (typeof order.shapes === "string") {
+    try {
+      return toPolygonFeatures(JSON.parse(order.shapes));
+    } catch {
+      return [];
+    }
+  }
+  return legacyFeatures(order);
+}
