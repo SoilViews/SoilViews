@@ -245,5 +245,10 @@
   "profile.fieldsEmpty": "You have no saved fields yet.",
   "map.savedField": "Saved field",
   "map.orderDate": "Order date",
-  "map.orderStatus": "Status"
+  "map.orderStatus": "Status",
+  "map.shape": "Shape",
+  "map.shapes": "Drawn / uploaded shapes",
+  "map.savedFields": "Saved fields",
+  "map.selectAll": "Select all",
+  "map.downloadKmlCount": "Download KML ({{count}})"
 }
