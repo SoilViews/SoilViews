@@ -44,6 +44,55 @@ function Groups({ groups }) {
   return null;
 }
 
+// Loads `features` ONCE (first non-empty value; later prop changes and StrictMode re-runs are ignored) into the
+// editable group so leaflet-draw can reshape/delete them, then reports via onLoaded and fits the map to them.
+function InitialFeatures({ features, group, color, onLoaded, fitRef }) {
+  const map = useMap();
+  const done = useRef(false);
+  useEffect(() => {
+    if (done.current || !features?.length) return;
+    done.current = true;
+    L.geoJSON(features, { style: () => ({ color }) }).eachLayer((layer) => group.addLayer(layer));
+    const fit = () => {
+      const bounds = group.getBounds();
+      if (bounds.isValid()) map.fitBounds(bounds, { padding: [30, 30] });
+    };
+    fit();
+    fitRef.current = fit;
+    onLoaded();
+  }, [map, features, group, color, onLoaded, fitRef]);
+  return null;
+}
+
+// Re-measures the map when its container is resized (e.g. inside a Dialog that has just opened) and, until the
+// user interacts with the map, re-fits to the initial features.
+function SizeWatcher({ fitRef }) {
+  const map = useMap();
+  useEffect(() => {
+    const el = map.getContainer();
+    let touched = false;
+    const touch = () => {
+      touched = true;
+    };
+    el.addEventListener("pointerdown", touch);
+    el.addEventListener("wheel", touch);
+    let ro;
+    if (typeof ResizeObserver !== "undefined") {
+      ro = new ResizeObserver(() => {
+        map.invalidateSize();
+        if (!touched) fitRef.current?.();
+      });
+      ro.observe(el);
+    }
+    return () => {
+      ro?.disconnect();
+      el.removeEventListener("pointerdown", touch);
+      el.removeEventListener("wheel", touch);
+    };
+  }, [map, fitRef]);
+  return null;
+}
+
 function FlyTo({ target, zoom }) {
   const map = useMap();
   useEffect(() => {
@@ -120,6 +169,7 @@ function SavedShapes({ shapes, color, hasDrawn, t }) {
  * Full-height map with draw, KML/GeoJSON upload, search, locate, fullscreen and layer switching.
  * onPolygonsChange(features[]) receives every Polygon feature currently on the map (drawn + uploaded)
  * `savedShapes` ([{ feature, createdAt, status }]) are drawn read-only and are never reported to onPolygonsChange.
+ * `initialFeatures` (Polygon features) are loaded once into the editable drawn group and reported like drawn shapes.
  * after each create / edit / delete / upload / clear.
  */
 export default function MapView({
@@ -129,6 +179,7 @@ export default function MapView({
   center = DEFAULT_CENTER,
   zoom = 13,
   savedShapes = [],
+  initialFeatures = null,
 }) {
   const { t } = useTranslation();
   const theme = useTheme();
@@ -139,6 +190,7 @@ export default function MapView({
   const [selected, setSelected] = useState(() => new Set());
   const [hoverId, setHoverId] = useState(null);
   const seen = useRef(new Set());
+  const fitRef = useRef(null);
   const numbers = useRef({ byId: new Map(), next: 1 });
   const count = shapes.length;
 
@@ -251,6 +303,8 @@ export default function MapView({
         />
         <AllLayers />
         <Groups groups={groups} />
+        <InitialFeatures features={initialFeatures} group={drawn} color={theme.palette.primary.main} onLoaded={emit} fitRef={fitRef} />
+        <SizeWatcher fitRef={fitRef} />
         <SavedShapes shapes={savedShapes} color={savedColor} hasDrawn={count > 0} t={t} />
         <Highlight feature={highlighted} color={theme.palette.warning.main} />
         <FlyTo target={flyTo} zoom={13} />

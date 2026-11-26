@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link as RouterLink, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Button from "@mui/material/Button";
@@ -12,8 +12,14 @@ import Checkbox from "@mui/material/Checkbox";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import FormCard from "../common/FormCard";
-import { getOrder, updateOrder } from "../../services/ordersService";
+import { useAuth } from "../../context/AuthContext";
+import { Role } from "../../constants/roles";
+import MapView from "../dashboard/MapView";
+import { orderToFeatures, polygonsArea } from "../dashboard/geo";
+import { getOrder, updateOrder, buildShapeUpdate } from "../../services/ordersService";
 import { CROPS } from "../Wizard/crops";
 import { STATUS_OPTIONS, getStatusValue, toList } from "./orderStatus";
 
@@ -21,7 +27,15 @@ export default function EditOrder() {
   const { t } = useTranslation();
   const { id } = useParams();
   const navigate = useNavigate();
+  const { user, profile } = useAuth();
   const [state, setState] = useState({ loading: true, found: false, crops: [], status: "Submitted" });
+  const [order, setOrder] = useState(null);
+  const [features, setFeatures] = useState([]);
+  const [noShape, setNoShape] = useState(false);
+  // Loaded once with the order; MapView ignores later identity changes anyway.
+  const initialFeatures = useMemo(() => (order ? orderToFeatures(order) : []), [order]);
+  const canEditShape =
+    profile?.role === Role.Admin || (Boolean(order) && order.userId === user?.uid && getStatusValue(order) === "Submitted");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(false);
 
@@ -30,6 +44,8 @@ export default function EditOrder() {
     getOrder(id)
       .then((order) => {
         if (cancelled) return;
+        setOrder(order);
+        setFeatures(order ? orderToFeatures(order) : []);
         setState(
           order
             ? { loading: false, found: true, crops: toList(order), status: getStatusValue(order) }
@@ -50,11 +66,20 @@ export default function EditOrder() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (canEditShape && !features.length) {
+      setNoShape(true);
+      return;
+    }
+    setNoShape(false);
     setSaving(true);
     setError(false);
     try {
       // Same shape createOrder writes: status is a one-element [{value,label}] array.
-      await updateOrder(id, { order: state.crops, status: [{ value: state.status, label: state.status }] });
+      await updateOrder(id, {
+        order: state.crops,
+        status: [{ value: state.status, label: state.status }],
+        ...(canEditShape ? buildShapeUpdate(order, features) : {}),
+      });
       navigate("/MyOrders");
     } catch (err) {
       console.error(err);
@@ -68,7 +93,7 @@ export default function EditOrder() {
   }
 
   return (
-    <FormCard title={t("orders.edit.title")} onSubmit={handleSubmit} maxWidth={520}>
+    <FormCard title={t("orders.edit.title")} onSubmit={handleSubmit} maxWidth={900}>
       <Button component={RouterLink} to="/MyOrders" sx={{ alignSelf: "flex-start" }}>
         {t("orders.edit.back")}
       </Button>
@@ -89,6 +114,28 @@ export default function EditOrder() {
               ))}
             </FormGroup>
           </FormControl>
+          <Box>
+            <FormLabel component="legend">{t("orders.edit.map")}</FormLabel>
+            {!canEditShape && (
+              <Alert severity="info" sx={{ my: 1 }}>
+                {t("orders.edit.readOnly")}
+              </Alert>
+            )}
+            {noShape && (
+              <Alert severity="error" sx={{ my: 1 }}>
+                {t("orders.edit.noShape")}
+              </Alert>
+            )}
+            {/* MapView is absolutely positioned: give it a sized, positioned parent. */}
+            <Box sx={{ position: "relative", height: 420, mt: 1 }}>
+              <MapView editable={canEditShape} initialFeatures={initialFeatures} onPolygonsChange={setFeatures} />
+            </Box>
+            {polygonsArea(features) && (
+              <Typography sx={{ mt: 1 }}>
+                {t("orders.edit.area")}: {polygonsArea(features)}
+              </Typography>
+            )}
+          </Box>
           <TextField
             select
             label={t("orders.edit.status")}

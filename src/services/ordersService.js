@@ -1,8 +1,8 @@
 import {
-  collection, addDoc, doc, getDoc, updateDoc, deleteDoc, onSnapshot, query, where, orderBy,
+  collection, addDoc, doc, getDoc, updateDoc, deleteDoc, onSnapshot, query, where, orderBy, deleteField,
 } from "firebase/firestore";
 import { db } from "../firebase/config";
-import { serializeShapes } from "../components/dashboard/geo";
+import { serializeShapes, polygonsArea, polygonsCoordinates } from "../components/dashboard/geo";
 
 // `shapes` (features or FeatureCollection) is stored as a JSON string.
 // `extra` holds legacy wizard fields (area + first polygon ring spread as "0","1",...).
@@ -29,6 +29,17 @@ export const ordersQuery = ({ uid, isAdmin }) =>
   isAdmin
     ? query(collection(db, "orders"), orderBy("createdAt", "desc"))
     : query(collection(db, "orders"), where("userId", "==", uid));
+
+// Fields to write when an order's shape is edited: `shapes` JSON, `area` (as the Wizard formats it) and the
+// legacy numeric ring keys of the first ring. Numeric keys of a longer old ring are removed with deleteField().
+export function buildShapeUpdate(oldOrder, features) {
+  const ring = polygonsCoordinates(features)[0] ?? [];
+  const update = { shapes: serializeShapes(features), area: polygonsArea(features) ?? "", ...ring };
+  Object.keys(oldOrder ?? {}).forEach((k) => {
+    if (/^\d+$/.test(k) && !(k in update)) update[k] = deleteField();
+  });
+  return update;
+}
 
 export const updateOrder = (id, data) => updateDoc(doc(db, "orders", id), data);
 

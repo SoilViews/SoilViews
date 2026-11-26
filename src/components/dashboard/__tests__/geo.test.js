@@ -21,3 +21,26 @@ it("flattens FeatureCollections/MultiPolygons and drops non-polygons", () => {
   expect(out).toHaveLength(3);
   expect(polygonsCoordinates(out)).toHaveLength(3);
 });
+
+import { orderToFeatures as _orderToFeatures } from "../geo";
+describe("orderToFeatures", () => {
+  const ring = [[23.3, 42.69], [23.31, 42.69], [23.31, 42.7], [23.3, 42.69]];
+  it("parses the shapes JSON string", () => {
+    const shapes = JSON.stringify({ type: "FeatureCollection", features: [
+      { type: "Feature", properties: {}, geometry: { type: "Polygon", coordinates: [ring] } },
+    ] });
+    expect(_orderToFeatures({ shapes })).toHaveLength(1);
+  });
+  it("falls back to legacy numeric ring keys and closes the ring", () => {
+    const f = _orderToFeatures({ 0: ring[0], 1: ring[1], 2: ring[2] });
+    expect(f).toHaveLength(1);
+    expect(f[0].geometry.coordinates[0]).toEqual([...ring]);
+  });
+  it("returns [] for bad data", () => {
+    expect(_orderToFeatures({ shapes: "{nope" })).toEqual([]);
+    expect(_orderToFeatures({ shapes: JSON.stringify({ foo: 1 }) })).toEqual([]);
+    expect(_orderToFeatures({})).toEqual([]);
+    expect(_orderToFeatures({ 0: [1, 2], 1: "x" })).toEqual([]);
+    expect(_orderToFeatures(null)).toEqual([]);
+  });
+});

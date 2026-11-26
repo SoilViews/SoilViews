@@ -31,3 +31,28 @@ it("unmounts without throwing under StrictMode (leaving a map page must not cras
   window.removeEventListener("error", onErr);
   expect(errors).toEqual([]);
 });
+
+const feat = (d = 0) => ({
+  type: "Feature", properties: {},
+  geometry: { type: "Polygon", coordinates: [[[23 + d, 42], [23.01 + d, 42], [23.01 + d, 42.01], [23 + d, 42]]] },
+});
+
+it("loads initialFeatures once (StrictMode safe, ignores later prop changes) and reports them", async () => {
+  const { StrictMode } = await import("react");
+  const cb = vi.fn();
+  const { rerender, container } = render(
+    <StrictMode>
+      <MapView onPolygonsChange={cb} editable initialFeatures={[feat()]} />
+    </StrictMode>
+  );
+  const last = () => cb.mock.calls[cb.mock.calls.length - 1][0];
+  expect(last()).toHaveLength(1);
+  expect(container.querySelectorAll(".leaflet-overlay-pane path")).toHaveLength(1);
+  rerender(
+    <StrictMode>
+      <MapView onPolygonsChange={cb} editable initialFeatures={[feat(1), feat(2)]} />
+    </StrictMode>
+  );
+  expect(last()).toHaveLength(1);
+  expect(container.querySelectorAll(".leaflet-overlay-pane path")).toHaveLength(1);
+});
