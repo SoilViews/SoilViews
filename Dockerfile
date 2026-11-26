@@ -1,18 +1,13 @@
-#base image
-FROM node
-
-# set working directory
-RUN mkdir /usr/src/app
-#copy all files from current directory to docker
-COPY . /usr/src/app
+FROM node:22-alpine
 
 WORKDIR /usr/src/app
 
-# add `/usr/src/app/node_modules/.bin` to $PATH
-ENV PATH /usr/src/app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
+# install dependencies first so they are cached between builds
+COPY package*.json ./
 RUN npm install
 
-# start app
-CMD ["npm", "start"]
+COPY . .
+
+# Vite dev server on port 3000 (see vite.config.js)
+EXPOSE 3000
+CMD ["npm", "run", "dev", "--", "--host"]

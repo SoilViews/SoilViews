@@ -1,0 +1,7 @@
+node_modules
+build
+.git
+.env.local
+sendgrid.env
+src/components/server/node_modules
+functions/node_modules

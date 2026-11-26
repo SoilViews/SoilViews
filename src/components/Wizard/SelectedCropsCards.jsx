@@ -1,35 +1,35 @@
-import React from "react";
-import { Card, CardContent, Typography, Grid } from "@material-ui/core";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import { useTranslation } from "react-i18next";
 
-import styles from "./SelectedCropsCards.module.css";
-
-export const SelectedCropsCards = ({
-  selectedCrops,
-  getArea,
-  getLandCoordinates,
-}) => {
+export const SelectedCropsCards = ({ selectedCrops, area, location }) => {
+  const { t } = useTranslation();
   return (
-    <div>
-      <Typography variant="h5">Please review and submit your order:</Typography>
-      <Typography variant="body">You selected the following crops:</Typography>
-      <Grid container spacing={3} className={styles.selected}>
+    <Stack spacing={2}>
+      <Typography variant="h6" component="h2">
+        {t("wizard.review.title")}
+      </Typography>
+      <Typography variant="body2">{t("wizard.review.crops")}</Typography>
+      <Stack direction="row" useFlexGap flexWrap="wrap" spacing={1}>
         {selectedCrops.map((crop) => (
-          <Grid item component={Card} className={styles.cropCard} key={crop}>
-            <CardContent className={styles.crop}>
-              <Typography>{crop}</Typography>
+          <Card key={crop} variant="outlined" sx={{ bgcolor: "primary.main", color: "primary.contrastText" }}>
+            <CardContent sx={{ py: 1, "&:last-child": { pb: 1 } }}>
+              <Typography>{t(`crop.${crop}`)}</Typography>
             </CardContent>
-          </Grid>
+          </Card>
         ))}
-      </Grid>
-      <Typography className={styles.OrderItem} variant="body">
-        <span>Total land area: </span>
-        {getArea}
+      </Stack>
+      <Typography variant="body2">
+        <strong>{t("wizard.review.area")}: </strong>
+        {area}
       </Typography>
-      <Typography className={styles.OrderItem} variant="body">
-        <span>Location: </span>
-        {getLandCoordinates.toString() + " "}
+      <Typography variant="body2" sx={{ wordBreak: "break-word" }}>
+        <strong>{t("wizard.review.location")}: </strong>
+        {location}
       </Typography>
-    </div>
+    </Stack>
   );
 };
 
