@@ -245,5 +245,10 @@
   "profile.fieldsEmpty": "Все още нямате запазени полета.",
   "map.savedField": "Запазено поле",
   "map.orderDate": "Дата на поръчката",
-  "map.orderStatus": "Статус"
+  "map.orderStatus": "Статус",
+  "map.shape": "Форма",
+  "map.shapes": "Очертани / качени форми",
+  "map.savedFields": "Запазени полета",
+  "map.selectAll": "Избери всички",
+  "map.downloadKmlCount": "Изтегли KML ({{count}})"
 }

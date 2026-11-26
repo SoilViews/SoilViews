@@ -6,7 +6,6 @@ import iconUrl from "leaflet/dist/images/marker-icon.png";
 import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
 import shadowUrl from "leaflet/dist/images/marker-shadow.png";
 import tokml from "tokml";
-import { saveAs } from "file-saver";
 import { format } from "date-fns";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@mui/material/styles";
@@ -24,7 +23,9 @@ import FullscreenControl from "./FullscreenControl";
 import KmlUpload from "./KmlUpload";
 import LocateControl from "./LocateControl";
 import SearchControl from "./SearchControl";
-import { toPolygonFeatures } from "./geo";
+import ShapeList from "./ShapeList";
+import { toPolygonFeatures, geodesicArea, formatArea } from "./geo";
+import { KML_MIME, buildKml, downloadKml, syncSelection, toggleId, setAll } from "./kml";
 import demoPolygons from "../Files/geojson.json";
 import demoPoints from "../Files/points.json";
 
@@ -50,6 +51,24 @@ function FlyTo({ target, zoom }) {
   }, [map, target, zoom]);
   return null;
 }
+
+// Temporary non-interactive outline of the hovered shape; removed on change/unmount.
+function Highlight({ feature, color }) {
+  const map = useMap();
+  useEffect(() => {
+    if (!feature) return undefined;
+    const layer = L.geoJSON(feature, {
+      interactive: false,
+      style: () => ({ color, weight: 5, fillOpacity: 0.35 }),
+    }).addTo(map);
+    return () => {
+      layer.remove();
+    };
+  }, [map, feature, color]);
+  return null;
+}
+
+const areaOf = (feature) => formatArea(geodesicArea(feature.geometry?.coordinates?.[0] ?? []));
 
 // Read-only layer of the user's previously saved shapes. Not part of the drawn/uploaded groups,
 // so it never reaches onPolygonsChange or the new order's area. Fits bounds once, if nothing is drawn yet.
@@ -116,11 +135,17 @@ export default function MapView({
   const { profile } = useAuth();
   const [showPolygons, setShowPolygons] = useState(false);
   const [showMarkers, setShowMarkers] = useState(false);
-  const [count, setCount] = useState(0);
+  const [shapes, setShapes] = useState([]);
+  const [selected, setSelected] = useState(() => new Set());
+  const [hoverId, setHoverId] = useState(null);
+  const seen = useRef(new Set());
+  const numbers = useRef({ byId: new Map(), next: 1 });
+  const count = shapes.length;
 
   const drawn = useMemo(() => new L.FeatureGroup(), []);
   const uploaded = useMemo(() => new L.FeatureGroup(), []);
   const groups = useMemo(() => [drawn, uploaded], [drawn, uploaded]);
+  const selectedRef = useRef(selected);
   const callback = useRef(onPolygonsChange);
   callback.current = onPolygonsChange;
 
@@ -128,18 +153,67 @@ export default function MapView({
     () => toPolygonFeatures([drawn.toGeoJSON(), uploaded.toGeoJSON()]),
     [drawn, uploaded]
   );
+
+  // Shapes with ids stable across re-derivation: L.stamp of the top-level layer + index within it.
+  const readShapes = useCallback(() => {
+    const out = [];
+    [drawn, uploaded].forEach((group) =>
+      group.eachLayer((layer) =>
+        toPolygonFeatures(layer.toGeoJSON()).forEach((feature, i) => {
+          const id = `${L.stamp(layer)}-${i}`;
+          const n = numbers.current;
+          if (!n.byId.has(id)) n.byId.set(id, n.next++);
+          out.push({ id, name: `${t("map.shape")} ${n.byId.get(id)}`, area: areaOf(feature), feature });
+        })
+      )
+    );
+    return out;
+  }, [drawn, uploaded, t]);
+
   const emit = useCallback(() => {
-    const features = currentFeatures();
-    setCount(features.length);
-    callback.current?.(features);
-  }, [currentFeatures]);
+    const list = readShapes();
+    setShapes(list);
+    const r = syncSelection(selectedRef.current, seen.current, list.map((s) => s.id));
+    seen.current = r.seen;
+    selectedRef.current = r.selected;
+    setSelected(r.selected);
+    callback.current?.(list.map((s) => s.feature));
+  }, [readShapes]);
+
+  const savedItems = useMemo(
+    () =>
+      savedShapes.map((s, i) => ({
+        id: `saved-${s.orderId ?? ""}-${i}`,
+        name: `${t("map.savedField")}${s.createdAt ? ` – ${s.createdAt.toLocaleDateString()}` : ""}`,
+        area: areaOf(s.feature),
+        feature: s.feature,
+      })),
+    [savedShapes, t]
+  );
+  // Saved ids are not ticked by default; just drop selections of saved shapes that no longer exist.
+  useEffect(() => {
+    const ids = new Set(savedItems.map((s) => s.id));
+    const next = new Set([...selectedRef.current].filter((id) => !id.startsWith("saved-") || ids.has(id)));
+    if (next.size !== selectedRef.current.size) {
+      selectedRef.current = next;
+      setSelected(next);
+    }
+  }, [savedItems]);
+
+  const updateSelected = (next) => {
+    selectedRef.current = next;
+    setSelected(next);
+  };
+  const allItems = useMemo(() => [...(editable ? shapes : []), ...savedItems], [editable, shapes, savedItems]);
+  const selectedItems = allItems.filter((i) => selected.has(i.id));
+  const highlighted = allItems.find((i) => i.id === hoverId)?.feature ?? null;
 
   // Keep a KML copy of every drawn shape in Firebase Storage (as the legacy dashboard did).
   const saveKml = async (layer) => {
     try {
       const kml = tokml(layer.toGeoJSON(), { name: "name", description: "description" });
-      const blob = new Blob([kml], { type: "text/plain;charset=utf-8" });
-      const filename = `${format(new Date(), "dd-mm-yyyy_h:mma")}_${profile?.firstName ?? ""}`;
+      const blob = new Blob([kml], { type: KML_MIME });
+      const filename = `${format(new Date(), "dd-MM-yyyy_h:mma")}_${profile?.firstName ?? ""}`;
       await uploadFile(`KmlFiles/${filename}.kml`, blob);
     } catch (err) {
       console.error("KML upload failed", err);
@@ -152,16 +226,14 @@ export default function MapView({
   };
 
   const handleDownload = () => {
-    const kml = tokml(
-      { type: "FeatureCollection", features: currentFeatures() },
-      { name: "name", description: "description" }
-    );
-    saveAs(new Blob([kml], { type: "text/plain;charset=utf-8" }), "coordinates.kml");
+    const kml = buildKml(selectedItems);
+    if (kml) downloadKml(kml);
   };
 
   const handleClear = () => {
     drawn.clearLayers();
     uploaded.clearLayers();
+    numbers.current = { byId: new Map(), next: 1 };
     emit();
   };
 
@@ -180,6 +252,7 @@ export default function MapView({
         <AllLayers />
         <Groups groups={groups} />
         <SavedShapes shapes={savedShapes} color={savedColor} hasDrawn={count > 0} t={t} />
+        <Highlight feature={highlighted} color={theme.palette.warning.main} />
         <FlyTo target={flyTo} zoom={13} />
         <FullscreenControl position="topright" title={t("map.fullscreen")} />
         <SearchControl position="topright" label={t("map.search")} />
@@ -217,13 +290,25 @@ export default function MapView({
           control={<Switch size="small" checked={showMarkers} onChange={(e) => setShowMarkers(e.target.checked)} />}
           label={t("map.showMarkers")}
         />
+        <ShapeList
+          groups={[
+            ...(editable ? [{ key: "shapes", title: t("map.shapes"), items: shapes }] : []),
+            { key: "saved", title: t("map.savedFields"), items: savedItems },
+          ]}
+          selected={selected}
+          onToggle={(id) => updateSelected(toggleId(selectedRef.current, id))}
+          onSetMany={(ids, on) => updateSelected(setAll(selectedRef.current, ids, on))}
+          onHover={setHoverId}
+        />
         <Stack spacing={1} sx={{ mt: 1 }}>
-          <Button size="small" variant="outlined" onClick={handleDownload} disabled={!count}>
-            {t("map.downloadKml")}
+          <Button size="small" variant="outlined" onClick={handleDownload} disabled={!selectedItems.length}>
+            {t("map.downloadKmlCount", { count: selectedItems.length })}
           </Button>
-          <Button size="small" variant="outlined" color="inherit" onClick={handleClear} disabled={!count}>
-            {t("map.clear")}
-          </Button>
+          {editable && (
+            <Button size="small" variant="outlined" color="inherit" onClick={handleClear} disabled={!count}>
+              {t("map.clear")}
+            </Button>
+          )}
         </Stack>
       </Paper>
     </Box>
