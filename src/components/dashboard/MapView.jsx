@@ -1,0 +1,231 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import iconUrl from "leaflet/dist/images/marker-icon.png";
+import iconRetinaUrl from "leaflet/dist/images/marker-icon-2x.png";
+import shadowUrl from "leaflet/dist/images/marker-shadow.png";
+import tokml from "tokml";
+import { saveAs } from "file-saver";
+import { format } from "date-fns";
+import { useTranslation } from "react-i18next";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
+import { useAuth } from "../../context/AuthContext";
+import { uploadFile } from "../../services/storageService";
+import AllLayers from "./AllLayers";
+import DrawControl from "./DrawControl";
+import FullscreenControl from "./FullscreenControl";
+import KmlUpload from "./KmlUpload";
+import LocateControl from "./LocateControl";
+import SearchControl from "./SearchControl";
+import { toPolygonFeatures } from "./geo";
+import demoPolygons from "../Files/geojson.json";
+import demoPoints from "../Files/points.json";
+
+// Bundlers break Leaflet's default marker icon URL detection.
+L.Icon.Default.mergeOptions({ iconUrl, iconRetinaUrl, shadowUrl });
+
+const DEFAULT_CENTER = [42.696295, 23.303643];
+
+// Adds the drawn/uploaded layer groups to the map for the lifetime of the map.
+function Groups({ groups }) {
+  const map = useMap();
+  useEffect(() => {
+    groups.forEach((g) => g.addTo(map));
+    return () => groups.forEach((g) => g.remove());
+  }, [map, groups]);
+  return null;
+}
+
+function FlyTo({ target, zoom }) {
+  const map = useMap();
+  useEffect(() => {
+    if (target) map.flyTo(target, zoom);
+  }, [map, target, zoom]);
+  return null;
+}
+
+// Read-only layer of the user's previously saved shapes. Not part of the drawn/uploaded groups,
+// so it never reaches onPolygonsChange or the new order's area. Fits bounds once, if nothing is drawn yet.
+function SavedShapes({ shapes, color, hasDrawn, t }) {
+  const map = useMap();
+  const fitted = useRef(false);
+  const hasDrawnRef = useRef(hasDrawn);
+  hasDrawnRef.current = hasDrawn;
+
+  useEffect(() => {
+    if (!shapes?.length) return undefined;
+    const row = (label, value) => {
+      const p = document.createElement("div");
+      p.textContent = `${label}: ${value}`;
+      return p;
+    };
+    const layer = L.geoJSON(
+      shapes.map((s) => s.feature),
+      {
+        interactive: true,
+        style: () => ({ color, weight: 2, fillOpacity: 0.25, dashArray: "4" }),
+        onEachFeature: (feature, l) => {
+          const s = shapes.find((x) => x.feature === feature);
+          const box = document.createElement("div");
+          const title = document.createElement("strong");
+          title.textContent = t("map.savedField");
+          box.append(title);
+          if (s?.createdAt) box.append(row(t("map.orderDate"), s.createdAt.toLocaleDateString()));
+          if (s?.status) box.append(row(t("map.orderStatus"), t(s.status, { defaultValue: s.status })));
+          l.bindPopup(box);
+        },
+      }
+    ).addTo(map);
+    if (!fitted.current && !hasDrawnRef.current) {
+      const bounds = layer.getBounds();
+      if (bounds.isValid()) {
+        map.fitBounds(bounds, { padding: [30, 30] });
+        fitted.current = true;
+      }
+    }
+    return () => {
+      layer.remove();
+    };
+  }, [map, shapes, color, t]);
+  return null;
+}
+
+/**
+ * Full-height map with draw, KML/GeoJSON upload, search, locate, fullscreen and layer switching.
+ * onPolygonsChange(features[]) receives every Polygon feature currently on the map (drawn + uploaded)
+ * `savedShapes` ([{ feature, createdAt, status }]) are drawn read-only and are never reported to onPolygonsChange.
+ * after each create / edit / delete / upload / clear.
+ */
+export default function MapView({
+  onPolygonsChange,
+  editable = true,
+  flyTo = null,
+  center = DEFAULT_CENTER,
+  zoom = 13,
+  savedShapes = [],
+}) {
+  const { t } = useTranslation();
+  const theme = useTheme();
+  const { profile } = useAuth();
+  const [showPolygons, setShowPolygons] = useState(false);
+  const [showMarkers, setShowMarkers] = useState(false);
+  const [count, setCount] = useState(0);
+
+  const drawn = useMemo(() => new L.FeatureGroup(), []);
+  const uploaded = useMemo(() => new L.FeatureGroup(), []);
+  const groups = useMemo(() => [drawn, uploaded], [drawn, uploaded]);
+  const callback = useRef(onPolygonsChange);
+  callback.current = onPolygonsChange;
+
+  const currentFeatures = useCallback(
+    () => toPolygonFeatures([drawn.toGeoJSON(), uploaded.toGeoJSON()]),
+    [drawn, uploaded]
+  );
+  const emit = useCallback(() => {
+    const features = currentFeatures();
+    setCount(features.length);
+    callback.current?.(features);
+  }, [currentFeatures]);
+
+  // Keep a KML copy of every drawn shape in Firebase Storage (as the legacy dashboard did).
+  const saveKml = async (layer) => {
+    try {
+      const kml = tokml(layer.toGeoJSON(), { name: "name", description: "description" });
+      const blob = new Blob([kml], { type: "text/plain;charset=utf-8" });
+      const filename = `${format(new Date(), "dd-mm-yyyy_h:mma")}_${profile?.firstName ?? ""}`;
+      await uploadFile(`KmlFiles/${filename}.kml`, blob);
+    } catch (err) {
+      console.error("KML upload failed", err);
+    }
+  };
+
+  const handleCreated = (e) => {
+    emit();
+    saveKml(e.layer);
+  };
+
+  const handleDownload = () => {
+    const kml = tokml(
+      { type: "FeatureCollection", features: currentFeatures() },
+      { name: "name", description: "description" }
+    );
+    saveAs(new Blob([kml], { type: "text/plain;charset=utf-8" }), "coordinates.kml");
+  };
+
+  const handleClear = () => {
+    drawn.clearLayers();
+    uploaded.clearLayers();
+    emit();
+  };
+
+  const shapeColor = theme.palette.primary.main;
+  const uploadColor = theme.palette.error.main;
+  const savedColor = theme.palette.info.main;
+  const geoStyle = { color: theme.palette.secondary.main, weight: 2 };
+
+  return (
+    <Box sx={{ position: "absolute", inset: 0 }}>
+      <MapContainer center={center} zoom={zoom} style={{ height: "100%", width: "100%" }}>
+        <TileLayer
+          attribution='&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <AllLayers />
+        <Groups groups={groups} />
+        <SavedShapes shapes={savedShapes} color={savedColor} hasDrawn={count > 0} t={t} />
+        <FlyTo target={flyTo} zoom={13} />
+        <FullscreenControl position="topright" title={t("map.fullscreen")} />
+        <SearchControl position="topright" label={t("map.search")} />
+        <LocateControl options={{ position: "topleft", strings: { title: t("map.locate") } }} />
+        <KmlUpload
+          target={uploaded}
+          onLoaded={emit}
+          onError={(e) => window.alert(`${t("map.unsupportedFile")} (${e.format})`)}
+          title={t("map.upload")}
+          color={uploadColor}
+        />
+        {editable && (
+          <DrawControl featureGroup={drawn} color={shapeColor} onCreated={handleCreated} onEdited={emit} onDeleted={emit} />
+        )}
+        {showPolygons && <GeoJSON data={demoPolygons} style={geoStyle} />}
+        {showMarkers && (
+          <GeoJSON
+            data={demoPoints}
+            onEachFeature={(feature, layer) =>
+              layer.bindPopup(`${feature.properties.Name}  ${feature.properties.Crops}`)
+            }
+          />
+        )}
+      </MapContainer>
+
+      <Paper
+        elevation={3}
+        sx={{ position: "absolute", zIndex: 1001, top: 110, right: 10, p: 1, display: "flex", flexDirection: "column" }}
+      >
+        <FormControlLabel
+          control={<Switch size="small" checked={showPolygons} onChange={(e) => setShowPolygons(e.target.checked)} />}
+          label={t("map.showPolygons")}
+        />
+        <FormControlLabel
+          control={<Switch size="small" checked={showMarkers} onChange={(e) => setShowMarkers(e.target.checked)} />}
+          label={t("map.showMarkers")}
+        />
+        <Stack spacing={1} sx={{ mt: 1 }}>
+          <Button size="small" variant="outlined" onClick={handleDownload} disabled={!count}>
+            {t("map.downloadKml")}
+          </Button>
+          <Button size="small" variant="outlined" color="inherit" onClick={handleClear} disabled={!count}>
+            {t("map.clear")}
+          </Button>
+        </Stack>
+      </Paper>
+    </Box>
+  );
+}

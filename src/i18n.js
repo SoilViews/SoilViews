@@ -9,13 +9,14 @@ i18n
   .use(initReactI18next)
   .init({
     fallbackLng: 'en',
-    debug: true,
+    debug: false,
+    // Translation files use flat keys such as "nav.home"; i18next 19 would otherwise treat dots as nesting.
+    keySeparator: false,
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
     },
     react: {
-      wait: true,
-      useSuspense: false,
+      useSuspense: true,
    },
   });
 export default i18n;
